@@ -11,6 +11,7 @@
     "express": "^4.16.4",
     "jsonwebtoken": "^8.4.0",
     "materialize-css": "^1.0.0-rc.2",
+    "mongodb": "^3.1.13",
     "mongoose": "^5.4.9",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
@@ -23,8 +24,11 @@
     "validator": "^10.11.0"
   },
   "scripts": {
+    "client-install": "cd client && npm install",
     "start": "node server.js",
-    "server": "nodemon server.js"
+    "server": "nodemon server.js",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "eslintConfig": {
     "extends": "react-app"
