@@ -1,15 +1,28 @@
-import React, { Component } from "react";
-import HomeButton from "../components/HomeButton";
+import React from "react";
+import axios from "axios";
+import { checkServerIdentity } from "tls";
 
-class Lp2 extends Component {
+export default class CitiesList extends React.Component {
+  state = {
+    cities: []
+  };
+
+  componentDidMount() {
+    console.log("didmount");
+    axios.get(`http://localhost:5000/api/test/`).then(res => {
+      console.log("didmount2");
+      const cities = res.data;
+      this.setState({ cities });
+    });
+  }
+
   render() {
     return (
-      <div className="Lp2">
-        <p>Lp2 App</p>
-        <HomeButton />
-      </div>
+      <ul>
+        {this.state.cities.map(city => (
+          <li>{city.cityname}</li>
+        ))}
+      </ul>
     );
   }
 }
-
-export default Lp2;

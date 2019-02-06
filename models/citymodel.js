@@ -1,12 +1,12 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-//Create City Schema & Model
+//Create City Schema
 
 const CitySchema = new Schema({
   cityname: {
-    type: String,
-    required: [true, "Name field is required"]
+    type: String
+    // required: [true, "Name field is required"]
   },
   country: {
     type: String
@@ -16,6 +16,7 @@ const CitySchema = new Schema({
   }
 });
 
-const City = mongoose.model("city", CitySchema);
+// // EXPORT CITY
+const City = mongoose.model("cities", CitySchema);
 
-module.exports = citymodel;
+module.exports = City;
