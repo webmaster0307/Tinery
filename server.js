@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
+// const cors = require("cors");
 
 // DB Config & Internal Links
 
@@ -24,14 +25,20 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // INIT ROUTES
 
-// app.use("/api", citydb);
+app.use("/api", citydb);
 
-app.use("/api", citydb, (req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "http://127.0.0.1:3000"); //My frontend APP domain
-  res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
-  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  next();
-});
+// app.use("/api", citydb, (req, res, next) => {
+//   res.header("Access-Control-Allow-Origin", "http://127.0.0.1:3000"); //My frontend APP domain
+//   res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
+//   res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+//   next();
+// });
+
+// app.use(cors());
+
+// app.get("/api/test", cors(), function(req, res, next) {
+//   res.json({ msg: "This is CORS-enabled for a Single Route" });
+// });
 
 // ROUTES
 //==============================================
@@ -41,20 +48,22 @@ app.get("/", (req, res) => {
   res.send({ name: "Homer Simpson" });
 });
 
-app.get("/api/hello", res => {
-  res.send({ express: "Hello From Express!" });
-});
+// app.get("/api/hello", res => {
+//   res.send({ express: "Hello From Express!" });
+// });
 
-// app.get("/api/test", res => res.send("hello test page"));
-
-app.post("/api/world", (req, res) => {
-  console.log(req.body);
-  res.send(
-    `I received your POST request. This is what you sent me: ${req.body.post}`
-  );
-});
+// app.post("/api/world", (req, res) => {
+//   console.log(req.body);
+//   res.send(
+//     `I received your POST request. This is what you sent me: ${req.body.post}`
+//   );
+// });
 
 // START THE SERVER
 // =============================================
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
+
+// app.listen(80, function() {
+//   console.log("CORS-enabled web server listening on port 80");
+// });

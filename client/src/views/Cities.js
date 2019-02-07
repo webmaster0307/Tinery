@@ -4,16 +4,16 @@ import { connect } from "react-redux";
 import HomeButton from "../components/HomeButton";
 
 class Cities extends Component {
-  state = {
-    name: null
-  };
-  componentDidMount() {
-    console.log(this.props);
-    let name = this.props.match.params.city_name;
-    this.setState({
-      name: name
-    });
-  }
+  // state = {
+  //   name: null
+  // };
+  // componentDidMount() {
+  //   console.log(this.props);
+  //   const name = this.props.match.params.city_name;
+  //   this.setState({
+  //     name
+  //   });
+  // }
   render() {
     const { cities } = this.props;
     return (
@@ -24,7 +24,7 @@ class Cities extends Component {
             <div className="post card" key={index}>
               <div className="card-content center">
                 <Link to={"/city/" + city.url}>
-                  {city.id} : {city.city}, {city.country}
+                  {city.city}, {city.country}
                 </Link>
               </div>
             </div>

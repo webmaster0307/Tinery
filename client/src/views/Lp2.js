@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-import { checkServerIdentity } from "tls";
+import HomeButton from "./../components/HomeButton";
 
 export default class CitiesList extends React.Component {
   state = {
@@ -9,7 +9,7 @@ export default class CitiesList extends React.Component {
 
   componentDidMount() {
     console.log("didmount");
-    axios.get(`http://localhost:5000/api/test/`).then(res => {
+    axios.get(`/api/test/`).then(res => {
       console.log("didmount2");
       const cities = res.data;
       this.setState({ cities });
@@ -20,8 +20,11 @@ export default class CitiesList extends React.Component {
     return (
       <ul>
         {this.state.cities.map(city => (
-          <li>{city.cityname}</li>
+          <div>
+            <li>{city.cityname}</li>
+          </div>
         ))}
+        <HomeButton />;
       </ul>
     );
   }

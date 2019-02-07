@@ -1,3 +1,9 @@
+// import { FETCH_CITY } from "../actions/Types";
+
+// const initState = {
+//   cities: []
+// };
+
 const initState = {
   cities: [
     { id: "1", city: "Barcelona", country: "Spain", url: "barcelona" },
@@ -22,6 +28,12 @@ const initState = {
     { id: "15", city: "Florianópolis", country: "Brazil", url: "florianopolis" }
   ]
 };
+
+// const rootReducer = (state = initState, action) => {
+//   return state;
+// };
+
+// export default rootReducer;
 
 const rootReducer = (state = initState, action) => {
   return state;
