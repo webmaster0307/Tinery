@@ -6,18 +6,19 @@ const Citymodel = require("../../models/citymodel");
 
 //GET
 
-router.get("/test", (req, res) => {
+router.get("/city", (req, res) => {
   Citymodel.find().then(city => res.json(city));
 });
 
 //POST
 
-router.post("/test", (req, res) => {
-  console.log(req.body);
+router.post("/city", (req, res) => {
+  // console.log(req.body);
   const city = new Citymodel({
     cityname: req.body.cityname,
     country: req.body.country,
-    url: req.body.url
+    url: req.body.url,
+    id: req.body.id
   });
 
   city
@@ -33,7 +34,7 @@ router.post("/test", (req, res) => {
 
 //PUT
 
-router.put("/test/:id", (req, res) => res.send({ type: "PUT" }));
+router.put("/city/:id", (req, res) => res.send({ type: "PUT" }));
 
 // EXAMPLE UPDATE/PUT
 
@@ -58,6 +59,6 @@ router.put("/test/:id", (req, res) => res.send({ type: "PUT" }));
 
 //DELETE
 
-router.delete("/test/:id", (req, res) => res.send({ type: "DELETE" }));
+router.delete("/city/:id", (req, res) => res.send({ type: "DELETE" }));
 
 module.exports = router;

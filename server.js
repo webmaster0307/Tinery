@@ -1,12 +1,17 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
-// const cors = require("cors");
 
 // DB Config & Internal Links
 
 const db = require("./config/keys").mongoURI;
+
+//ROUTES
+
 const citydb = require("./routes/api/citydb");
+const itinerarydb = require("./routes/api/itinerarydb");
+const activitydb = require("./routes/api/activitydb");
+const commentdb = require("./routes/api/commentdb");
 
 // Connect to MongoDB
 
@@ -26,6 +31,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // INIT ROUTES
 
 app.use("/api", citydb);
+app.use("/api", itinerarydb);
+app.use("/api", activitydb);
+app.use("/api", commentdb);
 
 // app.use("/api", citydb, (req, res, next) => {
 //   res.header("Access-Control-Allow-Origin", "http://127.0.0.1:3000"); //My frontend APP domain
@@ -44,9 +52,21 @@ app.use("/api", citydb);
 //==============================================
 
 app.get("/", (req, res) => {
-  // console.log("GET Request 2");
+  console.log("GET Request / (Home)");
   res.send({ name: "Homer Simpson" });
+  // res.sendFile(__dirname + "/client/public/index.html");
 });
+
+// app.get("/cities/", function(req, res) {
+//   res.send("The ID of this page is : " + req.params.id);
+// });
+
+// app.get("/cities/:id", (req, res) => {
+//   console.log(req.params);
+//   console.log(req.query);
+//   // console.log(req.params.id);
+//   res.send("The ID of this page is : " + req.params.id);
+// });
 
 // app.get("/api/hello", res => {
 //   res.send({ express: "Hello From Express!" });

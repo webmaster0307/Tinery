@@ -1,15 +1,15 @@
-import { FETCH_CITIES } from "../actions/Types";
+import { FETCH_ITINERARIES } from "../actions/Types";
 
 const initialState = {
-  cities: []
+  itineraries: []
 };
 
 export default function(state = initialState, action) {
   switch (action.type) {
-    case FETCH_CITIES:
+    case FETCH_ITINERARIES:
       return {
         ...state,
-        cities: action.payload
+        itineraries: action.payload
       };
     default:
       return state;

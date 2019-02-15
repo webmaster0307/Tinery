@@ -1,8 +1,10 @@
-import React from "react";
+import React, { Component } from "react";
+import Slider from "react-slick";
+
 import axios from "axios";
 import HomeButton from "./../components/HomeButton";
 
-export default class CitiesList extends React.Component {
+export default class CitiesList extends Component {
   state = {
     cities: []
   };
@@ -17,15 +19,38 @@ export default class CitiesList extends React.Component {
   }
 
   render() {
+    const settings = {
+      dots: true,
+      infinite: true,
+      speed: 500,
+      slidesToShow: 3,
+      slidesToScroll: 1
+    };
     return (
-      <ul>
-        {this.state.cities.map(city => (
+      <div className="row">
+        <h2> Single Item</h2>
+        <Slider {...settings}>
           <div>
-            <li>{city.cityname}</li>
+            <h3>1</h3>
           </div>
-        ))}
-        <HomeButton />;
-      </ul>
+          <div>
+            <h3>2</h3>
+          </div>
+          <div>
+            <h3>3</h3>
+          </div>
+          <div>
+            <h3>4</h3>
+          </div>
+          <div>
+            <h3>5</h3>
+          </div>
+          <div>
+            <h3>6</h3>
+          </div>
+        </Slider>
+        <HomeButton />
+      </div>
     );
   }
 }
