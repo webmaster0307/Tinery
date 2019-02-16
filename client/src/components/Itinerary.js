@@ -87,7 +87,7 @@ class Itinerary extends Component {
             />,
 
             <button
-              className="viewActivityBtn"
+              className="waves-effect waves-light btn-large"
               id={itinerary.activitykey}
               onClick={this.handleClick}
             >
@@ -96,7 +96,7 @@ class Itinerary extends Component {
           ]
         ) : (
           <button
-            className="viewActivityBtn"
+            className="waves-effect waves-light btn-large"
             id={itinerary.activitykey}
             onClick={this.handleClick}
           >

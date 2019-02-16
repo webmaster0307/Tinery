@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import axios from "axios";
+import moment from "moment";
 
 class Comments extends Component {
   componentDidMount() {
@@ -25,29 +26,13 @@ class Comments extends Component {
     });
   };
 
-  //AXIOS EXAMPLE
-  onSubmit(e) {
-    e.preventDefault();
-    const serverport = {
-      name: this.state.name,
-      port: this.state.port
-    };
-    axios
-      .post("http://localhost:4000/serverport/add", serverport)
-      .then(res => console.log(res.data));
-
-    this.setState({
-      name: "",
-      port: ""
-    });
-  }
-
   postMessage = event => {
     event.preventDefault();
-    const comments = {
+    let comments = {
       user: this.state.user,
       message: this.state.message,
-      timestamp: Date.now(),
+      // timestamp: this.state.timestamp,
+      timestamp: moment(Date.now()).format("lll"),
       activitykey: this.props.activityKey
     };
     console.log(comments);
@@ -94,11 +79,12 @@ class Comments extends Component {
     // console.log("from comments", this.props.comments.comments);
     const commentList = this.props.comments.comments.map(comment => (
       <div className="comments col" key={comment.message}>
-        <p>
-          <span className="commentUser"> {comment.user} </span> :
-          <span className="commentTimestamp">{comment.timestamp}</span> :
-          {comment.message}
-        </p>
+        <p>{comment.message}</p>
+        {/* <p>{moment(comment.timestamp).format("LTS")}</p> */}
+        <span className="commentUser">{comment.user}</span> -{" "}
+        <span className="commentTimestamp">
+          {moment(comment.timestamp).format("LLLL")}
+        </span>
       </div>
     ));
     // const inputForm = (
@@ -130,7 +116,11 @@ class Comments extends Component {
             onChange={this.handleChange}
           />
           <div>
-            <button type="submit" value="Submit">
+            <button
+              className="waves-effect waves-light btn-large"
+              type="submit"
+              value="Submit"
+            >
               Submit
             </button>
           </div>
