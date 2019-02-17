@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 // import { fetchAxiosItineraries } from "../actions/fetchItineraries";
 import { fetchAxiosActivities } from "../actions/fetchActivities";
@@ -29,7 +30,7 @@ class Itinerary extends Component {
 
     this.props.fetchAxiosActivities(eventTargetId);
     this.props.fetchAxiosComments(eventTargetId);
-    console.log(this.props.fetchAxiosComments(eventTargetId));
+    // console.log(this.props.fetchAxiosComments(eventTargetId));
 
     this.setState(state => ({
       eventId: eventTargetId,
@@ -38,37 +39,35 @@ class Itinerary extends Component {
   }
   render() {
     const listItin = this.props.itineraries.itineraries.map(itinerary => (
-      <div
-        className="card-panel grey lighten-5 z-depth-2 hoverable"
-        key={itinerary.title}
-      >
+      <div className="card-panel z-depth-2" key={itinerary.title}>
         <div className="row valign-wrapper">
           {/* <div className="col left-align s2 m4 l3"> */}
-          <div className="col s4 leftDiv">
-            <p> Author : {itinerary.author}</p>
+          <div className="col card profileIcon">
+            {/* <p> Author : {itinerary.author}</p> */}
+            <i className="material-icons Large profileIcon">person</i>
           </div>
 
-          {/* <div className="col s12 m8 l9 "> */}
-          <div className="col s9 m8 l9 rightDiv">
-            <div className="col center-align rightDiv">
-              <h4> {itinerary.title} </h4>
-            </div>
+          {/* <div className="col s12 m8 l9"> */}
+          <div className="card-panel z-depth-1">
+            <div>
+              <div className="col card z-depth-1">
+                <p className="rightDivTitle">{itinerary.title}</p>
+              </div>
 
-            <div className="col s12">
-              <div className="col s4 rightDiv">
-                <p> Likes : {itinerary.likes}</p>
+              <div className="row">
+                <span className="col  rightDivText">
+                  Likes : {itinerary.likes}
+                </span>
+                <span className="col  rightDivText">
+                  {itinerary.duration} Hours
+                </span>
+                <span className="col  rightDivText">${itinerary.price}</span>
+                {/* <p> Rating : {itinerary.rating} out of 5 </p> */}
               </div>
-              <div className="col s4 rightDiv">
-                <p> Duration : {itinerary.duration} Hours </p>
-              </div>
-              <div className="col s4 rightDiv">
-                <p> Price : ${itinerary.price} </p>
-              </div>
-              {/* <p> Rating : {itinerary.rating} out of 5 </p> */}
-            </div>
 
-            <div className="col s12 rightDiv">
-              <p> Hashtags : {itinerary.hashtag + " "}</p>
+              <div className="row rightDivText ">
+                <div className="col">{itinerary.hashtag + " "}</div>
+              </div>
             </div>
             {/* <p> Key : {itinerary.activitykey}</p> */}
           </div>
@@ -87,18 +86,20 @@ class Itinerary extends Component {
             />,
 
             <button
-              className="waves-effect waves-light btn-large"
+              className="viewActivityBtn"
               id={itinerary.activitykey}
               onClick={this.handleClick}
+              key={itinerary.title + itinerary._id}
             >
               Close
             </button>
           ]
         ) : (
           <button
-            className="waves-effect waves-light btn-large"
+            className="viewActivityBtn "
             id={itinerary.activitykey}
             onClick={this.handleClick}
+            key={itinerary.title + itinerary._id}
           >
             View All
           </button>
@@ -109,6 +110,12 @@ class Itinerary extends Component {
     return <div>{listItin}</div>;
   }
 }
+
+Itinerary.propTypes = {
+  itinerary: PropTypes.object,
+  activiy: PropTypes.object,
+  comment: PropTypes.object
+};
 
 const mapStateToProps = state => {
   // console.log(this.props.itineraries.itineraries);

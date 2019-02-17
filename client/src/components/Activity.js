@@ -17,6 +17,7 @@ class Activity extends Component {
   }
 
   render() {
+    //SLIDER SETTINGS
     const settings = {
       // SIMPLE SLIDER
       // dots: true,
@@ -24,28 +25,37 @@ class Activity extends Component {
       // speed: 500,
       // slidesToShow: 1,
       // slidesToScroll: 1
-
       // FADE SLIDER
-      dots: true,
-      fade: true,
-      infinite: true,
-      speed: 500,
-      slidesToShow: 1,
-      slidesToScroll: 1
-
-      //CENTER MODE SLIDER
-      // className: "center",
-      // centerMode: true,
+      // dots: true,
+      // fade: true,
       // infinite: true,
-      // centerPadding: "60px",
-      // slidesToShow: 1,
-      // speed: 500
+      // speed: 500,
+      // slidesToShow: 3,
+      // slidesToScroll: 1
+      //CENTER MODE SLIDER
+      className: "center",
+      centerMode: true,
+      infinite: true,
+      centerPadding: "60px",
+      slidesToShow: 1,
+      speed: 500
     };
     // console.log("from activity", this.props);
     const activityList = this.props.activities.activities.map(activity => (
-      <div className="activity col" key={activity.title}>
-        <h3 className="sliderImgTitle center-align"> {activity.title}</h3>
-        <img alt="" className="sliderImg" width="650" src={activity.image} />
+      <div className="row" key={activity.title}>
+        <div className="col s12 m9">
+          <div className="card">
+            <div className="card-image z-depth-3">
+              <img
+                className="sliderImg"
+                alt=""
+                width="600"
+                src={activity.image}
+              />
+              <p className="cardtitle">{activity.title}</p>
+            </div>
+          </div>
+        </div>
       </div>
     ));
 

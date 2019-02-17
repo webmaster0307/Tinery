@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import PropTypes from "prop-types";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 // import { BrowserRouter, Route } from "react-router-dom";
 
@@ -15,9 +15,6 @@ import Home from "./views/Home";
 import Cities from "./views/Cities";
 import Login from "./views/Login";
 import Signup from "./views/Signup";
-import Lp1 from "./views/Lp1";
-import Lp2 from "./views/Lp2";
-import Rex from "./views/Rex";
 
 class App extends Component {
   render() {
@@ -31,9 +28,7 @@ class App extends Component {
               <Route exact path="/Login" component={Login} />
               <Route exact path="/Signup" component={Signup} />
               <Route exact path="/Cities" component={Cities} />
-              <Route exact path="/Lp1" component={Lp1} />
-              <Route exact path="/Lp2" component={Lp2} />
-              <Route exact path="/React_exercises" component={Rex} />
+
               {/* <Route exact path="/City/:city_name" component={City} /> */}
               <Route
                 path="/Cities/:city_name"
@@ -50,5 +45,9 @@ class App extends Component {
     );
   }
 }
+
+App.protoTypes = {
+  cities: PropTypes.array
+};
 
 export default App;

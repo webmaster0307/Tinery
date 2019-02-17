@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import HomeButton from "../components/HomeButton";
@@ -16,6 +17,7 @@ class Cities extends Component {
     };
   }
   componentDidMount() {
+    // console.log(this.props);
     this.props.fetchAxiosCities();
     // CONVERT REDUX TO LOCAL STATE
     // this.setState({
@@ -86,6 +88,7 @@ class Cities extends Component {
   };
 
   render() {
+    // console.log(this.props.cities.cities);
     // let filteredCities = this.props.cities.cities.filter(
     //   debounce(city => {
     //     return city.cityname
@@ -110,6 +113,7 @@ class Cities extends Component {
             value={this.state.query}
             placeholder="Type to Search Destinations"
             onChange={this.handleSearch}
+            className="card-content center"
           />
         </div>
         {/* CITIES */}
@@ -117,7 +121,10 @@ class Cities extends Component {
           return (
             <div className="post card" key={city.cityname}>
               <div className="card-content center">
-                <Link to={"/cities/" + city.url}>
+                <Link
+                  to={"/cities/" + city.url}
+                  cities={this.props.cities.cities}
+                >
                   {city.cityname}, {city.country}
                 </Link>
               </div>
@@ -134,6 +141,10 @@ const mapStateToProps = state => {
   return {
     cities: state.cities
   };
+};
+
+Cities.propTypes = {
+  cities: PropTypes.object
 };
 
 export default connect(

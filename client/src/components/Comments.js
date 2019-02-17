@@ -5,7 +5,7 @@ import moment from "moment";
 
 class Comments extends Component {
   componentDidMount() {
-    console.log(this.props);
+    // console.log(this.props);
   }
 
   constructor() {
@@ -20,7 +20,7 @@ class Comments extends Component {
   }
 
   handleChange = event => {
-    console.log(event.target.name);
+    // console.log(event.target.name);
     this.setState({
       [event.target.name]: event.target.value
     });
@@ -79,36 +79,30 @@ class Comments extends Component {
     // console.log("from comments", this.props.comments.comments);
     const commentList = this.props.comments.comments.map(comment => (
       <div className="comments col" key={comment.message}>
-        <p>{comment.message}</p>
+        <p>
+          <span className="commentUser">{comment.user}</span> :{comment.message}
+        </p>
         {/* <p>{moment(comment.timestamp).format("LTS")}</p> */}
-        <span className="commentUser">{comment.user}</span> -{" "}
-        <span className="commentTimestamp">
+        <p className="commentTimestamp">
           {moment(comment.timestamp).format("LLLL")}
-        </span>
+        </p>
       </div>
     ));
-    // const inputForm = (
-    //   <form className="send-message-form">
-    //     {/* <input
-    //   onChange={this.handleChange}
-    //   value={this.state.message}
-    //   placeholder="Type your message and hit ENTER"
-    //   type="text"
-    // /> */}
-    //     <input placeholder="Type your message and hit ENTER" type="text" />
-    //   </form>
-    // );
-    const inputForm = (
-      <div>
+    const commentForm = (
+      <div className="commentForm card z-depth-2">
         <form onSubmit={this.postMessage}>
-          <label htmlFor="">Please enter your username:</label>
+          <label className="center-align" htmlFor="">
+            Please enter your username:
+          </label>
           <input
             type="text"
             name="user"
             value={this.state.user}
             onChange={this.handleChange}
           />
-          <label htmlFor="">Leave a Comment:</label>
+          <label className="center-align" htmlFor="">
+            Leave a Comment:
+          </label>
           <textarea
             type="text"
             name="message"
@@ -116,11 +110,7 @@ class Comments extends Component {
             onChange={this.handleChange}
           />
           <div>
-            <button
-              className="waves-effect waves-light btn-large"
-              type="submit"
-              value="Submit"
-            >
+            <button className="viewActivityBtn" type="submit" value="Submit">
               Submit
             </button>
           </div>
@@ -129,11 +119,11 @@ class Comments extends Component {
     );
 
     return (
-      <div className="Comments">
-        <h3>Comments:</h3>
-        <div>{inputForm}</div>
+      <div className="Comments texta-lign">
+        <p className="card center-align z-depth-2">Comments:</p>
+        <div>{commentForm}</div>
         <div>{commentList}</div>
-        {/* <div>{inputForm}</div> */}
+        {/* <div>{commentForm}</div> */}
       </div>
     );
   }
