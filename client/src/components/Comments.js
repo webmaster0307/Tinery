@@ -1,96 +1,92 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import axios from "axios";
+// import axios from "axios";
 import moment from "moment";
+import { fetchAxiosComments } from "../actions/fetchComments";
+import { postAxiosComments } from "../actions/postComments";
 
 class Comments extends Component {
   componentDidMount() {
     // console.log(this.props);
   }
-
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       message: "",
       user: "",
       timestamp: "",
-      activitykey: ""
+      activitykey: "",
+      comments: []
       // activitykey: this.props.comments.comment.activitykey
     };
   }
 
-  handleChange = event => {
-    // console.log(event.target.name);
+  onChange = e => {
     this.setState({
-      [event.target.name]: event.target.value
+      [e.target.name]: e.target.value
     });
   };
 
-  postMessage = event => {
-    event.preventDefault();
+  onSubmit = e => {
+    e.preventDefault();
     let comments = {
       user: this.state.user,
       message: this.state.message,
-      // timestamp: this.state.timestamp,
-      timestamp: moment(Date.now()).format("lll"),
+      timestamp: moment(Date.now()).format("LLLL"),
       activitykey: this.props.activityKey
     };
     console.log(comments);
-    axios.post("/api/comment", comments).then(res => console.log(res.data));
+    this.props.postAxiosComments(comments);
     this.setState({
       user: "",
       message: "",
       timestamp: "",
       activitykey: ""
     });
-    // fetch(URL, {
-    //   method: "POST",
-    //   headers: {
-    //     Accept: "application/json",
-    //     "Content-Type": "application/json"
-    //   },
-    //   body: JSON.stringify({
-    //     user: this.state.user,
-    //     message: this.state.message,
-    //     timestamp: Date.now(),
-    //     activitykey: this.activitykey
-    //   })
-    // })
-    // .then(res => {
-    //   if (res.status === 200) {
-    //     //   console.log('Request success: ', res)
-    //     this.setState({
-    //       user: "",
-    //       message: "",
-    //       timestamp: ""
-    //       // activitykey: ""
-    //     });
-    //   } else {
-    //     //   console.log('Request failure: ', res)
-    //   }
-    // })
-    // .catch(error => {
-    //   // console.log('Request failure: ', error)
-    // });
+    // REFRESH COMMENTS (NOT NEEDED)
+    // this.props.fetchAxiosComments(this.props.activityKey);
   };
 
+  // onSubmit = e => {
+  //   e.preventDefault();
+  //   let comments = {
+  //     user: this.state.user,
+  //     message: this.state.message,
+  //     // timestamp: moment(Date.now()).format("lll"),
+  //     timestamp: moment(Date.now()).format("LLLL"),
+  //     activitykey: this.props.activityKey
+  //   };
+  //   // console.log(comments);
+  //   axios.post("/api/comment", comments).then(res => console.log(res.data));
+  //   this.setState({
+  //     user: "",
+  //     message: "",
+  //     timestamp: "",
+  //     activitykey: ""
+  //   });
+  //   // let eventTargetId = this.onChange.target.id;
+  //   this.props.fetchAxiosComments(this.props.activityKey);
+  // };
+
   render() {
-    // console.log("from comments", this.props.comments);
-    // console.log("from comments", this.props.comments.comments);
+    //COMMENT LIST
     const commentList = this.props.comments.comments.map(comment => (
-      <div className="comments col" key={comment.message}>
+      <div className="comments col" key={comment._id + comment.user}>
         <p>
           <span className="commentUser">{comment.user}</span> :{comment.message}
         </p>
-        {/* <p>{moment(comment.timestamp).format("LTS")}</p> */}
         <p className="commentTimestamp">
-          {moment(comment.timestamp).format("LLLL")}
+          {/* <p>{moment(comment.timestamp).format("LTS")}</p> */}
+          {/* {moment.utc(comment.timestamp).format("LLLL")} */}
+          {comment.timestamp}
         </p>
       </div>
     ));
+
+    //COMMENT FORM
     const commentForm = (
       <div className="commentForm card z-depth-2">
-        <form onSubmit={this.postMessage}>
+        <form onSubmit={this.onSubmit}>
           <label className="center-align" htmlFor="">
             Please enter your username:
           </label>
@@ -98,7 +94,7 @@ class Comments extends Component {
             type="text"
             name="user"
             value={this.state.user}
-            onChange={this.handleChange}
+            onChange={this.onChange}
           />
           <label className="center-align" htmlFor="">
             Leave a Comment:
@@ -107,7 +103,7 @@ class Comments extends Component {
             type="text"
             name="message"
             value={this.state.message}
-            onChange={this.handleChange}
+            onChange={this.onChange}
           />
           <div>
             <button className="viewActivityBtn" type="submit" value="Submit">
@@ -122,22 +118,33 @@ class Comments extends Component {
       <div className="Comments texta-lign">
         <p className="card center-align z-depth-2">Comments:</p>
         <div>{commentForm}</div>
-        <div>{commentList}</div>
-        {/* <div>{commentForm}</div> */}
+        <div>{commentList.reverse()}</div>
       </div>
     );
   }
 }
 
 const mapStateToProps = state => {
-  // // let id = ownProps.match.params.city_name;
   return {
-    // itineraries: state.itineraries,
     comments: state.comments
   };
 };
 
+// const mapDispatchToProps = dispatch => {
+//   return {
+//     onSubmit: comment => {
+//       dispatch(postAxiosComments(comment));
+//     }
+//   };
+// };
+
+// export default connect(
+//   mapDispatchToProps,
+//   mapStateToProps,
+//   { fetchAxiosComments, postAxiosComments }
+// )(Comments);
+
 export default connect(
   mapStateToProps,
-  {}
+  { fetchAxiosComments, postAxiosComments }
 )(Comments);

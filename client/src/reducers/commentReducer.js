@@ -1,5 +1,4 @@
-import { FETCH_COMMENTS } from "../actions/Types";
-import { POST_COMMENTS } from "../actions/Types";
+import { FETCH_COMMENTS, POST_COMMENTS } from "../actions/Types";
 
 const initialState = {
   comments: [],
@@ -18,8 +17,12 @@ export default function(state = initialState, action) {
     case POST_COMMENTS:
       return {
         ...state,
-        comments: [...action.payload, state.comments]
+        comments: [...state.comments, action.payload]
+        // comments: state.comments
       };
+
+    // case DELETE_COMMENTS:
+    //   return state.filter(comment => comment._id !== action.payload.id);
 
     default:
       return state;

@@ -1,8 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-//Create City Schema
-
 const ActivitySchema = new Schema({
   title: {
     type: String

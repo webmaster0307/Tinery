@@ -25,12 +25,9 @@ class Itinerary extends Component {
   }
   handleClick(event) {
     // console.log("button value :", eventTargetId);
-
     let eventTargetId = event.target.id;
-
     this.props.fetchAxiosActivities(eventTargetId);
     this.props.fetchAxiosComments(eventTargetId);
-    // console.log(this.props.fetchAxiosComments(eventTargetId));
 
     this.setState(state => ({
       eventId: eventTargetId,
@@ -114,7 +111,7 @@ class Itinerary extends Component {
 Itinerary.propTypes = {
   itinerary: PropTypes.object,
   activiy: PropTypes.object,
-  comment: PropTypes.object
+  comment: PropTypes.array
 };
 
 const mapStateToProps = state => {
