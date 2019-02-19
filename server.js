@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
+const passport = require("passport");
 
 // DB Config & Internal Links
 
@@ -12,9 +13,9 @@ const citydb = require("./routes/api/citydb");
 const itinerarydb = require("./routes/api/itinerarydb");
 const activitydb = require("./routes/api/activitydb");
 const commentdb = require("./routes/api/commentdb");
+const usersdb = require("./routes/api/usersdb");
 
 // Connect to MongoDB
-
 mongoose
   .connect(db, { useNewUrlParser: true })
   .then(() => console.log("MongoDB Connected"))
@@ -25,8 +26,11 @@ mongoose
 
 const app = express();
 const port = process.env.port || 5000;
+
+// BODY PARSER MIDDLEWARE
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: false }));
+// app.use(bodyParser.urlencoded({ extended: true }));
 
 // INIT ROUTES
 
@@ -34,28 +38,16 @@ app.use("/api", citydb);
 app.use("/api", itinerarydb);
 app.use("/api", activitydb);
 app.use("/api", commentdb);
-
-// app.use("/api", citydb, (req, res, next) => {
-//   res.header("Access-Control-Allow-Origin", "http://127.0.0.1:3000"); //My frontend APP domain
-//   res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
-//   res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
-//   next();
-// });
-
-// app.use(cors());
-
-// app.get("/api/test", cors(), function(req, res, next) {
-//   res.json({ msg: "This is CORS-enabled for a Single Route" });
-// });
+app.use("/api", usersdb);
 
 // ROUTES
 //==============================================
 
-app.get("/", (req, res) => {
-  console.log("GET Request / (Home)");
-  res.send({ name: "Homer Simpson" });
-  // res.sendFile(__dirname + "/client/public/index.html");
-});
+// PASSPORT MIDDLEWARE
+app.use(passport.initialize());
+
+//PASSPORT CONFIG
+require("./config/passport")(passport);
 
 // app.get("/cities/", function(req, res) {
 //   res.send("The ID of this page is : " + req.params.id);

@@ -8,6 +8,7 @@
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
+    "gravatar": "^1.8.0",
     "jsonwebtoken": "^8.4.0",
     "lodash": "^4.17.11",
     "materialize-css": "^1.0.0-rc.2",
