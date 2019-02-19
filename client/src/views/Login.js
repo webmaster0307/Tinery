@@ -1,11 +1,11 @@
 import React from "react";
-import HomeButton from "../components/HomeButton";
+import BtnHome from "../components/BtnHome";
 
 const Login = () => {
   return (
     <div>
       <h4>Login Component</h4>
-      <HomeButton />
+      <BtnHome />
     </div>
   );
 };

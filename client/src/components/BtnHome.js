@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
-class HomeButton extends Component {
+class BtnHome extends Component {
   render() {
     return (
       <Link to="/">
@@ -16,4 +16,4 @@ class HomeButton extends Component {
   }
 }
 
-export default HomeButton;
+export default BtnHome;

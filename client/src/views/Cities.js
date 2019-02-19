@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import HomeButton from "../components/HomeButton";
+import BtnHome from "../components/BtnHome";
 import { fetchAxiosCities } from "../actions/fetchCities";
 // import { debounce } from "lodash";
 
@@ -131,7 +131,7 @@ class Cities extends Component {
             </div>
           );
         })}
-        <HomeButton />
+        <BtnHome />
       </div>
     );
   }

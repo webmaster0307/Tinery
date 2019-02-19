@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { fetchAxiosCities } from "../actions/fetchCities";
 import { fetchAxiosItineraries } from "../actions/fetchItineraries";
 import { fetchAxiosActivities } from "../actions/fetchActivities";
-import Itinerary from "./Itinerary";
+import Itinerary from "../components/Itinerary";
 
 class City extends Component {
   constructor(props) {

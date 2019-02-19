@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { NavLink, Link } from "react-router-dom";
-import HomeButton from "../components/HomeButton";
+import BtnHome from "../components/BtnHome";
 
 class Home extends Component {
   render() {
@@ -46,7 +46,7 @@ class Home extends Component {
         </div>
 
         <div>
-          <HomeButton />
+          <BtnHome />
           {/* <Link to="/">
             <img
               to="/"

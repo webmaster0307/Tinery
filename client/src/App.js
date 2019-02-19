@@ -10,7 +10,7 @@ import { Provider } from "react-redux";
 import "./styles/App.css";
 
 // import Navbar from "./components/Navbar";
-import City from "./components/City";
+import City from "./views/City";
 import Home from "./views/Home";
 import Cities from "./views/Cities";
 import Login from "./views/Login";
