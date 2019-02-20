@@ -1,11 +1,15 @@
 import React, { Component } from "react";
 import { NavLink, Link } from "react-router-dom";
-import BtnHome from "../components/BtnHome";
+import BtnHome from "../components/layout/BtnHome";
+import Navbar from "../components/layout/Navbar";
+// import Sidenav from "../components/layout/Sidenav";
 
 class Home extends Component {
   render() {
     return (
       <div className="Home">
+        <Navbar />
+        {/* <Sidenav /> */}
         <div>
           <img
             className="homeBrand"
@@ -36,11 +40,11 @@ class Home extends Component {
 
         <div className="homeP bold">Want to build your own MYtinerary?</div>
 
-        <div className="row">
-          <div className="col s6 center">
+        <div className="flexIcons">
+          <div className="">
             <NavLink to="/login">Log In</NavLink>
           </div>
-          <div className="col s6 center">
+          <div className="">
             <NavLink to="/signup">Create Account</NavLink>
           </div>
         </div>

@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import BtnHome from "../components/BtnHome";
+import BtnHome from "../components/layout/BtnHome";
+import Navbar from "../components/layout/Navbar";
 import { fetchAxiosCities } from "../actions/fetchCities";
 // import { debounce } from "lodash";
 
@@ -104,6 +105,7 @@ class Cities extends Component {
     });
     return (
       <div>
+        <Navbar />
         <h4 className="title center">Cities List</h4>
         <div className="filter-list">
           {/* INPUT */}

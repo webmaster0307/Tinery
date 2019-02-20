@@ -58,11 +58,11 @@ class City extends Component {
           {/* CHOOSE ALL CITIES */}
 
           <div>
-            <i className="material-icons left" to={"/cities/"}>
-              location_city
-            </i>
             <Link className="" to={"/cities/"}>
-              Choose Another City
+              <i className="icons medium material-icons" to={"/cities/"}>
+                location_city
+              </i>
+              <div className="icons">Choose Another City</div>
             </Link>
           </div>
         </div>
