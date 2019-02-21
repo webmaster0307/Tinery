@@ -1,13 +1,17 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-// import { BrowserRouter, Route } from "react-router-dom";
+import jwt_decode from "jwt-decode";
+import setAuthToken from "./actions/utils/setAuthToken";
+import { setCurrentUser, logoutUser } from "./actions/authActions";
 
 import store from "./store";
 import { Provider } from "react-redux";
 
-// import logo from "./images/logo.svg";
+// CSS
 import "./styles/App.css";
+import CssBaseline from "@material-ui/core/CssBaseline";
+// import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 
 // import Navbar from "./components/Navbar";
 import City from "./views/City";
@@ -16,12 +20,34 @@ import Cities from "./views/Cities";
 import Login from "./views/Login";
 import Signup from "./views/Signup";
 
+// Check for token
+if (localStorage.jwtToken) {
+  // Set auth token header auth
+  setAuthToken(localStorage.jwtToken);
+  // Decode token and get user info and exp
+  const decoded = jwt_decode(localStorage.jwtToken);
+  // Set user and isAuthenticated
+  store.dispatch(setCurrentUser(decoded));
+
+  // Check for expired token
+  const currentTime = Date.now() / 1000;
+  if (decoded.exp < currentTime) {
+    // Logout user
+    store.dispatch(logoutUser());
+    // Clear current Profile
+    // store.dispatch(clearCurrentProfile());
+    // Redirect to login
+    window.location.href = "/login";
+  }
+}
+
 class App extends Component {
   render() {
     return (
       <Provider store={store}>
         <BrowserRouter>
           <div>
+            <CssBaseline />
             {/* <Navbar /> */}
             <Switch>
               <Route exact path="/" component={Home} />

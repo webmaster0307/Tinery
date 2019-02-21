@@ -85,7 +85,7 @@ router.post("/user/login", (req, res) => {
         // Create JWT Payload
         const payload = {
           id: user.id,
-          name: user.username,
+          username: user.username,
           avatar: user.avatar
         };
         // Sign Token
@@ -117,7 +117,7 @@ router.get(
     // res.json({ message: "success passport" });
     res.json({
       id: req.user.id,
-      name: req.user.username,
+      username: req.user.username,
       email: req.user.email
     });
   }

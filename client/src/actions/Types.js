@@ -2,8 +2,10 @@ export const FETCH_CITIES = "FETCH_CITIES";
 export const FETCH_ITINERARIES = "FETCH_ITINERARIES";
 export const FETCH_ACTIVITIES = "FETCH_ACTIVITIES";
 export const FETCH_COMMENTS = "FETCH_COMMENTS";
-// SETUP POST AXIOS
 export const POST_COMMENTS = "POST_COMMENTS";
+
+export const GET_ERRORS = "GET_ERRORS";
+export const SET_CURRENT_USER = "SET_CURRENT_USER";
 
 // export const fetchCities = () => ({
 //   type: FETCH_CITIES

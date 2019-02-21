@@ -7,6 +7,13 @@ import Navbar from "../components/layout/Navbar";
 import { fetchAxiosCities } from "../actions/fetchCities";
 // import { debounce } from "lodash";
 
+// import { withStyles } from "@material-ui/core/styles";
+import Card from "@material-ui/core/Card";
+// import CardHeader from "@material-ui/core/CardHeader";
+import CardContent from "@material-ui/core/CardContent";
+import Typography from "@material-ui/core/Typography";
+import TextField from "@material-ui/core/TextField";
+
 class Cities extends Component {
   constructor(props) {
     super(props);
@@ -17,6 +24,7 @@ class Cities extends Component {
       // filteredCities: []
     };
   }
+
   componentDidMount() {
     // console.log(this.props);
     this.props.fetchAxiosCities();
@@ -106,30 +114,47 @@ class Cities extends Component {
     return (
       <div>
         <Navbar />
-        <h4 className="title center">Cities List</h4>
-        <div className="filter-list">
+        <h3 className="city_heading">Cities List</h3>
+        <div className="citysearchflex">
           {/* INPUT */}
-          <input
+          <TextField
+            id="filled-with-placeholder"
+            label="Search Cities"
+            type="text"
+            placeholder="Type to Search Destinations"
+            onChange={this.handleSearch}
+            margin="normal"
+            className="cityfilter"
+            variant="outlined"
+          />
+
+          {/* <input
             type="text"
             id="filter"
             value={this.state.query}
             placeholder="Type to Search Destinations"
             onChange={this.handleSearch}
-            className="card-content center"
-          />
+            className="cityfilter"
+          /> */}
         </div>
         {/* CITIES */}
         {filteredCities.map(city => {
           return (
-            <div className="post card" key={city.cityname}>
-              <div className="card-content center">
-                <Link
-                  to={"/cities/" + city.url}
-                  cities={this.props.cities.cities}
-                >
-                  {city.cityname}, {city.country}
-                </Link>
-              </div>
+            <div key={city._id}>
+              <Card className="city">
+                <CardContent>
+                  <Link
+                    to={"/cities/" + city.url}
+                    cities={this.props.cities.cities}
+                  >
+                    <Typography variant="button" gutterBottom>
+                      <span className="citylist">
+                        {city.cityname}, {city.country}
+                      </span>
+                    </Typography>
+                  </Link>
+                </CardContent>
+              </Card>
             </div>
           );
         })}

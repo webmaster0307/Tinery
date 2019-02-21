@@ -16,11 +16,11 @@ module.exports = function validateRegisterInput(data) {
   }
 
   if (!Validator.isLength(data.firstname, { min: 2, max: 30 })) {
-    errors.firstname = "Name must be between 2 and 30 characters";
+    errors.firstname = "First name must be between 2 and 30 characters";
   }
 
   if (!Validator.isLength(data.lastname, { min: 2, max: 30 })) {
-    errors.lastname = "Name must be between 2 and 30 characters";
+    errors.lastname = "Last name must be between 2 and 30 characters";
   }
 
   if (Validator.isEmpty(data.username)) {

@@ -3,11 +3,15 @@ import cityReducer from "./cityReducer";
 import itinReducer from "./itinReducer";
 import activityReducer from "./activityReducer";
 import commentReducer from "./commentReducer";
+import authReducer from "./authReducer";
+import errorReducer from "./errorReducer";
 
 export default combineReducers({
   //cityReducer
   cities: cityReducer,
   itineraries: itinReducer,
   activities: activityReducer,
-  comments: commentReducer
+  comments: commentReducer,
+  auth: authReducer,
+  errors: errorReducer
 });

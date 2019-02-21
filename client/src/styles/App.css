@@ -1,6 +1,6 @@
-.App {
+/* .App {
   text-align: center;
-}
+} */
 
 /* .App-logo {
   animation: App-logo-spin infinite 20s linear;
@@ -34,14 +34,30 @@
 
 /* COMPONENTS */
 
+.citylist {
+  text-decoration-color: white
+}
+
 .city_heading {
   text-align: center;
-  padding: 14px;
+
 }
 
 .city {
   font-size: 20px;
   border: 1px solid black;
+  text-align: center;
+}
+
+.citysearchflex {
+  display: flex;
+  justify-content: center
+}
+
+
+.cityfilter {
+  width: 240px;
+
 }
 
 .itin {
@@ -230,5 +246,21 @@
 .tandc {
   color: #039be5;
   text-decoration: underline;
+}
 
+.invalid-feedback {
+  color: red;
+  font-size: 12px;
+  padding-bottom: 10px;
+  margin-left: 10px;
+}
+
+.forminput {
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 20px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-left: 10px;
+  padding-left: 10px;
 }

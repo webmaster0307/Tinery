@@ -6,6 +6,7 @@ import Navbar from "../components/layout/Navbar";
 
 class Home extends Component {
   render() {
+    console.log(this.props);
     return (
       <div className="Home">
         <Navbar />

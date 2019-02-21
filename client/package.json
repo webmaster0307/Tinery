@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "^3.9.2",
+    "@material-ui/icons": "^3.0.2",
     "babel-cli": "^6.26.0",
     "babel-preset-react-app": "^3.1.2",
     "bcryptjs": "^2.4.3",
@@ -10,6 +12,7 @@
     "express": "^4.16.4",
     "gravatar": "^1.8.0",
     "jsonwebtoken": "^8.4.0",
+    "jwt-decode": "^2.2.0",
     "lodash": "^4.17.11",
     "moment": "^2.24.0",
     "mongoose": "^5.4.9",
