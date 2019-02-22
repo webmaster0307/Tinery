@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 // import TextFieldGroup from "../components/TextFieldGroup";
 import BtnHome from "../components/layout/BtnHome";
 import Navbar from "../components/layout/Navbar";
+import LoginFacebook from "../components/LoginFacebook";
+import LoginGoogle from "../components/LoginGoogle";
 import { Link } from "react-router-dom";
 
 import { connect } from "react-redux";
@@ -113,11 +115,13 @@ class Login extends Component {
               </form>
 
               <div>
-                <Button>Login with Google</Button>
+                {/* <Button>Login with Google</Button> */}
+                <LoginGoogle />
               </div>
 
               <div>
-                <Button>Login with Facebook</Button>
+                <LoginFacebook />
+                {/* <Button>Login with Facebook</Button> */}
               </div>
 
               <div>

@@ -2,8 +2,8 @@ import React, { Component } from "react";
 // import { fetchAxiosActivities } from "../actions/fetchActivities";
 import { connect } from "react-redux";
 import Slider from "react-slick";
-
-// import Clock from "../components/Clock";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
 
 class Activity extends Component {
   componentDidMount() {
@@ -42,21 +42,20 @@ class Activity extends Component {
     };
     // console.log("from activity", this.props);
     const activityList = this.props.activities.activities.map(activity => (
-      <div className="row" key={activity.title}>
-        <div className="col s12 m9">
-          <div className="card">
-            <div className="card-image z-depth-3">
-              <img
-                className="sliderImg"
-                alt=""
-                width="600"
-                src={activity.image}
-              />
-              <p className="cardtitle">{activity.title}</p>
-            </div>
-          </div>
-        </div>
-      </div>
+      <Card raised className="sliderCard" key={activity.title}>
+        <Card>
+          <Card className="sliderInnerCard">
+            <img
+              className="sliderImg"
+              alt={activity.image}
+              src={activity.image}
+            />
+            <CardContent className="sliderImgTitle">
+              {activity.title}
+            </CardContent>
+          </Card>
+        </Card>
+      </Card>
     ));
 
     return (

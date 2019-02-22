@@ -7,6 +7,8 @@ import { fetchAxiosItineraries } from "../actions/fetchItineraries";
 import { fetchAxiosActivities } from "../actions/fetchActivities";
 import Itinerary from "../components/Itinerary";
 
+import Typography from "@material-ui/core/Typography";
+
 class City extends Component {
   constructor(props) {
     super(props);
@@ -32,13 +34,11 @@ class City extends Component {
     );
     // console.log(city);
     const showCity = city ? (
-      <div className="card city_heading ">
+      <div>
         {city.cityname}, {city.country}
       </div>
     ) : (
-      <div className="card city_heading ">
-        {this.props.match.params.city_name.toUpperCase()}
-      </div>
+      <div>{this.props.match.params.city_name.toUpperCase()}</div>
     );
 
     // console.log(this.state.city);
@@ -49,20 +49,27 @@ class City extends Component {
     return (
       <div>
         <div>
-          <div className="card city_heading ">{showCity}</div>
+          <Typography
+            className="city"
+            component="h2"
+            variant="display2"
+            gutterBottom
+          >
+            {showCity}
+          </Typography>
+          {/* <div className="card city_heading ">{showCity}</div> */}
         </div>
 
-        <div className="city">
+        <div>
           <Itinerary />
 
           {/* CHOOSE ALL CITIES */}
-
           <div>
             <Link className="" to={"/cities/"}>
               <i className="icons medium material-icons" to={"/cities/"}>
                 location_city
               </i>
-              <div className="icons">Choose Another City</div>
+              <div className="city icons">Choose Another City</div>
             </Link>
           </div>
         </div>
