@@ -11,7 +11,10 @@ import { connect } from "react-redux";
 import { loginUser } from "../actions/authActions";
 
 import Checkbox from "@material-ui/core/Checkbox";
-import Button from "@material-ui/core/Button";
+// import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
+import TextField from "@material-ui/core/TextField";
+import Card from "@material-ui/core/Card";
 
 class Login extends Component {
   constructor() {
@@ -67,18 +70,30 @@ class Login extends Component {
     const { errors } = this.state;
 
     const loginComponent = (
-      <div className="login">
-        <div className="container">
-          <div className="row">
-            <div className="col-md-8 m-auto">
-              <h1 className="display-4 text-center">Login</h1>
-
+      <div>
+        <div>
+          <div>
+            <div>
+              <Typography
+                component="h2"
+                variant="display1"
+                gutterBottom
+                className="activtytitle"
+              >
+                Login
+              </Typography>
+            </div>
+            <Card raised className="commentForm">
               <form onSubmit={this.onSubmit}>
                 <div>
-                  <input
-                    className="forminput"
-                    type="text"
+                  <TextField
+                    className="registerFormInput"
+                    id="outlined-with-placeholder"
+                    label="Please enter your Email:"
                     placeholder="email:"
+                    margin="normal"
+                    variant="outlined"
+                    type="text"
                     name="email"
                     value={this.state.email}
                     onChange={this.onChange}
@@ -89,15 +104,20 @@ class Login extends Component {
                   <div className="invalid-feedback">{errors.email}</div>
                 )}
                 <div>
-                  <input
-                    className="forminput"
-                    type="password"
+                  <TextField
+                    className="registerFormInput"
+                    id="outlined-with-placeholder"
+                    label="Please enter your Password:"
                     placeholder="Password:"
+                    margin="normal"
+                    variant="outlined"
+                    type="password"
                     name="password"
                     value={this.state.password}
                     onChange={this.onChange}
                     error={errors.password}
                   />
+
                   {errors.password && (
                     <div className="invalid-feedback">{errors.password}</div>
                   )}
@@ -108,31 +128,29 @@ class Login extends Component {
                 </div>
                 {/* SUBMIT BUTTON */}
                 <div>
-                  <Button type="submit" variant="contained">
+                  <button className="loginButton" type="submit" value="Submit">
                     Submit
-                  </Button>
+                  </button>
                 </div>
               </form>
 
-              <div>
+              <div className="loginSocial">
                 {/* <Button>Login with Google</Button> */}
                 <LoginGoogle />
               </div>
-
-              <div>
+              <div className="loginSocial">
                 <LoginFacebook />
                 {/* <Button>Login with Facebook</Button> */}
               </div>
-
-              <div>
-                <p>
-                  Dont have a MYtinerary account yet? You should create one! Its
-                  totally free and only takes a minute.
-                </p>
-                <Link to="/Signup">
-                  <span className="tandc">Create Account</span>
-                </Link>
-              </div>
+            </Card>
+            <div>
+              <p>
+                Dont have a MYtinerary account yet? You should create one! Its
+                totally free and only takes a minute.
+              </p>
+              <Link to="/Signup">
+                <span className="tandc">Create Account</span>
+              </Link>
             </div>
           </div>
         </div>

@@ -70,9 +70,9 @@ class Comments extends Component {
           <div>
             {/* <span>Please enter your username:</span> */}
             <TextField
-              className="commentFormTA"
+              className="commentFormInput"
               id="outlined-with-placeholder"
-              label="Please enter your username:"
+              label="Please enter your Username:"
               placeholder=""
               margin="normal"
               variant="outlined"
@@ -84,7 +84,7 @@ class Comments extends Component {
           </div>
 
           <TextField
-            className="commentFormTA"
+            className="commentFormInput"
             id="outlined-with-placeholder"
             label="Leave a Comment:"
             placeholder=""

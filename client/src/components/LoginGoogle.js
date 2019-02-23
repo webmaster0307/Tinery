@@ -16,7 +16,6 @@ export default class LoginGoogle extends Component {
           onSuccess={responseGoogle}
           onFailure={responseGoogle}
         />
-        ,
       </div>
     );
   }

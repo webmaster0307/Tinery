@@ -18,13 +18,20 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Slide from "@material-ui/core/Slide";
 
-// import FormControl from "@material-ui/core/FormControl";
-// import InputLabel from "@material-ui/core/InputLabel";
-// import FilledInput from "@material-ui/core/FilledInput";
-// import Input from "@material-ui/core/Input";
-// import FormHelperText from "@material-ui/core/FormHelperText";
+import Typography from "@material-ui/core/Typography";
+import TextField from "@material-ui/core/TextField";
+import Card from "@material-ui/core/Card";
+import Select from "@material-ui/core/Select";
 
-// import { Row, input, Modal, Card } from "react-materialize";
+import Input from "@material-ui/core/Input";
+import CloudUploadIcon from "@material-ui/icons/CloudUpload";
+// import OutlinedInput from "@material-ui/core/OutlinedInput";
+// import FilledInput from "@material-ui/core/FilledInput";
+// import InputLabel from "@material-ui/core/InputLabel";
+// import MenuItem from "@material-ui/core/MenuItem";
+// import FormHelperText from "@material-ui/core/FormHelperText";
+// import FormControl from "@material-ui/core/FormControl";
+// import Icon from "@material-ui/core/Icon";
 
 function Transition(props) {
   return <Slide direction="up" {...props} />;
@@ -106,231 +113,328 @@ class Signup extends Component {
       <div className="register">
         <div className="container">
           <div>
-            <h1 className="">Create Account</h1>
+            <Typography
+              component="h2"
+              variant="display1"
+              gutterBottom
+              className="activtytitle"
+            >
+              Register
+            </Typography>
           </div>
 
-          <form noValidate onSubmit={this.onSubmit}>
-            <div className="addPhoto">
+          {/* START OF FORM */}
+          <Card raised className="commentForm">
+            <form noValidate onSubmit={this.onSubmit}>
+              {/* UPLOAD PHOTO */}
+              <div className="addPhoto">
+                <div>
+                  <CloudUploadIcon />
+
+                  {/* <input
+                    accept="image/*"
+                    id="outlined-button-file"
+                    multiple
+                    type="file"
+                  /> */}
+                  {/* <label htmlFor="outlined-button-file">
+                  <Button variant="outlined" component="span">
+                    Upload
+                  </Button>
+                </label>*/}
+                  <Input
+                    id="contained-button-file"
+                    type="file"
+                    label="Add Photo"
+                    accept="image/*"
+                    name="avatar"
+                    value={this.state.avatar}
+                    onChange={this.onChange}
+                    error={errors.avatar}
+                  />
+                  {errors.avatar && (
+                    <div className="invalid-feedback">{errors.avatar}</div>
+                  )}
+                </div>
+              </div>
+              {/* <label htmlFor="contained-button-file">
+                  <Button variant="contained" component="span">
+                    Upload
+                    <CloudUploadIcon />
+                  </Button>
+                </label> */}
+
+              {/* <div className="photoAvatar"> */}
               {/* <input type="file" label="File" /> */}
               {/* <input /> */}
               {/* <input type="file" label="Add Photo" s={12} name="avatar" /> */}
               {/* <i className="small material-icons">add_a_photo</i> */}
-              {/* 
-                <input
-                  className="btn btn-block mt-4"
-                  type="file"
+              {/* <input type="file" label="Add Photo" name="avatar" />
+                Add Photo
+                <TextField
                   label="Add Photo"
+                  type="file"
                   name="avatar"
-                  s={12}
+                  accept="image"
+                  value={this.state.avatar}
+                  onChange={this.onChange}
+                  error={errors.avatar}
                 /> */}
-              Add Photo
-              <input
-                label="Add Photo"
-                type="file"
-                name="avatar"
-                accept="image"
-                value={this.state.avatar}
-                onChange={this.onChange}
-                error={errors.avatar}
-              />
-            </div>
-            <div>
-              <input
-                className="forminput"
-                type="text"
-                placeholder="Username:"
-                name="username"
-                value={this.state.username}
-                onChange={this.onChange}
-                error={errors.username}
-              />
-              {errors.username && (
-                <div className="invalid-feedback">{errors.username}</div>
-              )}
-            </div>
-            <div>
-              <input
-                className="forminput"
-                type="password"
-                placeholder="Password"
-                name="password"
-                value={this.state.password}
-                onChange={this.onChange}
-                error={errors.password}
-              />
-              {errors.password && (
-                <div className="invalid-feedback">{errors.password}</div>
-              )}
-            </div>
-            <input
-              className="forminput"
-              type="password"
-              placeholder="Confirm Password"
-              name="password2"
-              value={this.state.password2}
-              onChange={this.onChange}
-              error={errors.password2}
-            />
-            {errors.password2 && (
-              <div className="invalid-feedback">{errors.password2}</div>
-            )}
-            <div>
-              <input
-                className="forminput"
-                type="email"
-                placeholder="Email:"
-                name="email"
-                value={this.state.email}
-                onChange={this.onChange}
-                error={errors.email}
-                info="This site uses Gravatar so if you want a profile image, use a Gravatar email"
-              />
-              {errors.email && (
-                <div className="invalid-feedback">{errors.email}</div>
-              )}
-            </div>
-            <div>
-              <input
-                className="forminput"
-                type="text"
-                placeholder="First Name:"
-                name="firstname"
-                value={this.state.firstname}
-                onChange={this.onChange}
-                error={errors.firstname}
-              />
-              {errors.firstname && (
-                <div className="invalid-feedback">{errors.firstname}</div>
-              )}
-            </div>
-            <div>
-              <input
-                className="forminput"
-                type="text"
-                placeholder="Last Name:"
-                name="lastname"
-                value={this.state.lastname}
-                onChange={this.onChange}
-                error={errors.lastname}
-              />
-              {errors.lastname && (
-                <div className="invalid-feedback">{errors.lastname}</div>
-              )}
-            </div>
-            {/* <FormControl variant="filled">
-              <InputLabel htmlFor="component-filled">Name</InputLabel>
-              <FilledInput
-                id="component-filled"
-                value={this.state.name}
-                onChange={this.handleChange}
-              />
-            </FormControl>
-            <FormControl>
-              <InputLabel htmlFor="component-simple">Name</InputLabel>
-              <Input
-                id="component-simple"
-                value={this.state.name}
-                onChange={this.handleChange}
-              />
-            </FormControl> */}
+              {/* </div> */}
 
-            {/* <input
-              s={6}
-              type="select"
-              name="country"
-              value={this.state.country}
-              onChange={this.onChange}
-              error={errors.country}
-              icon="map"
-            >
-              <option value="">Choose Country</option>
-              <option value="Spain">Spain</option>
-              <option value="UK">UK</option>
-              <option value="France">France</option>
-              <option value="Germany">Germany</option>
-              <option value="Netherlands">Netherlands</option>
-              <option value="Ireland">Ireland</option>
-              <option value="USA">USA</option>
-            </input> */}
-            <div>
-              <select
-                className="forminput"
-                type="select"
-                name="country"
-                value={this.state.country}
+              {/* START OF REST OF FORM */}
+              <div>
+                <TextField
+                  className="registerFormInput"
+                  id="outlined-with-placeholder"
+                  label="Username:"
+                  margin="normal"
+                  variant="outlined"
+                  type="text"
+                  placeholder="Username:"
+                  name="username"
+                  value={this.state.username}
+                  onChange={this.onChange}
+                  error={errors.username}
+                />
+                {errors.username && (
+                  <div className="invalid-feedback">{errors.username}</div>
+                )}
+              </div>
+              <div>
+                <TextField
+                  className="registerFormInput"
+                  id="outlined-with-placeholder"
+                  label="Password:"
+                  margin="normal"
+                  variant="outlined"
+                  type="password"
+                  placeholder="Password"
+                  name="password"
+                  value={this.state.password}
+                  onChange={this.onChange}
+                  error={errors.password}
+                />
+                {errors.password && (
+                  <div className="invalid-feedback">{errors.password}</div>
+                )}
+              </div>
+              <TextField
+                className="registerFormInput"
+                id="outlined-with-placeholder"
+                label="Confirm Password:"
+                margin="normal"
+                variant="outlined"
+                type="password"
+                placeholder="Confirm Password"
+                name="password2"
+                value={this.state.password2}
                 onChange={this.onChange}
-                error={errors.country}
-              >
-                <option value="">Choose Country</option>
-                <option value="Spain">Spain</option>
-                <option value="UK">UK</option>
-                <option value="France">France</option>
-                <option value="Germany">Germany</option>
-                <option value="Netherlands">Netherlands</option>
-                <option value="Ireland">Ireland</option>
-                <option value="USA">USA</option>
-              </select>
-            </div>
-            {/* {errors.country && (
+                error={errors.password2}
+              />
+              {errors.password2 && (
+                <div className="invalid-feedback">{errors.password2}</div>
+              )}
+              <div>
+                <TextField
+                  className="registerFormInput"
+                  id="outlined-with-placeholder"
+                  label="Email:"
+                  margin="normal"
+                  variant="outlined"
+                  type="email"
+                  placeholder="Email:"
+                  name="email"
+                  value={this.state.email}
+                  onChange={this.onChange}
+                  error={errors.email}
+                  info="This site uses Gravatar so if you want a profile image, use a Gravatar email"
+                />
+                {errors.email && (
+                  <div className="invalid-feedback">{errors.email}</div>
+                )}
+              </div>
+              <div>
+                <TextField
+                  className="registerFormInput"
+                  id="outlined-with-placeholder"
+                  label="First Name:"
+                  margin="normal"
+                  variant="outlined"
+                  type="text"
+                  placeholder="First Name:"
+                  name="firstname"
+                  value={this.state.firstname}
+                  onChange={this.onChange}
+                  error={errors.firstname}
+                />
+                {errors.firstname && (
+                  <div className="invalid-feedback">{errors.firstname}</div>
+                )}
+              </div>
+              <div>
+                <TextField
+                  className="registerFormInput"
+                  id="outlined-with-placeholder"
+                  label="Last Name:"
+                  margin="normal"
+                  variant="outlined"
+                  type="text"
+                  placeholder="Last Name:"
+                  name="lastname"
+                  value={this.state.lastname}
+                  onChange={this.onChange}
+                  error={errors.lastname}
+                />
+                {errors.lastname && (
+                  <div className="invalid-feedback">{errors.lastname}</div>
+                )}
+              </div>
+              <div>
+                <div>
+                  <Select
+                    native
+                    className="selectCountry"
+                    type="select"
+                    name="country"
+                    label="Country:"
+                    value={this.state.country}
+                    onChange={this.onChange}
+                    error={errors.country}
+                  >
+                    <option value="">Choose Country</option>
+                    <option value="Spain">Spain</option>
+                    <option value="UK">UK</option>
+                    <option value="France">France</option>
+                    <option value="Germany">Germany</option>
+                    <option value="Netherlands">Netherlands</option>
+                    <option value="Ireland">Ireland</option>
+                    <option value="USA">USA</option>
+                  </Select>
+                  {errors.country && (
+                    <div className="invalid-feedback">{errors.country}</div>
+                  )}
+                </div>
+                <div>
+                  {/* NEW FORM */}
+                  {/* <FormControl>
+                    <Select
+                      value={this.state.country}
+                      onChange={this.onChange}
+                      error={errors.country}
+                      displayEmpty
+                      name="country"
+                    >
+                      <MenuItem value="">
+                        <em>None</em>
+                      </MenuItem>
+                      <MenuItem value="Spain">Spain</MenuItem>
+                      <MenuItem value="UK">UK</MenuItem>
+                      <MenuItem value="France">France</MenuItem>
+                      <MenuItem value="Germany">Germany</MenuItem>
+                      <MenuItem value="Netherlands">Netherlands</MenuItem>
+                      <MenuItem value="Ireland">Ireland</MenuItem>
+                      <MenuItem value="USA">USA</MenuItem>
+                    </Select>
+                  </FormControl> */}
+
+                  {/* NEW FORM 2*/}
+                  {/* <FormControl variant="filled">
+                    <InputLabel htmlFor="filled-country-simple">
+                      Country:
+                    </InputLabel>
+                    <Select
+                      className="selectCountry"
+                      value={this.state.country}
+                      onChange={this.onChange}
+                      error={errors.country}
+                      type="select"
+                      name="country"
+                      input={
+                        <FilledInput
+                          name="country"
+                          id="filled-country-simple"
+                        />
+                      }
+                    >
+                      <MenuItem value="">
+                        <em>None</em>
+                      </MenuItem>
+                      <MenuItem value="Spain">Spain</MenuItem>
+                      <MenuItem value="UK">UK</MenuItem>
+                      <MenuItem value="France">France</MenuItem>
+                      <MenuItem value="Germany">Germany</MenuItem>
+                      <MenuItem value="Netherlands">Netherlands</MenuItem>
+                      <MenuItem value="Ireland">Ireland</MenuItem>
+                      <MenuItem value="USA">USA</MenuItem>
+                    </Select>
+                  </FormControl> */}
+                </div>
+              </div>
+              {/* {errors.country && (
                 <div className="invalid-feedback">{errors.country}</div>
               )} */}
-            <div>
-              <Checkbox value="t&c" color="primary" name="t&c_checkbox" />
-              {/* <input
+              <div>
+                <Checkbox value="t&c" color="primary" name="t&c_checkbox" />
+                {/* <input
                   name="t&c_checkbox"
                   type="checkbox"
                   value=" "
                   label=" "
                   className="filled-in"
                 /> */}
-              <span>
-                I agree to MYtinerarys{" "}
-                <span className="tandc" onClick={this.handleClickOpen}>
-                  Terms & Conditions
+                <span>
+                  I agree to MYtinerarys{" "}
+                  <span className="tandc" onClick={this.handleClickOpen}>
+                    Terms & Conditions
+                  </span>
                 </span>
-              </span>
-            </div>
-            {/* MODAL */}
-            <div>
-              <Dialog
-                open={this.state.open}
-                TransitionComponent={Transition}
-                keepMounted
-                onClose={this.handleClose}
-                aria-labelledby="alert-dialog-slide-title"
-                aria-describedby="alert-dialog-slide-description"
-              >
-                <DialogTitle id="alert-dialog-slide-title">
-                  {"MYtinerary Terms & Conditions"}
-                </DialogTitle>
-                <DialogContent>
-                  <DialogContentText id="alert-dialog-slide-description">
-                    Let MYtinerary help apps determine location. This means
-                    sending anonymous data to MYtinerary, even when no apps are
-                    running.
-                  </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                  <Button onClick={this.handleClose} color="primary">
-                    Disagree
-                  </Button>
-                  <Button onClick={this.handleClose} color="primary">
-                    Agree
-                  </Button>
-                </DialogActions>
-              </Dialog>
-            </div>
-            {/* SUBMIT BUTTON */}
-            <div>
-              <input type="submit" className="" />
-            </div>
-            {/* SUBMIT BUTTON 2*/}
-            {/* <div>
+              </div>
+              {/* MODAL */}
+              <div>
+                <Dialog
+                  open={this.state.open}
+                  TransitionComponent={Transition}
+                  keepMounted
+                  onClose={this.handleClose}
+                  aria-labelledby="alert-dialog-slide-title"
+                  aria-describedby="alert-dialog-slide-description"
+                >
+                  <DialogTitle id="alert-dialog-slide-title">
+                    {"MYtinerary Terms & Conditions"}
+                  </DialogTitle>
+                  <DialogContent>
+                    <DialogContentText id="alert-dialog-slide-description">
+                      Let MYtinerary help apps determine location. This means
+                      sending anonymous data to MYtinerary, even when no apps
+                      are running.
+                    </DialogContentText>
+                  </DialogContent>
+                  <DialogActions>
+                    <Button onClick={this.handleClose} color="primary">
+                      Disagree
+                    </Button>
+                    <Button onClick={this.handleClose} color="primary">
+                      Agree
+                    </Button>
+                  </DialogActions>
+                </Dialog>
+              </div>
+              {/* SUBMIT BUTTON */}
+              <div>
+                {/* <input type="submit" className="" /> */}
+                <button className="loginButton" type="submit" value="Submit">
+                  Submit
+                </button>
+              </div>
+              {/* SUBMIT BUTTON 2*/}
+              {/* <div>
               <Button variant="contained" color="secondary" disabled>
                 Submit
               </Button>
             </div> */}
-          </form>
+            </form>
+          </Card>
         </div>
       </div>
     );
