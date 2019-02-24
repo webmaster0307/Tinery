@@ -7,7 +7,7 @@ class BtnHome extends Component {
       <div>
         <Link to="/">
           {/* <i class="large material-icons">insert_chart</i> */}
-          <i className="icons medium material-icons">home</i>
+          <i className="icons Large material-icons">home</i>
           {/* <img
          
          

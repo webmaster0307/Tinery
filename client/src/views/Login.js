@@ -3,10 +3,14 @@ import PropTypes from "prop-types";
 // import TextFieldGroup from "../components/TextFieldGroup";
 import BtnHome from "../components/layout/BtnHome";
 import Navbar from "../components/layout/Navbar";
-import LoginFacebook from "../components/LoginFacebook";
-import LoginGoogle from "../components/LoginGoogle";
-import { Link } from "react-router-dom";
+// import LoginFacebook from "../components/LoginFacebook";
+// import LoginGoogle from "../components/LoginGoogle";
+// import { FacebookLogin } from "react-facebook-login";
+// import { FacebookLogout } from "react-facebook-logout";
+// import { GoogleLogin } from "react-google-login";
+// import { GoogleLogout } from "react-google-login";
 
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { loginUser } from "../actions/authActions";
 
@@ -15,6 +19,9 @@ import Checkbox from "@material-ui/core/Checkbox";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import Card from "@material-ui/core/Card";
+
+// REDIRECT
+// import { Redirect } from "react-router-dom";
 
 class Login extends Component {
   constructor() {
@@ -40,11 +47,6 @@ class Login extends Component {
       this.setState({ errors: nextProps.errors });
     }
   }
-
-  //   if (nextProps.errors) {
-  //     this.setState({ errors: nextProps.errors });
-  //   }
-  // }
 
   onSubmit = e => {
     e.preventDefault();
@@ -133,33 +135,52 @@ class Login extends Component {
                   </button>
                 </div>
               </form>
-
-              <div className="loginSocial">
-                {/* <Button>Login with Google</Button> */}
-                <LoginGoogle />
-              </div>
-              <div className="loginSocial">
-                <LoginFacebook />
-                {/* <Button>Login with Facebook</Button> */}
-              </div>
             </Card>
-            <div>
-              <p>
-                Dont have a MYtinerary account yet? You should create one! Its
-                totally free and only takes a minute.
-              </p>
-              <Link to="/Signup">
-                <span className="tandc">Create Account</span>
-              </Link>
-            </div>
           </div>
         </div>
+      </div>
+    );
+    const noAccountMessage = (
+      <div>
+        <p className="createAccountText">
+          Dont have a MYtinerary account yet? You should create one! Its totally
+          free and only takes a minute.
+        </p>
+        <Link to="/Signup">
+          <div className="createAccountLink">Create Account</div>
+        </Link>
+      </div>
+    );
+    const socialLogin = (
+      <div>
+        <Card>
+          <div className="loginSocialFlex">
+            {/* <LoginGoogle /> */}
+            {/* <img
+            className="loginSocialBtn"
+            alt="logo_image"
+            src={require("../images/google1.png")}
+          /> */}
+            <button className="loginGBtn">Login with Google</button>
+            {/* </div>
+          <div > */}
+            {/* <LoginFacebook />
+          <img
+            className="loginSocialBtn"
+            alt="logo_image"
+            src={require("../images/facebook.png")}
+          /> */}
+            <button className="loginFBtn">Login with Facebook</button>
+          </div>
+        </Card>
       </div>
     );
     return (
       <div>
         <Navbar />
         {loginComponent}
+        {socialLogin}
+        {noAccountMessage}
         <BtnHome />
       </div>
     );

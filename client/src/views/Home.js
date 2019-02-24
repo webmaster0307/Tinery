@@ -2,15 +2,41 @@ import React, { Component } from "react";
 import { NavLink, Link } from "react-router-dom";
 import BtnHome from "../components/layout/BtnHome";
 import Navbar from "../components/layout/Navbar";
-// import Sidenav from "../components/layout/Sidenav";
+import { logoutUser } from "../actions/authActions";
+import { connect } from "react-redux";
 
 class Home extends Component {
+  onLogoutClick(e) {
+    e.preventDefault();
+    // this.props.clearCurrentProfile();
+    this.props.logoutUser();
+  }
   render() {
-    console.log(this.props);
+    const { isAuthenticated } = this.props.auth;
+
+    const loginState = (
+      <div className="flexIcons">
+        <div className="flexLink">
+          <NavLink onClick={this.onLogoutClick.bind(this)} to="/login">
+            Log Out
+          </NavLink>
+        </div>
+      </div>
+    );
+    const logoutState = (
+      <div className="flexIcons">
+        <div className="flexLink">
+          <NavLink to="/login">Log In</NavLink>
+        </div>
+        <div className="flexLink">
+          <NavLink to="/signup">Create Account</NavLink>
+        </div>
+      </div>
+    );
+    // console.log(this.props.auth);
     return (
       <div className="Home">
         <Navbar />
-        {/* <Sidenav /> */}
         <div>
           <img
             className="homeBrand"
@@ -25,7 +51,6 @@ class Home extends Component {
         </div>
 
         <div className="homeBrowsing">
-          {" "}
           <span>Start Browsing</span>
         </div>
 
@@ -41,14 +66,8 @@ class Home extends Component {
 
         <div className="homeP bold">Want to build your own MYtinerary?</div>
 
-        <div className="flexIcons">
-          <div className="">
-            <NavLink to="/login">Log In</NavLink>
-          </div>
-          <div className="">
-            <NavLink to="/signup">Create Account</NavLink>
-          </div>
-        </div>
+        {/* LOGIN STATE LOGIC */}
+        {isAuthenticated ? loginState : logoutState}
 
         <div>
           <BtnHome />
@@ -66,4 +85,13 @@ class Home extends Component {
   }
 }
 
-export default Home;
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+// export default Home;
+
+export default connect(
+  mapStateToProps,
+  { logoutUser }
+)(Home);

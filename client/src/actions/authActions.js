@@ -4,10 +4,9 @@ import jwt_decode from "jwt-decode";
 import { GET_ERRORS, SET_CURRENT_USER } from "./Types";
 
 // REGISTER USER
-
 export const registerUser = (userData, history) => dispatch => {
   axios
-    .post("/api/user/register", userData)
+    .post("/auth/user/register", userData)
     .then(res => history.push("/login"))
     .catch(err =>
       dispatch({
@@ -20,13 +19,14 @@ export const registerUser = (userData, history) => dispatch => {
 // LOGIN GET USER TOKEN
 export const loginUser = userData => dispatch => {
   axios
-    .post("/api/user/login", userData)
+    .post("/auth/user/login", userData)
     .then(res => {
       // console.log(res.data);
       // Save to localStorage
       const { token } = res.data;
       // Set token to ls
       localStorage.setItem("jwtToken", token);
+      //sessionStorage.setItem("jwtToken", token);
       // Set token to Auth header
       setAuthToken(token);
       // Decode token to get user data
@@ -54,6 +54,8 @@ export const setCurrentUser = decoded => {
 export const logoutUser = () => dispatch => {
   // Remove token from localStorage
   localStorage.removeItem("jwtToken");
+  //  sessionStorage.removeItem("jwtToken");
+
   // Remove auth header for future requests
   setAuthToken(false);
   // Set current user to {} which will set isAuthenticated to false

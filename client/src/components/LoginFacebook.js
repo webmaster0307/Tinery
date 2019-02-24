@@ -22,6 +22,18 @@ export default class LoginFacebook extends Component {
     });
   };
 
+  logoutFacebook = response => {
+    console.log(response);
+
+    this.setState({
+      isLoggedIn: false,
+      userID: "",
+      name: "",
+      email: "",
+      picture: ""
+    });
+  };
+
   componentClicked = () => console.log("clicked");
 
   render() {
@@ -40,17 +52,20 @@ export default class LoginFacebook extends Component {
           <img src={this.state.picture} alt={this.state.name} />
           <h2>Welcome {this.state.name}</h2>
           Email: {this.state.email}
+          <button onClick={this.logoutFacebook} icon="fa-facebook">
+            Logout of Facebook
+          </button>
         </div>
       );
     } else {
       fbContent = (
         <FacebookLogin
           appId="284220635589707"
-          autoLoad={true}
+          autoLoad={false}
           fields="name,email,picture"
           onClick={this.componentClicked}
           callback={this.responseFacebook}
-          cssClass="my-facebook-button-class"
+          cssClass="fb-login-button"
           icon="fa-facebook"
         />
       );

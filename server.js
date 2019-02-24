@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const passport = require("passport");
+// const passportGoogle = require("./config/passportGoogle");
 
 // DB Config & Internal Links
 
@@ -14,6 +15,7 @@ const itinerarydb = require("./routes/api/itinerarydb");
 const activitydb = require("./routes/api/activitydb");
 const commentdb = require("./routes/api/commentdb");
 const usersdb = require("./routes/api/usersdb");
+const authdb = require("./routes/api/authdb");
 
 // Connect to MongoDB
 mongoose
@@ -38,7 +40,11 @@ app.use("/api", citydb);
 app.use("/api", itinerarydb);
 app.use("/api", activitydb);
 app.use("/api", commentdb);
-app.use("/api", usersdb);
+
+// AUTH ROUTES
+
+app.use("/auth", usersdb);
+app.use("/auth", authdb);
 
 // ROUTES
 //==============================================
@@ -48,6 +54,7 @@ app.use(passport.initialize());
 
 //PASSPORT CONFIG
 require("./config/passport")(passport);
+// require("./config/passportGoogle")(passport);
 
 // app.get("/cities/", function(req, res) {
 //   res.send("The ID of this page is : " + req.params.id);
