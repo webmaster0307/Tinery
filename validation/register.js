@@ -10,6 +10,9 @@ module.exports = function validateRegisterInput(data) {
   data.email = !isEmpty(data.email) ? data.email : "";
   data.password = !isEmpty(data.password) ? data.password : "";
   data.password2 = !isEmpty(data.password2) ? data.password2 : "";
+  //- NEW ENTRIES
+  data.country = !isEmpty(data.country) ? data.country : "";
+  // data.avatar = !isEmpty(data.avatar) ? data.avatar : "";
 
   if (!Validator.isLength(data.username, { min: 2, max: 30 })) {
     errors.username = "Name must be between 2 and 30 characters";
@@ -50,6 +53,15 @@ module.exports = function validateRegisterInput(data) {
     if (!Validator.equals(data.password, data.password2)) {
       errors.password2 = "Passwords must match";
     }
+  }
+
+  //- NEW ENTRIES
+  // if (Validator.isEmpty(data.avatar)) {
+  //   errors.avatar = "Photo or Gravatar";
+  // }
+
+  if (Validator.isEmpty(data.country)) {
+    errors.country = "Country field is required";
   }
 
   return {

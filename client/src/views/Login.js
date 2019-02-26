@@ -99,7 +99,7 @@ class Login extends Component {
                     name="email"
                     value={this.state.email}
                     onChange={this.onChange}
-                    error={errors.email}
+                    errorform={errors.email}
                   />
                 </div>
                 {errors.email && (
@@ -117,7 +117,7 @@ class Login extends Component {
                     name="password"
                     value={this.state.password}
                     onChange={this.onChange}
-                    error={errors.password}
+                    errorform={errors.password}
                   />
 
                   {errors.password && (
@@ -157,19 +157,19 @@ class Login extends Component {
           <div className="loginSocialFlex">
             {/* <LoginGoogle /> */}
             {/* <img
-            className="loginSocialBtn"
-            alt="logo_image"
-            src={require("../images/google1.png")}
-          /> */}
+              className="loginSocialBtn"
+              alt="logo_image"
+              src={require("../images/google1.png")}
+            /> */}
             <button className="loginGBtn">Login with Google</button>
-            {/* </div>
-          <div > */}
-            {/* <LoginFacebook />
-          <img
-            className="loginSocialBtn"
-            alt="logo_image"
-            src={require("../images/facebook.png")}
-          /> */}
+          </div>
+          <div>
+            {/* <LoginFacebook /> */}
+            {/* <img
+              className="loginSocialBtn"
+              alt="logo_image"
+              src={require("../images/facebook.png")}
+            /> */}
             <button className="loginFBtn">Login with Facebook</button>
           </div>
         </Card>

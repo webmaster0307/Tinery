@@ -13,7 +13,7 @@ import { NavLink } from "react-router-dom";
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
 import Divider from "@material-ui/core/Divider";
 import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
+// import ListItemIcon from "@material-ui/core/ListItemIcon";
 import MenuIcon from "@material-ui/icons/Menu";
 import IconButton from "@material-ui/core/IconButton";
 
@@ -21,9 +21,10 @@ class MenuAppBar extends React.Component {
   state = {
     left: false
   };
-  toggleDrawer = (side, open) => () => {
+  toggleDrawer = open => () => {
+    console.log(this.state);
     this.setState({
-      [side]: open
+      left: open
     });
   };
 
@@ -32,10 +33,6 @@ class MenuAppBar extends React.Component {
     // this.props.clearCurrentProfile();
     this.props.logoutUser();
   }
-  state = {
-    auth: true,
-    anchorEl: null
-  };
 
   handleChange = event => {
     this.setState({ auth: event.target.checked });
@@ -49,12 +46,6 @@ class MenuAppBar extends React.Component {
     this.setState({ anchorEl: null });
   };
 
-  toggleDrawer = (side, open) => () => {
-    this.setState({
-      [side]: open
-    });
-  };
-
   render() {
     const { isAuthenticated, user } = this.props.auth;
 
@@ -62,24 +53,34 @@ class MenuAppBar extends React.Component {
     const loginState = (
       <div>
         <ListItem button>
-          <ListItemIcon>
-            {/* <InboxIcon /> */}
-            <NavLink onClick={this.onLogoutClick.bind(this)} to="/login">
-              Log Out
-            </NavLink>
-          </ListItemIcon>
+          {/* <ListItemIcon> */}
+          {/* <InboxIcon /> */}
+          <NavLink to="/favorites">My Favorites</NavLink>
         </ListItem>
+        <ListItem button>
+          <NavLink onClick={this.onLogoutClick.bind(this)} to="/">
+            Log Out
+          </NavLink>
+        </ListItem>
+        <ListItem button>
+          <NavLink to="/cms">Create Your Own</NavLink>
+        </ListItem>
+        {/* </ListItemIcon> */}
+        {/* </ListItem> */}
       </div>
     );
     const logoutState = (
       <div>
         <ListItem button>
-          <ListItemIcon>
-            <NavLink to="/login">Log In</NavLink>
-          </ListItemIcon>
+          {/* <ListItemIcon> */}
+          <NavLink to="/login">Log In</NavLink>
+          {/* </ListItemIcon> */}
         </ListItem>
         <ListItem button>
           <NavLink to="/signup">Create Account</NavLink>
+        </ListItem>
+        <ListItem button>
+          <NavLink to="/cms">Create Your Own</NavLink>
         </ListItem>
       </div>
     );
@@ -142,23 +143,20 @@ class MenuAppBar extends React.Component {
             <div>{isAuthenticated ? authLinks : guestLinks}</div>
             {/* MENU BURGER ICON */}
             <div>
-              <IconButton
-                aria-label="Menu"
-                onClick={this.toggleDrawer("left", true)}
-              >
+              <IconButton aria-label="Menu" onClick={this.toggleDrawer(true)}>
                 <MenuIcon />
               </IconButton>
 
               <SwipeableDrawer
                 open={this.state.left}
-                onClose={this.toggleDrawer("left", false)}
-                onOpen={this.toggleDrawer("left", true)}
+                onClose={this.toggleDrawer(false)}
+                onOpen={this.toggleDrawer(true)}
               >
                 <div
                   tabIndex={0}
                   role="button"
-                  onClick={this.toggleDrawer("left", false)}
-                  onKeyDown={this.toggleDrawer("left", false)}
+                  onClick={this.toggleDrawer(false)}
+                  onKeyDown={this.toggleDrawer(false)}
                 >
                   {sideList}
                 </div>

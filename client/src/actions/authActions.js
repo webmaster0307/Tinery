@@ -5,6 +5,7 @@ import { GET_ERRORS, SET_CURRENT_USER } from "./Types";
 
 // REGISTER USER
 export const registerUser = (userData, history) => dispatch => {
+  console.log("from actions", userData);
   axios
     .post("/auth/user/register", userData)
     .then(res => history.push("/login"))

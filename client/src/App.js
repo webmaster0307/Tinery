@@ -19,6 +19,8 @@ import Home from "./views/Home";
 import Cities from "./views/Cities";
 import Login from "./views/Login";
 import Signup from "./views/Signup";
+import Favorites from "./views/Favorites";
+import Cms from "./views/Cms";
 
 // Check for token
 if (localStorage.jwtToken) {
@@ -57,6 +59,8 @@ class App extends Component {
               <Route exact path="/Login" component={Login} />
               <Route exact path="/Signup" component={Signup} />
               <Route exact path="/Cities" component={Cities} />
+              <Route exact path="/Favorites" component={Favorites} />
+              <Route exact path="/Cms" component={Cms} />
 
               {/* <Route exact path="/City/:city_name" component={City} /> */}
               <Route

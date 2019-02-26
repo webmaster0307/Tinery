@@ -327,6 +327,7 @@
   font-size: 12px;
   padding-bottom: 10px;
   margin-left: 10px;
+
 }
 
 .forminput {
@@ -361,9 +362,8 @@
   border: 1px solid black;
   /* text-align: center; */
   margin-bottom: 10px;
-
-  /* max-height: 120px;
-  max-width: 250px */
+  max-height: 100px;
+  max-width: 100px
 }
 
 .loginGBtn {

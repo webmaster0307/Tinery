@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const passport = require("passport");
+// const path = require("path");
 // const passportGoogle = require("./config/passportGoogle");
 
 // DB Config & Internal Links
@@ -16,6 +17,7 @@ const activitydb = require("./routes/api/activitydb");
 const commentdb = require("./routes/api/commentdb");
 const usersdb = require("./routes/api/usersdb");
 const authdb = require("./routes/api/authdb");
+const imagedb = require("./routes/api/imagedb");
 
 // Connect to MongoDB
 mongoose
@@ -31,15 +33,19 @@ const port = process.env.port || 5000;
 
 // BODY PARSER MIDDLEWARE
 app.use(bodyParser.json());
+
 app.use(bodyParser.urlencoded({ extended: false }));
 // app.use(bodyParser.urlencoded({ extended: true }));
 
+app.use("/uploads", express.static("uploads"));
 // INIT ROUTES
 
 app.use("/api", citydb);
 app.use("/api", itinerarydb);
 app.use("/api", activitydb);
 app.use("/api", commentdb);
+app.use("/api", imagedb);
+// app.use("/api", imagedb);
 
 // AUTH ROUTES
 

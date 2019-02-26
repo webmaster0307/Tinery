@@ -7,8 +7,6 @@ import { registerUser } from "../actions/authActions";
 import BtnHome from "../components/layout/BtnHome";
 import Navbar from "../components/layout/Navbar";
 
-// import classnames from "classnames";
-
 import Checkbox from "@material-ui/core/Checkbox";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
@@ -47,7 +45,7 @@ class Signup extends Component {
       password2: "",
       firstname: "",
       lastname: "",
-      avatar: "",
+      avatar: null,
       country: "",
       open: false,
       // country: [
@@ -84,12 +82,41 @@ class Signup extends Component {
     }
   }
 
+  // IMAGE METHODS
+  fileChangedHandler = event => {
+    // console.log(event.target.files[0]);
+    this.setState({
+      avatar: event.target.files[0]
+    });
+    console.log(this.state);
+    console.log("from upload button", this.state.avatar);
+    console.log("from upload button", event.target.files[0]);
+  };
+
+  // uploadHandler = () => {
+  //   const formData = new FormData();
+  //   formData.append("myFile", this.state.avatar, this.state.avatar.name);
+  //   // console.log(this.state.selectedFile);
+  //   console.log(this.state.avatar);
+  //   console.log(this.state);
+  // };
+
+  // FORM METHODS
+
   onChange = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
 
   onSubmit = e => {
+    // console.log(this.state.avatar);
+    // console.log(this.state);
     e.preventDefault();
+    // console.log(this.state);
+    let formData = new FormData();
+    formData.append("myFile", this.state.avatar);
+
+    // console.log(this.state.selectedFile);
+
     const newUser = {
       username: this.state.username,
       email: this.state.email,
@@ -98,17 +125,28 @@ class Signup extends Component {
       firstname: this.state.firstname,
       lastname: this.state.lastname,
       country: this.state.country,
-      avatar: this.state.avatar
+      avatar: formData
     };
+    // this.props.registerUser(this.state, this.props.history);
     this.props.registerUser(newUser, this.props.history);
-    console.log(newUser);
-    console.log(this.state);
+    console.log("submit", newUser);
+    console.log("submit", this.state);
+    console.log("submit", this.state.avatar);
   };
 
   render() {
     const { errors } = this.state;
     // const { user } = this.props.auth;
     // console.log(user);
+
+    const uploadImage = (
+      <div>
+        {/* <h2>upload photo</h2>
+        <input type="file" onChange={this.fileChangedHandler} />
+        <button onClick={this.uploadHandler}>Upload!</button> */}
+      </div>
+    );
+
     const registerForm = (
       <div className="register">
         <div className="container">
@@ -126,6 +164,7 @@ class Signup extends Component {
           {/* START OF FORM */}
           <Card raised className="commentForm">
             <form noValidate onSubmit={this.onSubmit}>
+              {/* <form noValidate onSubmit={this.onSubmit}> */}
               {/* UPLOAD PHOTO */}
               <div className="addPhoto">
                 <div>
@@ -142,7 +181,23 @@ class Signup extends Component {
                     Upload
                   </Button>
                 </label>*/}
+
+                  {/* IMAGE UPLOADER */}
+                  {/* <input type="file" onChange={this.fileChangedHandler} /> */}
                   <Input
+                    id="contained-button-file"
+                    type="file"
+                    label="Add Photo"
+                    accept="image/*"
+                    name="avatar"
+                    onChange={this.fileChangedHandler}
+                    errorform={errors.avatar}
+                    info="This site uses Gravatar so if you want a profile image, use a Gravatar email"
+                  />
+                  {errors.avatar && (
+                    <div className="invalid-feedback">{errors.avatar}</div>
+                  )}
+                  {/* <Input
                     id="contained-button-file"
                     type="file"
                     label="Add Photo"
@@ -151,10 +206,11 @@ class Signup extends Component {
                     value={this.state.avatar}
                     onChange={this.onChange}
                     error={errors.avatar}
-                  />
-                  {errors.avatar && (
+                    info="This site uses Gravatar so if you want a profile image, use a Gravatar email"
+                  /> */}
+                  {/* {errors.avatar && (
                     <div className="invalid-feedback">{errors.avatar}</div>
-                  )}
+                  )} */}
                 </div>
               </div>
               {/* <label htmlFor="contained-button-file">
@@ -178,7 +234,7 @@ class Signup extends Component {
                   accept="image"
                   value={this.state.avatar}
                   onChange={this.onChange}
-                  error={errors.avatar}
+                  errorform={errors.avatar}
                 /> */}
               {/* </div> */}
 
@@ -195,7 +251,7 @@ class Signup extends Component {
                   name="username"
                   value={this.state.username}
                   onChange={this.onChange}
-                  error={errors.username}
+                  errorform={errors.username}
                 />
                 {errors.username && (
                   <div className="invalid-feedback">{errors.username}</div>
@@ -213,7 +269,7 @@ class Signup extends Component {
                   name="password"
                   value={this.state.password}
                   onChange={this.onChange}
-                  error={errors.password}
+                  errorform={errors.password}
                 />
                 {errors.password && (
                   <div className="invalid-feedback">{errors.password}</div>
@@ -230,7 +286,7 @@ class Signup extends Component {
                 name="password2"
                 value={this.state.password2}
                 onChange={this.onChange}
-                error={errors.password2}
+                errorform={errors.password2}
               />
               {errors.password2 && (
                 <div className="invalid-feedback">{errors.password2}</div>
@@ -247,7 +303,7 @@ class Signup extends Component {
                   name="email"
                   value={this.state.email}
                   onChange={this.onChange}
-                  error={errors.email}
+                  errorform={errors.email}
                   info="This site uses Gravatar so if you want a profile image, use a Gravatar email"
                 />
                 {errors.email && (
@@ -266,7 +322,7 @@ class Signup extends Component {
                   name="firstname"
                   value={this.state.firstname}
                   onChange={this.onChange}
-                  error={errors.firstname}
+                  errorform={errors.firstname}
                 />
                 {errors.firstname && (
                   <div className="invalid-feedback">{errors.firstname}</div>
@@ -284,7 +340,7 @@ class Signup extends Component {
                   name="lastname"
                   value={this.state.lastname}
                   onChange={this.onChange}
-                  error={errors.lastname}
+                  errorform={errors.lastname}
                 />
                 {errors.lastname && (
                   <div className="invalid-feedback">{errors.lastname}</div>
@@ -300,7 +356,7 @@ class Signup extends Component {
                     label="Country:"
                     value={this.state.country}
                     onChange={this.onChange}
-                    error={errors.country}
+                    errorform={errors.country}
                   >
                     <option value="">Choose Country</option>
                     <option value="Spain">Spain</option>
@@ -441,6 +497,8 @@ class Signup extends Component {
     return (
       <div>
         <Navbar />
+        {uploadImage}
+
         {registerForm}
         <BtnHome />
       </div>
