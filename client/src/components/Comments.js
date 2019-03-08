@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import moment from "moment";
 import { fetchAxiosComments } from "../actions/fetchComments";
 import { postAxiosComments } from "../actions/postComments";
-
 import Card from "@material-ui/core/Card";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
@@ -19,9 +18,16 @@ class Comments extends Component {
       user: "",
       timestamp: "",
       activitykey: "",
+      errors: {},
       comments: []
       // activitykey: this.props.comments.comment.activitykey
     };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.errors) {
+      this.setState({ errors: nextProps.errors });
+    }
   }
 
   onChange = e => {
@@ -34,6 +40,26 @@ class Comments extends Component {
     e.preventDefault();
     let comments = {
       user: this.state.user,
+      message: this.state.message,
+      timestamp: moment(Date.now()).format("LLLL"),
+      activitykey: this.props.activityKey
+    };
+    // console.log(comments);
+    this.props.postAxiosComments(comments);
+    this.setState({
+      user: "",
+      message: "",
+      timestamp: "",
+      activitykey: ""
+    });
+    // REFRESH COMMENTS (NOT NEEDED)
+    // this.props.fetchAxiosComments(this.props.activityKey);
+  };
+
+  onSubmitLoggedIn = e => {
+    e.preventDefault();
+    let comments = {
+      user: this.props.auth.user.username,
       message: this.state.message,
       timestamp: moment(Date.now()).format("LLLL"),
       activitykey: this.props.activityKey
@@ -51,6 +77,9 @@ class Comments extends Component {
   };
 
   render() {
+    const { errors } = this.state;
+    // const { isAuthenticated, user } = this.props.auth;
+    const { isAuthenticated } = this.props.auth;
     //COMMENT LIST
     const commentList = this.props.comments.comments.map(comment => (
       <div className="comments" key={comment._id + comment.user}>
@@ -64,7 +93,7 @@ class Comments extends Component {
     ));
 
     //COMMENT FORM
-    const commentForm = (
+    const commentFormGuest = (
       <Card raised className="commentForm">
         <form onSubmit={this.onSubmit}>
           <div>
@@ -94,7 +123,45 @@ class Comments extends Component {
             name="message"
             value={this.state.message}
             onChange={this.onChange}
+            errorform={errors.message}
           />
+          {errors.message && (
+            <div className="invalid-feedback">{errors.message}</div>
+          )}
+
+          <div>
+            <button className="submitCommentBtn" type="submit" value="Submit">
+              Submit
+            </button>
+          </div>
+        </form>
+      </Card>
+    );
+
+    const commentFormLoggedIn = (
+      <Card raised className="commentForm">
+        <form onSubmit={this.onSubmitLoggedIn}>
+          <div>
+            {/* <div>{user.username}</div> */}
+            <div>{this.props.auth.user.username}</div>
+          </div>
+
+          <TextField
+            className="commentFormInput"
+            id="outlined-with-placeholder"
+            label="Leave a Comment:"
+            placeholder=""
+            margin="normal"
+            variant="outlined"
+            type="text"
+            name="message"
+            value={this.state.message}
+            onChange={this.onChange}
+            errorform={errors.message}
+          />
+          {errors.message && (
+            <div className="invalid-feedback">{errors.message}</div>
+          )}
 
           <div>
             <button className="submitCommentBtn" type="submit" value="Submit">
@@ -115,7 +182,8 @@ class Comments extends Component {
         >
           Comments:
         </Typography>
-        <div>{commentForm}</div>
+        <div>{isAuthenticated ? commentFormLoggedIn : commentFormGuest}</div>
+        {/* <div>{commentForm}</div> */}
         <div>{commentList.reverse()}</div>
       </div>
     );
@@ -124,7 +192,9 @@ class Comments extends Component {
 
 const mapStateToProps = state => {
   return {
-    comments: state.comments
+    comments: state.comments,
+    auth: state.auth,
+    errors: state.errors
   };
 };
 

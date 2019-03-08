@@ -4,8 +4,10 @@ const Schema = mongoose.Schema;
 const CommentSchema = new Schema({
   message: {
     type: String,
+    // type: Schema.Types.ObjectId,
     required: true
   },
+  // _id: { type: Number },
   user: {
     type: String
   },
@@ -14,6 +16,22 @@ const CommentSchema = new Schema({
   },
   activitykey: {
     type: String
+  },
+  avatar: {
+    type: String
+  },
+  likes: [
+    {
+      user: {
+        type: String,
+        // type: Schema.Types.ObjectId,
+        ref: "users"
+      }
+    }
+  ],
+  date: {
+    type: Date,
+    default: Date.now
   }
 });
 

@@ -20,6 +20,7 @@ class Home extends Component {
           <NavLink onClick={this.onLogoutClick.bind(this)} to="/login">
             Log Out
           </NavLink>
+          {/* <div>{this.props.auth.user.username}</div> */}
         </div>
       </div>
     );

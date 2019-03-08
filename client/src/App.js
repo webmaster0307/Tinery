@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./actions/utils/setAuthToken";
 import { setCurrentUser, logoutUser } from "./actions/authActions";
+import { clearCurrentProfile } from "./actions/profileActions";
 
 import store from "./store";
 import { Provider } from "react-redux";
@@ -19,8 +20,11 @@ import Home from "./views/Home";
 import Cities from "./views/Cities";
 import Login from "./views/Login";
 import Signup from "./views/Signup";
-import Favorites from "./views/Favorites";
+// import Favorites from "./components/Favorites";
 import Cms from "./views/Cms";
+import Dashboard from "./views/Dashboard";
+
+import PrivateRoute from "./components/layout/PrivateRoute";
 
 // Check for token
 if (localStorage.jwtToken) {
@@ -40,7 +44,7 @@ if (localStorage.jwtToken) {
     // Logout user
     store.dispatch(logoutUser());
     // Clear current Profile
-    // store.dispatch(clearCurrentProfile());
+    store.dispatch(clearCurrentProfile());
     // Redirect to login
     window.location.href = "/login";
   }
@@ -59,8 +63,10 @@ class App extends Component {
               <Route exact path="/Login" component={Login} />
               <Route exact path="/Signup" component={Signup} />
               <Route exact path="/Cities" component={Cities} />
-              <Route exact path="/Favorites" component={Favorites} />
+              {/* <PrivateRoute exact path="/Favorites" component={Favorites} /> */}
               <Route exact path="/Cms" component={Cms} />
+              {/* <Route exact path="/Dashboard" component={Dashboard} /> */}
+              <PrivateRoute exact path="/Dashboard" component={Dashboard} />
 
               {/* <Route exact path="/City/:city_name" component={City} /> */}
               <Route

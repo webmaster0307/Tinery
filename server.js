@@ -2,7 +2,11 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const passport = require("passport");
-// const path = require("path");
+const cookierParser = require("cookie-parser");
+const session = require("express-session");
+const path = require("path");
+// const logger = require("morgan");
+const cors = require("cors");
 // const passportGoogle = require("./config/passportGoogle");
 
 // DB Config & Internal Links
@@ -18,6 +22,11 @@ const commentdb = require("./routes/api/commentdb");
 const usersdb = require("./routes/api/usersdb");
 const authdb = require("./routes/api/authdb");
 const imagedb = require("./routes/api/imagedb");
+const profiledb = require("./routes/api/profiledb");
+
+require("./models/usermodel");
+
+mongoose.Promise = global.Promise;
 
 // Connect to MongoDB
 mongoose
@@ -30,6 +39,16 @@ mongoose
 
 const app = express();
 const port = process.env.port || 5000;
+
+// CORS
+var corsOption = {
+  origin: true,
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  credentials: true,
+  exposedHeaders: ["x-auth-token"]
+};
+
+app.use(cors(corsOption));
 
 // BODY PARSER MIDDLEWARE
 app.use(bodyParser.json());
@@ -45,50 +64,41 @@ app.use("/api", itinerarydb);
 app.use("/api", activitydb);
 app.use("/api", commentdb);
 app.use("/api", imagedb);
-// app.use("/api", imagedb);
+
+// ROUTES
+//==============================================
+
+// EXPRESS MIDDLWARE
+app.use(cookierParser());
+app.use(
+  session({
+    secret: "secret",
+    resave: false,
+    saveUninitialized: false
+  })
+);
+
+// PASSPORT MIDDLEWARE
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Set Global Variables
+app.use((req, res, next) => {
+  res.locals.user = req.user || null;
+  next();
+});
 
 // AUTH ROUTES
 
 app.use("/auth", usersdb);
 app.use("/auth", authdb);
-
-// ROUTES
-//==============================================
-
-// PASSPORT MIDDLEWARE
-app.use(passport.initialize());
+app.use("/auth", profiledb);
 
 //PASSPORT CONFIG
 require("./config/passport")(passport);
 // require("./config/passportGoogle")(passport);
 
-// app.get("/cities/", function(req, res) {
-//   res.send("The ID of this page is : " + req.params.id);
-// });
-
-// app.get("/cities/:id", (req, res) => {
-//   console.log(req.params);
-//   console.log(req.query);
-//   // console.log(req.params.id);
-//   res.send("The ID of this page is : " + req.params.id);
-// });
-
-// app.get("/api/hello", res => {
-//   res.send({ express: "Hello From Express!" });
-// });
-
-// app.post("/api/world", (req, res) => {
-//   console.log(req.body);
-//   res.send(
-//     `I received your POST request. This is what you sent me: ${req.body.post}`
-//   );
-// });
-
 // START THE SERVER
 // =============================================
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
-
-// app.listen(80, function() {
-//   console.log("CORS-enabled web server listening on port 80");
-// });

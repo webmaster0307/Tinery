@@ -27,17 +27,21 @@ const fileFilter = (req, file, cb) => {
 
 const upload = multer({
   storage: storage,
-
   fileFilter: fileFilter
 });
 
 const Imagemodel = require("../../models/imagemodel");
 
+// @route
+// @desc
+// @access
+
 router.post("/image", upload.any(), (req, res, next) => {
-  console.log(req);
+  console.log(req.body);
+  console.log(req.files[0].filename);
   const image = new Imagemodel({
     name: req.body.name,
-    imagefile: req.files[0].filename
+    avatar: "/uploads/" + req.files[0].filename
   });
   image
     .save()
@@ -50,7 +54,7 @@ router.post("/image", upload.any(), (req, res, next) => {
           _id: result._id,
           request: {
             type: "GET",
-            url: "http://localhost:5000/upload/" + result._id
+            url: "/uploads/" + result._id
             //     }
             //     request: {
             //       type: "GET",
@@ -66,6 +70,10 @@ router.post("/image", upload.any(), (req, res, next) => {
       });
     });
 });
+
+// @route
+// @desc
+// @access
 
 router.get("/image", (req, res) => {
   Imagemodel.find().then(city => res.json(city));

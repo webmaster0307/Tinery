@@ -1,26 +1,30 @@
 import React from "react";
 import PropTypes from "prop-types";
-// import { withStyles } from "@material-ui/core/styles";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-// import Typography from "@material-ui/core/Typography";
-import AccountCircle from "@material-ui/icons/AccountCircle";
-import Avatar from "@material-ui/core/Avatar";
+
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
 import { Link } from "react-router-dom";
 import { NavLink } from "react-router-dom";
+
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
 import Divider from "@material-ui/core/Divider";
 import ListItem from "@material-ui/core/ListItem";
 // import ListItemIcon from "@material-ui/core/ListItemIcon";
 import MenuIcon from "@material-ui/icons/Menu";
 import IconButton from "@material-ui/core/IconButton";
+import Icon from "@material-ui/core/Icon";
+// import { withStyles } from "@material-ui/core/styles";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+// import Typography from "@material-ui/core/Typography";
+import AccountCircle from "@material-ui/icons/AccountCircle";
+import Avatar from "@material-ui/core/Avatar";
 
 class MenuAppBar extends React.Component {
   state = {
     left: false
   };
+
   toggleDrawer = open => () => {
     console.log(this.state);
     this.setState({
@@ -53,20 +57,24 @@ class MenuAppBar extends React.Component {
     const loginState = (
       <div>
         <ListItem button>
-          {/* <ListItemIcon> */}
-          {/* <InboxIcon /> */}
-          <NavLink to="/favorites">My Favorites</NavLink>
-        </ListItem>
-        <ListItem button>
           <NavLink onClick={this.onLogoutClick.bind(this)} to="/">
             Log Out
           </NavLink>
         </ListItem>
+        <Divider />
         <ListItem button>
+          <Icon>dashboard</Icon>
+          <NavLink to="/dashboard">Dashboard</NavLink>
+        </ListItem>
+        {/* <ListItem button> */}
+        {/* <ListItemIcon> */}
+        {/* <InboxIcon /> */}
+        {/* <NavLink to="/favorites">My Favorites</NavLink>
+        </ListItem> */}
+        <ListItem button>
+          {/* <IconButton>create</IconButton> */}
           <NavLink to="/cms">Create Your Own</NavLink>
         </ListItem>
-        {/* </ListItemIcon> */}
-        {/* </ListItem> */}
       </div>
     );
     const logoutState = (
@@ -79,9 +87,9 @@ class MenuAppBar extends React.Component {
         <ListItem button>
           <NavLink to="/signup">Create Account</NavLink>
         </ListItem>
-        <ListItem button>
+        {/* <ListItem button>
           <NavLink to="/cms">Create Your Own</NavLink>
-        </ListItem>
+        </ListItem> */}
       </div>
     );
 
@@ -109,9 +117,16 @@ class MenuAppBar extends React.Component {
             src={user.avatar}
             title="You must have a Gravatar connected to your email to display an image"
           />
+          {/* <Avatar
+            alt={user.name}
+            src={user.avatar}
+            to="/dashboard"
+            title="You must have a Gravatar connected to your email to display an image"
+          /> */}
+          {/* <div>{user.username}</div> */}
         </div>
         {/* LOGOUT LINK */}
-        {/* <div>
+        {/* <div>]
           <a
             href="/"
             onClick={this.onLogoutClick.bind(this)}

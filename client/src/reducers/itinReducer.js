@@ -1,7 +1,8 @@
-import { FETCH_ITINERARIES } from "../actions/Types";
+import { FETCH_ITINERARIES, FETCH_ITINERARIES_ID } from "../actions/Types";
 
 const initialState = {
-  itineraries: []
+  itineraries: [],
+  itinid: []
 };
 
 export default function(state = initialState, action) {
@@ -9,7 +10,21 @@ export default function(state = initialState, action) {
     case FETCH_ITINERARIES:
       return {
         ...state,
+        // itineraries: [action.payload, ...state.itineraries]
         itineraries: action.payload
+      };
+    case FETCH_ITINERARIES_ID:
+      return {
+        ...state,
+        itinid: [...state.itinid, action.payload]
+        // itineraries: [action.payload, ...state.itineraries]
+        // itineraries: [...state.itineraries, action.payload],
+        // itinid: [action.payload]
+        // itinid: [...state.itinid]
+        // itinid: [action.payload, ...state.itinid]
+        // itinid: [...state.itineraries]
+        // itineraries: action.payload
+        // itineraries: [...state.itineraries]
       };
     default:
       return state;

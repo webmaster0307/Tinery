@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 // import { fetchAxiosItineraries } from "../actions/fetchItineraries";
+import { postFavorites } from "../actions/profileActions";
 import { fetchAxiosActivities } from "../actions/fetchActivities";
 import { fetchAxiosComments } from "../actions/fetchComments";
 import Activity from "./Activity";
@@ -18,68 +20,159 @@ import Typography from "@material-ui/core/Typography";
 // import Button from "@material-ui/core/Button";
 import Avatar from "@material-ui/core/Avatar";
 import Grid from "@material-ui/core/Grid";
+
 // import Paper from "@material-ui/core/Paper";
+import Icon from "@material-ui/core/Icon";
+
+import Button from "@material-ui/core/Button";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
 
 class Itinerary extends Component {
-  // state = {
-  //   container: {
-  //     display: "grid"
-  //   },
-  //   paper: {
-  //     textAlign: "center",
-  //     whiteSpace: "nowrap"
-  //   },
-  //   bigAvatar: {
-  //     margin: 10,
-  //     width: 60,
-  //     height: 60
-  //   }
-  // };
-
-  componentDidMount() {
-    // this.props.fetchAxiosActivities(event.target.id);
-    // this.props.fetchAxiosItineraries();
-    // this.props.fetchAxiosItineraries(this.props.match.params.city_name);
-  }
   constructor(props) {
     super(props);
     this.state = {
       isBtn: false,
       eventId: "",
       activities: [],
-      comments: []
+      itineraries: [],
+      comments: [],
+      open: false
     };
     this.handleClick = this.handleClick.bind(this);
+    this.addToFav = this.addToFav.bind(this);
   }
+  componentDidMount() {
+    // this.props.fetchAxiosActivities(event.target.id);
+    // this.props.fetchAxiosItineraries();
+    // this.props.fetchAxiosItineraries(this.props.match.params.city_name);
+  }
+  // ADD FAVORITES
+
+  addToFav = event => {
+    let eventTargetId = event;
+    let favData = {
+      favorites: eventTargetId
+    };
+    let userID = this.props.auth.user.id;
+    // console.log("user id", userID);
+    // console.log("itin id", favData);
+    this.props.postFavorites(userID, favData);
+
+    this.setState({ open: true });
+  };
+
+  handleClose = () => {
+    this.setState({ open: false });
+  };
+
+  // FETCH ACTIVITY AND COMMENTS
   handleClick(event) {
-    // console.log("button value :", eventTargetId);
     let eventTargetId = event.target.id;
     this.props.fetchAxiosActivities(eventTargetId);
     this.props.fetchAxiosComments(eventTargetId);
-
     this.setState(state => ({
       eventId: eventTargetId,
       isBtn: !state.isBtn
     }));
   }
   render() {
+    // const { isAuthenticated, user } = this.props.auth;
+    console.log(this.props);
+    const { isAuthenticated, user } = this.props.auth;
+    const favDialog = (
+      <div>
+        <Dialog
+          open={this.state.open}
+          onClose={this.handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">
+            {"MYtinerary added to your Favorites"}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              This itinerary has been added to your favorites. Go to Favorites
+              page to view and manage your Itineraries.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Link to="/dashboard">
+              <Button onClick={this.handleClose} color="primary" autoFocus>
+                Go To Favorites
+              </Button>
+            </Link>
+            <Button onClick={this.handleClose} color="inherit" autoFocus>
+              Close
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </div>
+    );
+
     const listItin = this.props.itineraries.itineraries.map(itinerary => (
-      <div className="" key={itinerary.title}>
+      <div key={itinerary.title}>
         <div className="itineraryCard">
           <Card raised>
-            {/* <CardMedia
-                image="/static/images/cards/contemplative-reptile.jpg"
-                title="Contemplative Reptile"
-              /> */}
+            <Grid container spacing={24}>
+              <Grid item xs={10}>
+                <Typography
+                  className="activtytitle"
+                  gutterBottom
+                  variant="h4"
+                  component="h2"
+                >
+                  {itinerary.title}
+                </Typography>
+              </Grid>
+              {/* ADD TO FAVORITES */}
+              <Grid item xs={2}>
+                <div>
+                  {/* 1st TERNARY */}
+                  {isAuthenticated &&
+                  !user.favorites.includes(itinerary._id) ? (
+                    <div>
+                      <Icon
+                        value={itinerary.title}
+                        color="inherit"
+                        variant="outlined"
+                        fontSize="large"
+                        onClick={this.addToFav.bind(this, itinerary._id)}
+                      >
+                        add_location
+                      </Icon>
+                      {favDialog}
+                    </div>
+                  ) : (
+                    <div />
+                  )}
+
+                  {/* 2nd TERNARY */}
+
+                  {isAuthenticated && user.favorites.includes(itinerary._id) ? (
+                    <div>
+                      <Icon
+                        value={itinerary.title}
+                        color="inherit"
+                        variant="outlined"
+                        fontSize="large"
+                      >
+                        star
+                      </Icon>
+                    </div>
+                  ) : (
+                    <div />
+                  )}
+                </div>
+
+                {/* <div> {itinerary._id}</div> */}
+              </Grid>
+            </Grid>
             <CardContent>
-              <Typography
-                className="activtytitle"
-                gutterBottom
-                variant="h4"
-                component="h2"
-              >
-                {itinerary.title}
-              </Typography>
               {/* AVATAR */}
               {/* <Grid item xs={3}> */}
               {/* <Avatar src={itinerary.authorimage} /> */}
@@ -119,38 +212,8 @@ class Itinerary extends Component {
                   </Grid>
                 </Grid>
               </div>
-
-              {/* <div className="activitycard"> */}
-              {/* <Grid item xs={6}>
-                <Paper className="">Likes : {itinerary.likes}</Paper>
-              </Grid> */}
-              {/* <div className="">Likes : {itinerary.likes}</div> */}
-              {/* <div className="">{itinerary.duration} Hours</div>
-                <div className="">${itinerary.divrice}</div>
-                <div> Rating : {itinerary.rating} out of 5 </div>
-                <div className="">{itinerary.hashtag + " "}</div> */}
-              {/* </div> */}
             </CardContent>
           </Card>
-
-          {/* OLD CARD */}
-
-          {/* <Grid container justify="center" alignItems="center">
-            <i className="material-icons medium icons authorIcon">person</i>
-            <Avatar className="authorIcon">{itinerary.authorimage} </Avatar>
-          </Grid> */}
-          {/* <div className="col s12 m8 l9"> */}
-          {/* <div className="">
-            <div>
-              <p className="">{itinerary.title}</p>
-              <span className="">Likes : {itinerary.likes}</span>
-              <span className="">{itinerary.duration} Hours</span>
-              <span className="">${itinerary.price}</span>
-              <span> Rating : {itinerary.rating} out of 5 </span>
-              <span className="">{itinerary.hashtag + " "}</span>
-            </div> */}
-          {/* <p> Key : {itinerary.activitykey}</p> */}
-          {/* </div> */}
         </div>
         {/* TERNARY OPERATOR */}
         {this.state.isBtn && this.state.eventId === itinerary.activitykey ? (
@@ -194,22 +257,23 @@ class Itinerary extends Component {
 Itinerary.propTypes = {
   itinerary: PropTypes.object,
   activiy: PropTypes.object,
-  comment: PropTypes.array
+  comment: PropTypes.array,
+  auth: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => {
-  // console.log(this.props.itineraries.itineraries);
   // // let id = ownProps.match.params.city_name;
-
+  // console.log(state.itineraries);
   return {
     itineraries: state.itineraries,
-    // eventId: state.event.target.id
+    // eventId: state.event.target.id,
     activities: state.activities,
-    comments: state.comments
+    comments: state.comments,
+    auth: state.auth
   };
 };
 
 export default connect(
   mapStateToProps,
-  { fetchAxiosActivities, fetchAxiosComments }
+  { fetchAxiosActivities, fetchAxiosComments, postFavorites }
 )(Itinerary);

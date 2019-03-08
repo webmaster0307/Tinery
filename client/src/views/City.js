@@ -6,7 +6,7 @@ import { fetchAxiosCities } from "../actions/fetchCities";
 import { fetchAxiosItineraries } from "../actions/fetchItineraries";
 import { fetchAxiosActivities } from "../actions/fetchActivities";
 import Itinerary from "../components/Itinerary";
-
+import Navbar from "../components/layout/Navbar";
 import Typography from "@material-ui/core/Typography";
 
 class City extends Component {
@@ -14,25 +14,22 @@ class City extends Component {
     super(props);
     this.state = {
       cities: this.props.cities.cities,
-      activities: [],
-      itineraries: [],
-      city: []
+      // activities: [],
+      city: [],
+      itineraries: []
     };
   }
   componentDidMount() {
     this.props.fetchAxiosItineraries(this.props.match.params.city_name);
-    this.props.fetchAxiosActivities();
     this.props.fetchAxiosCities();
-    // console.log("from city comp :", this.props);
-    // console.log("from city comp props :", this.props.cities);
-    // console.log("from city comp state :", this.state.cities);
-    // console.log("from city comp params", this.props.match.params.city_name);
   }
   render() {
+    // console.log("clog", this.state);
+    // console.log("clog props", this.props);
     let city = this.state.cities.find(
       city => city.url === this.props.match.params.city_name
     );
-    // console.log(city);
+
     const showCity = city ? (
       <div>
         {city.cityname}, {city.country}
@@ -41,13 +38,9 @@ class City extends Component {
       <div>{this.props.match.params.city_name.toUpperCase()}</div>
     );
 
-    // console.log(this.state.city);
-    // console.log(this.state.cities);
-    // console.log(this.state.cities.cities);
-    // console.log(this.props.match.params.city_name);
-
     return (
       <div>
+        <Navbar />
         <div>
           <Typography
             className="city"
@@ -91,6 +84,8 @@ const mapStateToProps = (state, ownProps) => {
   return {
     city: state.cities.cities.find(city => city.id === id),
     cities: state.cities
+    // itineraries: state.itineraries
+    // eventId: state.event.target.id,
   };
 };
 

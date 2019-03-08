@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { registerUser } from "../actions/authActions";
-// import TextFieldGroup from "../components/TextFieldGroup";
+
 import BtnHome from "../components/layout/BtnHome";
 import Navbar from "../components/layout/Navbar";
 
@@ -18,18 +18,22 @@ import Slide from "@material-ui/core/Slide";
 
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
+// import TextFieldGroup from "../components/TextFieldGroup";
 import Card from "@material-ui/core/Card";
 import Select from "@material-ui/core/Select";
 
 import Input from "@material-ui/core/Input";
 import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 // import OutlinedInput from "@material-ui/core/OutlinedInput";
-// import FilledInput from "@material-ui/core/FilledInput";
-// import InputLabel from "@material-ui/core/InputLabel";
-// import MenuItem from "@material-ui/core/MenuItem";
+import FilledInput from "@material-ui/core/FilledInput";
+import InputLabel from "@material-ui/core/InputLabel";
+import MenuItem from "@material-ui/core/MenuItem";
 // import FormHelperText from "@material-ui/core/FormHelperText";
-// import FormControl from "@material-ui/core/FormControl";
+import FormControl from "@material-ui/core/FormControl";
 // import Icon from "@material-ui/core/Icon";
+import DeleteIcon from "@material-ui/icons/Delete";
+
+// import axios from "axios";
 
 function Transition(props) {
   return <Slide direction="up" {...props} />;
@@ -48,19 +52,14 @@ class Signup extends Component {
       avatar: null,
       country: "",
       open: false,
-      // country: [
-      //   "UK",
-      //   "Spain",
-      //   "France",
-      //   "Germany",
-      //   "Netherlands",
-      //   "Ireland",
-      //   "Spain",
-      //   "USA"
-      // ],
-      errors: {}
+      previewAvatar: null,
+      errors: {},
+      checkbox: false
     };
+    this.tccheckbox = this.tccheckbox.bind(this);
   }
+
+  // T&C LOGIC
 
   handleClickOpen = () => {
     this.setState({ open: true });
@@ -70,6 +69,23 @@ class Signup extends Component {
     this.setState({ open: false });
   };
 
+  handleCloseAgree = () => {
+    this.setState(state => ({
+      checkbox: true,
+      open: false
+    }));
+  };
+
+  tccheckbox = () => {
+    this.setState(state => ({
+      checkbox: !state.checkbox,
+      open: false
+    }));
+    // console.log(this.state.checkbox);
+  };
+
+  // ROUTE LOGIC
+
   componentDidMount() {
     if (this.props.auth.isAuthenticated) {
       this.props.history.push("/");
@@ -78,73 +94,168 @@ class Signup extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.errors) {
-      this.setState({ errors: nextProps.errors });
+      this.setState({
+        errors: nextProps.errors
+      });
     }
   }
 
+  // REMOVE IMAGE
+
+  removeImage = event => {
+    this.setState({
+      avatar: null,
+      previewAvatar: null
+    });
+  };
+
   // IMAGE METHODS
   fileChangedHandler = event => {
-    // console.log(event.target.files[0]);
     this.setState({
-      avatar: event.target.files[0]
+      avatar: event.target.files[0],
+      previewAvatar: URL.createObjectURL(event.target.files[0])
     });
-    console.log(this.state);
-    console.log("from upload button", this.state.avatar);
-    console.log("from upload button", event.target.files[0]);
   };
 
-  // uploadHandler = () => {
-  //   const formData = new FormData();
-  //   formData.append("myFile", this.state.avatar, this.state.avatar.name);
-  //   // console.log(this.state.selectedFile);
-  //   console.log(this.state.avatar);
-  //   console.log(this.state);
-  // };
-
-  // FORM METHODS
+  // FORM EVENT HANDLER
 
   onChange = e => {
-    this.setState({ [e.target.name]: e.target.value });
+    // let input = {
+    //   name: this.state.name
+    // };
+    // console.log(input);
+    this.setState({
+      [e.target.name]: e.target.value
+    });
   };
 
+  // FORM SUBMIT
+
   onSubmit = e => {
-    // console.log(this.state.avatar);
-    // console.log(this.state);
     e.preventDefault();
-    // console.log(this.state);
-    let formData = new FormData();
-    formData.append("myFile", this.state.avatar);
+    const formData = new FormData();
+    formData.append("avatar", this.state.avatar);
+    formData.append("username", this.state.username);
+    formData.append("email", this.state.email);
+    formData.append("password", this.state.password);
+    formData.append("password2", this.state.password2);
+    formData.append("firstname", this.state.firstname);
+    formData.append("lastname", this.state.lastname);
+    formData.append("country", this.state.country);
 
-    // console.log(this.state.selectedFile);
-
-    const newUser = {
-      username: this.state.username,
-      email: this.state.email,
-      password: this.state.password,
-      password2: this.state.password2,
-      firstname: this.state.firstname,
-      lastname: this.state.lastname,
-      country: this.state.country,
-      avatar: formData
-    };
-    // this.props.registerUser(this.state, this.props.history);
-    this.props.registerUser(newUser, this.props.history);
-    console.log("submit", newUser);
-    console.log("submit", this.state);
-    console.log("submit", this.state.avatar);
+    this.props.registerUser(formData, this.props.history);
   };
 
   render() {
+    const previewAvatar = this.state.previewAvatar;
     const { errors } = this.state;
     // const { user } = this.props.auth;
-    // console.log(user);
 
-    const uploadImage = (
+    const checkboxFalseBtn = (
       <div>
-        {/* <h2>upload photo</h2>
-        <input type="file" onChange={this.fileChangedHandler} />
-        <button onClick={this.uploadHandler}>Upload!</button> */}
+        <button
+          disabled
+          className="loginButtonDisabled"
+          onClick={this.uploadHandler}
+          type="submit"
+          value="Submit"
+        >
+          Agree to Terms & Conditions
+        </button>
       </div>
+    );
+
+    const checkboxTrueBtn = (
+      <div>
+        <button
+          className="loginButton"
+          onClick={this.uploadHandler}
+          type="submit"
+          value="Submit"
+        >
+          Submit
+        </button>
+      </div>
+    );
+
+    const checkboxFalse = (
+      <div>
+        <Checkbox
+          value="t&c"
+          color="primary"
+          name="t&c_checkbox"
+          onClick={this.tccheckbox}
+        />
+
+        <span>
+          I agree to MYtinerarys{" "}
+          <span className="tandc" onClick={this.handleClickOpen}>
+            Terms & Conditions
+          </span>
+        </span>
+      </div>
+    );
+
+    const checkboxTrue = (
+      <div>
+        <Checkbox disabled />
+
+        <span>
+          I agree to MYtinerarys{" "}
+          <span className="tandc">Terms & Conditions</span>
+        </span>
+      </div>
+    );
+
+    //IMAGE LOGIC
+
+    const noPreview = (
+      <Card className="commentForm">
+        <div className="addPhoto">
+          <div>
+            <CloudUploadIcon />
+            <Input
+              id="contained-button-file"
+              type="file"
+              label="Add Photo"
+              accept="image/*"
+              name="avatar"
+              onChange={this.fileChangedHandler}
+              errorform={errors.avatar}
+            />
+            {/* {errors.avatar && (
+              <div className="invalid-feedback">{errors.avatar}</div>
+            )} */}
+          </div>
+        </div>
+        <div>
+          <p>* Gravatar is supported.</p>
+        </div>
+      </Card>
+    );
+
+    const preview = (
+      <Card className="commentForm">
+        <div className="previewPhoto">
+          <div>
+            <img
+              className="previewImage"
+              alt="imageuploader"
+              src={this.state.previewAvatar}
+            />
+          </div>
+        </div>
+        <div className="removePhotoDiv">
+          <Button
+            className="removePhoto"
+            onClick={this.removeImage}
+            variant="contained"
+          >
+            Remove Image
+            <DeleteIcon />
+          </Button>
+        </div>
+      </Card>
     );
 
     const registerForm = (
@@ -163,80 +274,12 @@ class Signup extends Component {
 
           {/* START OF FORM */}
           <Card raised className="commentForm">
-            <form noValidate onSubmit={this.onSubmit}>
-              {/* <form noValidate onSubmit={this.onSubmit}> */}
-              {/* UPLOAD PHOTO */}
-              <div className="addPhoto">
-                <div>
-                  <CloudUploadIcon />
-
-                  {/* <input
-                    accept="image/*"
-                    id="outlined-button-file"
-                    multiple
-                    type="file"
-                  /> */}
-                  {/* <label htmlFor="outlined-button-file">
-                  <Button variant="outlined" component="span">
-                    Upload
-                  </Button>
-                </label>*/}
-
-                  {/* IMAGE UPLOADER */}
-                  {/* <input type="file" onChange={this.fileChangedHandler} /> */}
-                  <Input
-                    id="contained-button-file"
-                    type="file"
-                    label="Add Photo"
-                    accept="image/*"
-                    name="avatar"
-                    onChange={this.fileChangedHandler}
-                    errorform={errors.avatar}
-                    info="This site uses Gravatar so if you want a profile image, use a Gravatar email"
-                  />
-                  {errors.avatar && (
-                    <div className="invalid-feedback">{errors.avatar}</div>
-                  )}
-                  {/* <Input
-                    id="contained-button-file"
-                    type="file"
-                    label="Add Photo"
-                    accept="image/*"
-                    name="avatar"
-                    value={this.state.avatar}
-                    onChange={this.onChange}
-                    error={errors.avatar}
-                    info="This site uses Gravatar so if you want a profile image, use a Gravatar email"
-                  /> */}
-                  {/* {errors.avatar && (
-                    <div className="invalid-feedback">{errors.avatar}</div>
-                  )} */}
-                </div>
-              </div>
-              {/* <label htmlFor="contained-button-file">
-                  <Button variant="contained" component="span">
-                    Upload
-                    <CloudUploadIcon />
-                  </Button>
-                </label> */}
-
-              {/* <div className="photoAvatar"> */}
-              {/* <input type="file" label="File" /> */}
-              {/* <input /> */}
-              {/* <input type="file" label="Add Photo" s={12} name="avatar" /> */}
-              {/* <i className="small material-icons">add_a_photo</i> */}
-              {/* <input type="file" label="Add Photo" name="avatar" />
-                Add Photo
-                <TextField
-                  label="Add Photo"
-                  type="file"
-                  name="avatar"
-                  accept="image"
-                  value={this.state.avatar}
-                  onChange={this.onChange}
-                  errorform={errors.avatar}
-                /> */}
-              {/* </div> */}
+            <form
+              encType="multipart/form-data"
+              noValidate
+              onSubmit={this.onSubmit}
+            >
+              {previewAvatar === null ? noPreview : preview}
 
               {/* START OF REST OF FORM */}
               <div>
@@ -348,54 +391,7 @@ class Signup extends Component {
               </div>
               <div>
                 <div>
-                  <Select
-                    native
-                    className="selectCountry"
-                    type="select"
-                    name="country"
-                    label="Country:"
-                    value={this.state.country}
-                    onChange={this.onChange}
-                    errorform={errors.country}
-                  >
-                    <option value="">Choose Country</option>
-                    <option value="Spain">Spain</option>
-                    <option value="UK">UK</option>
-                    <option value="France">France</option>
-                    <option value="Germany">Germany</option>
-                    <option value="Netherlands">Netherlands</option>
-                    <option value="Ireland">Ireland</option>
-                    <option value="USA">USA</option>
-                  </Select>
-                  {errors.country && (
-                    <div className="invalid-feedback">{errors.country}</div>
-                  )}
-                </div>
-                <div>
-                  {/* NEW FORM */}
-                  {/* <FormControl>
-                    <Select
-                      value={this.state.country}
-                      onChange={this.onChange}
-                      error={errors.country}
-                      displayEmpty
-                      name="country"
-                    >
-                      <MenuItem value="">
-                        <em>None</em>
-                      </MenuItem>
-                      <MenuItem value="Spain">Spain</MenuItem>
-                      <MenuItem value="UK">UK</MenuItem>
-                      <MenuItem value="France">France</MenuItem>
-                      <MenuItem value="Germany">Germany</MenuItem>
-                      <MenuItem value="Netherlands">Netherlands</MenuItem>
-                      <MenuItem value="Ireland">Ireland</MenuItem>
-                      <MenuItem value="USA">USA</MenuItem>
-                    </Select>
-                  </FormControl> */}
-
-                  {/* NEW FORM 2*/}
-                  {/* <FormControl variant="filled">
+                  <FormControl variant="filled">
                     <InputLabel htmlFor="filled-country-simple">
                       Country:
                     </InputLabel>
@@ -403,7 +399,7 @@ class Signup extends Component {
                       className="selectCountry"
                       value={this.state.country}
                       onChange={this.onChange}
-                      error={errors.country}
+                      errorform={errors.country}
                       type="select"
                       name="country"
                       input={
@@ -424,27 +420,16 @@ class Signup extends Component {
                       <MenuItem value="Ireland">Ireland</MenuItem>
                       <MenuItem value="USA">USA</MenuItem>
                     </Select>
-                  </FormControl> */}
+                  </FormControl>
                 </div>
               </div>
-              {/* {errors.country && (
+              {errors.country && (
                 <div className="invalid-feedback">{errors.country}</div>
-              )} */}
+              )}
+
+              {/* T&C CHECKBOX */}
               <div>
-                <Checkbox value="t&c" color="primary" name="t&c_checkbox" />
-                {/* <input
-                  name="t&c_checkbox"
-                  type="checkbox"
-                  value=" "
-                  label=" "
-                  className="filled-in"
-                /> */}
-                <span>
-                  I agree to MYtinerarys{" "}
-                  <span className="tandc" onClick={this.handleClickOpen}>
-                    Terms & Conditions
-                  </span>
-                </span>
+                {this.state.checkbox === false ? checkboxFalse : checkboxTrue}
               </div>
               {/* MODAL */}
               <div>
@@ -470,35 +455,26 @@ class Signup extends Component {
                     <Button onClick={this.handleClose} color="primary">
                       Disagree
                     </Button>
-                    <Button onClick={this.handleClose} color="primary">
+                    <Button onClick={this.handleCloseAgree} color="primary">
                       Agree
                     </Button>
                   </DialogActions>
                 </Dialog>
               </div>
               {/* SUBMIT BUTTON */}
-              <div>
-                {/* <input type="submit" className="" /> */}
-                <button className="loginButton" type="submit" value="Submit">
-                  Submit
-                </button>
-              </div>
-              {/* SUBMIT BUTTON 2*/}
-              {/* <div>
-              <Button variant="contained" color="secondary" disabled>
-                Submit
-              </Button>
-            </div> */}
+
+              {this.state.checkbox === false
+                ? checkboxFalseBtn
+                : checkboxTrueBtn}
             </form>
           </Card>
         </div>
       </div>
     );
+
     return (
       <div>
         <Navbar />
-        {uploadImage}
-
         {registerForm}
         <BtnHome />
       </div>

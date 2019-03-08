@@ -5,6 +5,7 @@ import activityReducer from "./activityReducer";
 import commentReducer from "./commentReducer";
 import authReducer from "./authReducer";
 import errorReducer from "./errorReducer";
+import profileReducer from "./profileReducer.js";
 
 export default combineReducers({
   //cityReducer
@@ -13,5 +14,6 @@ export default combineReducers({
   activities: activityReducer,
   comments: commentReducer,
   auth: authReducer,
-  errors: errorReducer
+  errors: errorReducer,
+  profile: profileReducer
 });

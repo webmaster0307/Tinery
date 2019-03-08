@@ -2,17 +2,40 @@ const express = require("express");
 const router = express.Router();
 const Itinmodel = require("../../models/itinerary");
 
+//-------------------------------------------------------------
 //GET
+//-------------------------------------------------------------
+// @route /api/itin/
+// @desc Get All Itineraries
+// @access Public
 
 router.get("/itin", (req, res) => {
   Itinmodel.find().then(itin => res.json(itin));
 });
+//-------------------------------------------------------------
+// @route /api/itin/:city
+// @desc Get Itinerary by City name
+// @access Public
 
-router.get("/itin/:url", (req, res) => {
-  Itinmodel.find({ cityurl: req.params.url }).then(itin => res.json(itin));
+router.get("/itin/:cityurl", (req, res) => {
+  Itinmodel.find({ cityurl: req.params.cityurl }).then(itin => res.json(itin));
 });
 
+//-------------------------------------------------------------
+// @route /api/itinid/:city
+// @desc Get Itinerary by ID
+// @access Public
+
+router.get("/itinid/:id", (req, res) => {
+  Itinmodel.findById(req.params.id).then(itin => res.json(itin));
+});
+
+//-------------------------------------------------------------
 //POST
+//-------------------------------------------------------------
+// @route /api/itin/
+// @desc Post Itineraries
+// @access Public
 
 router.post("/itin", (req, res) => {
   // console.log(req.body);
@@ -39,12 +62,6 @@ router.post("/itin", (req, res) => {
     });
 });
 
-//PUT
-
-router.put("/itin/:id", (req, res) => res.send({ type: "PUT" }));
-
-//DELETE
-
-router.delete("/itin/:id", (req, res) => res.send({ type: "DELETE" }));
+//-------------------------------------------------------------
 
 module.exports = router;

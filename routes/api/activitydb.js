@@ -6,6 +6,10 @@ const Activitymodel = require("../../models/activitymodel");
 
 //GET
 
+// @route
+// @desc
+// @access
+
 router.get("/activity", (req, res) => {
   Activitymodel.find().then(activity => res.json(activity));
 });
@@ -16,6 +20,10 @@ router.get("/activity", (req, res) => {
 //   }).then(activity => res.json(activity));
 // });
 
+// @route
+// @desc
+// @access
+
 router.get("/activity/:activitykey", (req, res) => {
   Activitymodel.find({ activitykey: req.params.activitykey }).then(activity =>
     res.json(activity)
@@ -23,6 +31,10 @@ router.get("/activity/:activitykey", (req, res) => {
 });
 
 //POST
+
+// @route
+// @desc
+// @access
 
 router.post("/activity", (req, res) => {
   //   console.log(req.body);
@@ -44,6 +56,10 @@ router.post("/activity", (req, res) => {
 });
 
 //PUT
+
+// @route
+// @desc
+// @access
 
 router.put("/activity/:id", (req, res) => res.send({ type: "PUT" }));
 
@@ -69,6 +85,10 @@ router.put("/activity/:id", (req, res) => res.send({ type: "PUT" }));
 //   });
 
 //DELETE
+
+// @route
+// @desc
+// @access
 
 router.delete("/activity/:id", (req, res) => res.send({ type: "DELETE" }));
 

@@ -6,11 +6,19 @@ const Citymodel = require("../../models/citymodel");
 
 //GET
 
+// @route
+// @desc
+// @access
+
 router.get("/city", (req, res) => {
   Citymodel.find().then(city => res.json(city));
 });
 
 //POST
+
+// @route
+// @desc
+// @access
 
 router.post("/city", (req, res) => {
   // console.log(req.body);
@@ -33,6 +41,10 @@ router.post("/city", (req, res) => {
 });
 
 //PUT
+
+// @route
+// @desc
+// @access
 
 router.put("/city/:id", (req, res) => res.send({ type: "PUT" }));
 
@@ -58,6 +70,10 @@ router.put("/city/:id", (req, res) => res.send({ type: "PUT" }));
 //   });
 
 //DELETE
+
+// @route
+// @desc
+// @access
 
 router.delete("/city/:id", (req, res) => res.send({ type: "DELETE" }));
 

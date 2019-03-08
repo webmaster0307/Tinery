@@ -1,5 +1,5 @@
 import axios from "axios";
-import { POST_COMMENTS } from "./Types";
+import { GET_ERRORS, POST_COMMENTS } from "./Types";
 
 export const postAxiosCommentSuccess = data => {
   return {
@@ -23,11 +23,14 @@ export const postAxiosComments = ({
     return axios
       .post("/api/comment", { user, message, timestamp, activitykey })
       .then(res => {
-        console.log("redux:", res.data);
+        // console.log("redux:", res.data);
         dispatch(postAxiosCommentSuccess(res.data));
       })
-      .catch(error => {
-        throw error;
-      });
+      .catch(err =>
+        dispatch({
+          type: GET_ERRORS,
+          payload: err.response.data
+        })
+      );
   };
 };

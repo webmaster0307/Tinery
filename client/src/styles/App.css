@@ -179,6 +179,7 @@
 
 .itineraryCard {
   margin-bottom: 10px;
+  padding: 10px;
 }
 
 /* SLIDER */
@@ -306,7 +307,7 @@
 /* FORM  */
 
 .addPhoto {
-  width: 300px;
+  /* width: 300px; */
   margin-top: 10px;
   padding: 20px;
   background-color: gainsboro;
@@ -315,6 +316,14 @@
   width: 145px;
   border-radius: 50%;
   display: inline-block;
+}
+
+.previewImage {
+  max-width: 145px;
+  max-height: 145px;
+  border-radius: 50%;
+  background-color: gainsboro;
+  border: 1px solid black;
 }
 
 .tandc {
@@ -327,7 +336,6 @@
   font-size: 12px;
   padding-bottom: 10px;
   margin-left: 10px;
-
 }
 
 .forminput {
@@ -344,16 +352,16 @@
 .createAccountLink {
   color: #039be5;
   text-decoration: underline;
-  text-align: center
+  text-align: center;
 }
 
 .createAccountText {
-  text-align: center
+  text-align: center;
 }
 
 .loginSocialFlex {
   display: flex;
-
+  justify-content: space-evenly;
 }
 
 .loginSocialBtn {
@@ -363,25 +371,38 @@
   /* text-align: center; */
   margin-bottom: 10px;
   max-height: 100px;
-  max-width: 100px
+  max-width: 100px;
 }
 
 .loginGBtn {
   width: 200px;
   background-color: rgb(209, 72, 54);
   color: white;
-  font-size: 12px;
+
   padding: 14px 22px;
   border-radius: 12px;
   margin-bottom: 10px;
-  margin-left: auto;
-  margin-right: auto;
+
   text-align: center;
   text-decoration: none;
   display: block;
   border: none;
   color: white;
   margin-top: 10px;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.googleDiv {
+  margin-bottom: 10px;
+  margin-top: 20px;
+}
+
+.googleComponentBtn {
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 12px;
+  border-radius: 12px;
+
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
@@ -420,6 +441,21 @@
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
+.loginButtonDisabled {
+  font-size: 12px;
+  padding: 14px 100px;
+  border-radius: 12px;
+  margin-bottom: 15px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: white;
+  color: black;
+  border: 2px solid #e7e7e7;
+  text-align: center;
+  text-decoration: none;
+  display: block;
+}
+
 .registerFormInput {
   background-color: gainsboro;
   width: 400px;
@@ -428,6 +464,7 @@
 
 .selectCountry {
   width: 300px;
+  max-height: 50px;
   margin-top: 10px;
   padding: 5px;
   background-color: gainsboro;
@@ -441,14 +478,46 @@
   display: flex;
   justify-content: space-between;
   flex-direction: row;
-
 }
 
 .appBar {
-  margin-bottom: 20px
+  margin-bottom: 20px;
 }
 
 .IconaAccountCircle {
   /* border: 1px solid black; */
-  color: skyblue
+  color: skyblue;
+}
+
+.removePhoto {
+  border: 1px solid black;
+  font-size: 12px;
+
+  border-radius: 12px;
+
+  display: block;
+}
+
+.removePhotoDiv {
+  margin-bottom: 15px;
+  margin-top: 15px;
+}
+
+.previewPhoto {
+  margin-top: 10px;
+}
+
+/* DASHBOARD */
+
+.dashboardCard {
+  color: black;
+  padding: 10px;
+  margin-bottom: 10px;
+  /* margin: 10px; */
+  /* border: 2px solid black */
+  /* border-radius: 15px; */
+}
+
+.dashboardImg {
+  max-width: 100px;
 }
