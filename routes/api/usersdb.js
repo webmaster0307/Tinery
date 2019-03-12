@@ -4,9 +4,10 @@ const gravatar = require("gravatar");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const keys = require("../../config/keys");
-const passport = require("passport");
+// const passport = require("passport");
 const multer = require("multer");
 
+// MULTER CONFIGURATION
 const storage = multer.diskStorage({
   destination: function(req, file, cb) {
     cb(null, "./uploads/");
@@ -113,6 +114,7 @@ router.post("/user/registersocial", (req, res, next) => {
   // const { errors } = validateLoginInput(req.body);
 
   User.findOne({ email: req.body.email }).then(user => {
+    // FIND IF USER EXISTS
     if (user) {
       const payload = {
         id: user.id,
@@ -120,7 +122,7 @@ router.post("/user/registersocial", (req, res, next) => {
         avatar: user.avatar,
         favorites: user.favorites
       };
-
+      // SIGN IN
       jwt.sign(payload, keys.secretOrKey, { expiresIn: 3600 }, (err, token) => {
         res.json({
           success: true,
@@ -131,6 +133,7 @@ router.post("/user/registersocial", (req, res, next) => {
       // errors.email = "Email already exists";
       // return res.status(400).json(errors);
     } else {
+      // CREATE NEW USER
       const newUser = new User({
         username: req.body.username,
         avatar: req.body.avatar,
@@ -143,7 +146,7 @@ router.post("/user/registersocial", (req, res, next) => {
         facebookID: req.body.facebookID,
         country: req.body.country
       });
-
+      // BCRYPT
       bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(newUser.password, salt, (err, hash) => {
           if (err) throw err;
@@ -169,6 +172,7 @@ router.post("/user/registersocial", (req, res, next) => {
       //   favorites: user.favorites
       // };
 
+      //SIGN IN USER
       jwt.sign(payload, keys.secretOrKey, { expiresIn: 3600 }, (err, token) => {
         res.json({
           success: true,
@@ -236,32 +240,6 @@ router.post("/user/login", (req, res) => {
     });
   });
 });
-
-// SHOULD BE MOVED TO PROFILE
-// PROTECTED ROUTE POST
-
-// @route
-// @desc
-// @access
-
-router.get(
-  "/user/current",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    const errors = {};
-
-    User.findOne({ user: req.user._id })
-      .populate("user", ["username", "avatar"])
-      .then(user => {
-        if (!user) {
-          errors.nouser = "There is no user for this account";
-          return res.status(404).json(errors);
-        }
-        res.json(user);
-      })
-      .catch(err => res.status(404).json(err));
-  }
-);
 
 // EXPORT
 module.exports = router;

@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { fetchAxiosCities } from "../actions/fetchCities";
-import { fetchAxiosItineraries } from "../actions/fetchItineraries";
-import { fetchAxiosActivities } from "../actions/fetchActivities";
+import { fetchAxiosCities } from "../actions/citiesActions";
+import { fetchAxiosItineraries } from "../actions/itinerariesActions";
+import { fetchAxiosActivities } from "../actions/activitiesActions";
 import Itinerary from "../components/Itinerary";
 import Navbar from "../components/layout/Navbar";
 import Typography from "@material-ui/core/Typography";
@@ -70,14 +70,6 @@ class City extends Component {
     );
   }
 }
-
-// const mapStateToProps = state => {
-//   return {
-//     cities: state.cities,
-//     activities: state.activities,
-//     itineraries: state.itineraries
-//   };
-// };
 
 const mapStateToProps = (state, ownProps) => {
   let id = ownProps.match.params.city_name;

@@ -21,8 +21,18 @@ export const fetchAxiosItineraries = url => dispatch => {
   });
 };
 
-export const fetchAxiosItinerariesID = id => dispatch => {
-  axios.get(`/api/itinid/${id}`).then(res => {
+// export const fetchAxiosItinerariesID = id => dispatch => {
+//   axios.get(`/api/itinid/${id}`).then(res => {
+//     // console.log("fetched from actions", res.data);
+//     dispatch({
+//       type: FETCH_ITINERARIES_ID,
+//       payload: res.data
+//     });
+//   });
+// };
+
+export const fetchAxiosItinerariesID = favid => dispatch => {
+  axios.post(`/api/itinid`, { favid: favid }).then(res => {
     // console.log("fetched from actions", res.data);
     dispatch({
       type: FETCH_ITINERARIES_ID,

@@ -4,8 +4,9 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 // import { fetchAxiosItineraries } from "../actions/fetchItineraries";
 import { postFavorites } from "../actions/profileActions";
-import { fetchAxiosActivities } from "../actions/fetchActivities";
-import { fetchAxiosComments } from "../actions/fetchComments";
+import { fetchAxiosActivities } from "../actions/activitiesActions";
+import { fetchAxiosComments } from "../actions/commentActions";
+
 import Activity from "./Activity";
 import Comments from "./Comments";
 
@@ -40,6 +41,7 @@ class Itinerary extends Component {
       activities: [],
       itineraries: [],
       comments: [],
+      errors: {},
       open: false
     };
     this.handleClick = this.handleClick.bind(this);
@@ -78,10 +80,12 @@ class Itinerary extends Component {
       eventId: eventTargetId,
       isBtn: !state.isBtn
     }));
+    console.log(this.props.errors);
   }
   render() {
     // const { isAuthenticated, user } = this.props.auth;
     console.log(this.props);
+    console.log(this.state);
     const { isAuthenticated, user } = this.props.auth;
     const favDialog = (
       <div>
@@ -208,7 +212,9 @@ class Itinerary extends Component {
                     <div>Rating: {itinerary.rating}/5</div>
                   </Grid>
                   <Grid item xs={6} container wrap="nowrap">
-                    <Typography>{itinerary.hashtag + " "}</Typography>
+                    <Typography>
+                      {itinerary.hashtag.toString() + " "}
+                    </Typography>
                   </Grid>
                 </Grid>
               </div>
@@ -269,7 +275,8 @@ const mapStateToProps = state => {
     // eventId: state.event.target.id,
     activities: state.activities,
     comments: state.comments,
-    auth: state.auth
+    auth: state.auth,
+    errors: state.errors
   };
 };
 

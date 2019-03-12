@@ -14,9 +14,12 @@ export default function(state = initialState, action) {
         itineraries: action.payload
       };
     case FETCH_ITINERARIES_ID:
+      console.log(action.payload);
       return {
         ...state,
-        itinid: [...state.itinid, action.payload]
+        itinid: action.payload
+        // itinid: [action.payload, ...state.itinid]
+        // itinid: [...state.itinid, action.payload]
         // itineraries: [action.payload, ...state.itineraries]
         // itineraries: [...state.itineraries, action.payload],
         // itinid: [action.payload]

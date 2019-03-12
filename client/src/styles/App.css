@@ -94,6 +94,10 @@
   text-align: center;
 }
 
+.commentMinChar {
+  font-style: italic;
+}
+
 .commentFormInput {
   background-color: gainsboro;
   width: 400px;
@@ -105,7 +109,7 @@
   display: flex;
 }
 
-.activitycard>div {
+.activitycard > div {
   flex: 1;
 }
 
@@ -244,7 +248,7 @@
   margin-right: auto; */
 }
 
-.flexIcons>a {
+.flexIcons > a {
   /* flex: 1; */
   color: black;
 }

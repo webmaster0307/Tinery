@@ -1,8 +1,15 @@
-import { POST_FAVORITES, DELETE_FAVORITES } from "../actions/Types";
+import {
+  POST_FAVORITES,
+  DELETE_FAVORITES,
+  GET_PROFILE,
+  PROFILE_LOADING,
+  CLEAR_CURRENT_PROFILE
+} from "../actions/Types";
 
 const initialState = {
   // userID: [],
-  // itinID: [],
+  itinID: [],
+  itineraries: [],
   favorites: [],
   profile: [],
   loading: false
@@ -10,15 +17,44 @@ const initialState = {
 
 export default function(state = initialState, action) {
   switch (action.type) {
-    // case FETCH_FAVORITES:
-    //   return {
-    //     // ...state.favorites,
-    //     // ...state,
-    //     favorites: action.payload
+    case POST_FAVORITES:
+      return {
+        ...state,
+        favorites: [action.payload, ...state.favorites]
+        // favorites: [action.payload, ...state.favorites]
+        // favorites: action.payload
+      };
 
-    //     // favorites: [action.payload, ...state.favorites]
-    //   };
+    case DELETE_FAVORITES:
+      console.log("del fav", action.payload);
+      return {
+        // console.log("test")
+        ...state,
+        // favorites: [action.payload]
+        // favorites: state.favorites.filter(
+        //   favorite => favorite._id !== action.payload
+        // )
+        itinID: state.itinID.filter(favorite => favorite !== action.payload)
+      };
 
+    case PROFILE_LOADING:
+      return {
+        ...state,
+        loading: true
+      };
+
+    case GET_PROFILE:
+      return {
+        ...state,
+        profile: action.payload,
+        loading: false
+      };
+
+    case CLEAR_CURRENT_PROFILE:
+      return {
+        ...state,
+        profile: null
+      };
     // COMMENT EXAMPLE
     // case POST_COMMENTS:
     //   return {
@@ -26,22 +62,6 @@ export default function(state = initialState, action) {
     //     comments: [...state.comments, action.payload]
     //     // comments: state.comments
     //   };
-
-    case POST_FAVORITES:
-      return {
-        ...state,
-        // favorites: [...state.favorites, action.payload]
-        favorites: [action.payload, ...state.favorites]
-        // favorites: action.payload
-      };
-
-    case DELETE_FAVORITES:
-      return {
-        ...state,
-        favorites: state.favorites.filter(
-          favorite => favorite._id !== action.payload
-        )
-      };
 
     default:
       return state;

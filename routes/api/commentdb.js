@@ -47,25 +47,6 @@ router.get("/commentid/:id", (req, res) => {
   Commentmodel.findById(req.params.id).then(comment => res.json(comment));
 });
 
-// router.get("/comment/:id", (req, res) => {
-//   Commentmodel.find({ id: req.params.id }).then(comment => res.json(comment));
-// });
-
-// router.get("/comment/:id", (req, res) => {
-//   console.log(req.params);
-//   Commentmodel.findById(req.params._id)
-//     .then(post => {
-//       if (post) {
-//         res.json(post);
-//       } else {
-//         res.status(404).json({ nopostfound: "No post found with that ID" });
-//       }
-//     })
-//     .catch(err =>
-//       res.status(404).json({ nopostfound: "No post found with that ID" })
-//     );
-// });
-
 //POST
 
 // @route   POST api/comment
@@ -100,6 +81,25 @@ router.post("/comment", (req, res) => {
       console.error(err);
     });
 });
+
+// router.get("/comment/:id", (req, res) => {
+//   Commentmodel.find({ id: req.params.id }).then(comment => res.json(comment));
+// });
+
+// router.get("/comment/:id", (req, res) => {
+//   console.log(req.params);
+//   Commentmodel.findById(req.params._id)
+//     .then(post => {
+//       if (post) {
+//         res.json(post);
+//       } else {
+//         res.status(404).json({ nopostfound: "No post found with that ID" });
+//       }
+//     })
+//     .catch(err =>
+//       res.status(404).json({ nopostfound: "No post found with that ID" })
+//     );
+// });
 
 //PUT
 
@@ -166,7 +166,7 @@ router.delete("/comment/:activitykey", (req, res) =>
 // @desc    Like post
 // @access  Private
 router.post(
-  "/comment/:id",
+  "/commentlike/:id",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     User.findOne({ user: req.user.id }).then(user => {
@@ -195,7 +195,7 @@ router.post(
 // @desc    Unlike post
 // @access  Private
 router.post(
-  "/comment/:id",
+  "/commentlike/:id",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     User.findOne({ user: req.user.id }).then(user => {

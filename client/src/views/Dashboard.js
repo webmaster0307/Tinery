@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getCurrentProfile } from "./../actions/profileActions";
-import { fetchAxiosItinerariesID } from "../actions/fetchItineraries";
 import { removeFavorites } from "../actions/profileActions";
+import { fetchAxiosItinerariesID } from "../actions/itinerariesActions";
+
 import Navbar from "../components/layout/Navbar";
 // import Favorites from "../components/Favorites";
 
@@ -11,7 +12,6 @@ import Navbar from "../components/layout/Navbar";
 // import { Link } from "react-router-dom";
 // import { NavLink } from "react-router-dom";
 
-// import { getCurrentProfile, deleteAccount } from '../../actions/profileActions';
 // import ProfileActions from './ProfileActions';
 
 import Typography from "@material-ui/core/Typography";
@@ -48,19 +48,22 @@ class Dashboard extends Component {
     this.removeFav = this.removeFav.bind(this);
   }
   componentDidMount() {
-    if (this.props.itineraries.itinid.length === 0) {
-      let favoritesArray = this.props.auth.user.favorites;
-      // this.props.fetchFavorites("5c6162cee7179a22d682ef84");
-      favoritesArray.forEach(favorite => {
-        this.props.fetchAxiosItinerariesID(favorite);
-        // console.log(favorite);
-      });
-      this.setState({
-        itineraries: this.props.itineraries.itineraries
-      });
-    }
+    // getCurrentProfile(this.props.auth.user.id);
+    // console.log("didmount", this.props.auth.user.id);
+    // console.log("didmount", this.props.auth.user.favorites);
+    // console.log("state.profile", this.state);
+    // console.log("didmount updated user info", this.props.auth.user.id);
+    // if (this.props.itineraries.itinid.length === 0) {
+    let favoritesArray = this.props.auth.user.favorites;
+
+    this.props.fetchAxiosItinerariesID(favoritesArray);
+    this.setState({
+      itineraries: this.props.itineraries.itineraries,
+      itinid: this.props.itineraries.itinid
+    });
+    // }
     // console.log(this.state);
-    console.log(this.props.itineraries);
+    // console.log(this.props.itineraries);
   }
   // onDeleteClick(e) {
   //   this.props.deleteAccount();
@@ -74,23 +77,29 @@ class Dashboard extends Component {
     let userID = this.props.auth.user.id;
     console.log("user id", userID);
     console.log("itin id", favData.favorites);
+    // console.log("itin id", favData);
     // console.log(eventTargetId);
     // this.props.removeFavorites();
     // this.props.removeFavorites(userID, favData);
+    this.props.removeFavorites(userID, favData.favorites);
+    console.log("state", this.state);
+  };
+
+  refreshProfile = event => {
+    console.log("This Props ID", this.props.auth.user.id);
+    getCurrentProfile(this.props.auth.user.id);
   };
 
   render() {
+    // getCurrentProfile(this.props.auth.user.id);
     const { isAuthenticated, user } = this.props.auth;
     // const { profile, loading } = this.props.profile;
     // console.log(this.props.itineraries);
-    console.log("itin.itin", this.props.itineraries.itineraries);
-    console.log("itin.id", this.props.itineraries.itinid);
-    console.log("state", this.state);
+    // console.log("itin.itin", this.props.itineraries.itineraries);
+    // console.log("itin.id", this.props.itineraries.itinid);
+    // console.log("state", this.state);
 
     // const { profile, loading } = this.props.profile;
-    const guestContent = (
-      <p>You must be registered and logged in to enable Dashboard</p>
-    );
 
     // const listID = user.favorites.map((favorite, i) => (
     //   <div key={i}>
@@ -105,6 +114,7 @@ class Dashboard extends Component {
 
     // let itinstate = this.props.itineraries.itineraries;
     let itinid = this.props.itineraries.itinid;
+    // console.log("itinid", this.props.itineraries.itinid[0]);
     // let uniqueitin = [...new Set(itinid)];
 
     // const listFavorites = itinstate.map((itin, i) => (
@@ -118,6 +128,18 @@ class Dashboard extends Component {
     //     <div>Hours : {itin.duration}</div>
     //     {/* <img src={itin.authorimage} /> */}
     //   </Card>
+    // ));
+    // const listNestedArray = itinid.map((itinerary, i) => (
+    //   <div key={i} className="dashboardCard">
+    //     {itinerary.title}
+    //     {itinerary.map((subitem, i) => {
+    //       return (
+    //         <ul>
+    //           <li>{subitem.title}</li>
+    //         </ul>
+    //       );
+    //     })}
+    //   </div>
     // ));
 
     const listFavoriteIDs = itinid.map((itinerary, i) => (
@@ -174,7 +196,7 @@ class Dashboard extends Component {
         </Card>
       </div>
     ));
-
+    console.log(this.state);
     return (
       <React.Fragment>
         <Navbar />
@@ -187,9 +209,11 @@ class Dashboard extends Component {
           >
             Dashboard
           </Typography>
+          <button onClick={this.refreshProfile}>Refresh Profile</button>
         </div>
         <div>
-          {isAuthenticated ? <p>Welcome {user.username}.</p> : guestContent}
+          <p>Welcome {user.username}.</p>
+          {/* {isAuthenticated ? <p>Welcome {user.username}.</p> : guestContent} */}
         </div>
         {/* <div>{listID}</div> */}
         {/* 
@@ -201,6 +225,7 @@ class Dashboard extends Component {
 
         {/* <div>{listFavorites}</div> */}
         <div>{listFavoriteIDs}</div>
+        {/* <div>{listNestedArray}</div> */}
       </React.Fragment>
     );
   }

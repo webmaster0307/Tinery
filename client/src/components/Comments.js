@@ -1,8 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import PropTypes from "prop-types";
 import moment from "moment";
-import { fetchAxiosComments } from "../actions/fetchComments";
-import { postAxiosComments } from "../actions/postComments";
+import {
+  fetchAxiosComments,
+  postAxiosComments
+} from "../actions/commentActions";
 import Card from "@material-ui/core/Card";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
@@ -19,9 +22,12 @@ class Comments extends Component {
       timestamp: "",
       activitykey: "",
       errors: {},
-      comments: []
+      comments: [],
+      input: ""
+
       // activitykey: this.props.comments.comment.activitykey
     };
+    this.onChange = this.onChange.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -30,16 +36,32 @@ class Comments extends Component {
     }
   }
 
+  componentWillUnmount() {
+    // console.log("unmount");
+    // this.setState(state => ({
+    //   errors: null
+    // }));
+    // if (this.props.errors) {
+    //   this.setState({ errors: null });
+    // }
+  }
+
   onChange = e => {
     this.setState({
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
+      input: e.target.value
     });
+    // console.log(e.target.name);
+    // console.log(e.target.value);
+    // console.log(this.state.input);
   };
 
   onSubmit = e => {
     e.preventDefault();
     let comments = {
       user: this.state.user,
+      avatar:
+        "http://www.gravatar.com/avatar/bd1eeb9418cdb0186fe316df129fc146?s=200&r=pg&d=mm",
       message: this.state.message,
       timestamp: moment(Date.now()).format("LLLL"),
       activitykey: this.props.activityKey
@@ -48,6 +70,7 @@ class Comments extends Component {
     this.props.postAxiosComments(comments);
     this.setState({
       user: "",
+      avatar: "",
       message: "",
       timestamp: "",
       activitykey: ""
@@ -60,20 +83,20 @@ class Comments extends Component {
     e.preventDefault();
     let comments = {
       user: this.props.auth.user.username,
+      avatar: this.props.auth.user.avatar,
       message: this.state.message,
       timestamp: moment(Date.now()).format("LLLL"),
       activitykey: this.props.activityKey
     };
-    console.log(comments);
+    // console.log(comments);
     this.props.postAxiosComments(comments);
     this.setState({
       user: "",
+      avatar: "",
       message: "",
       timestamp: "",
       activitykey: ""
     });
-    // REFRESH COMMENTS (NOT NEEDED)
-    // this.props.fetchAxiosComments(this.props.activityKey);
   };
 
   render() {
@@ -109,27 +132,34 @@ class Comments extends Component {
               name="user"
               value={this.state.user}
               onChange={this.onChange}
+              errorform={errors.user}
             />
+            {errors.user && (
+              <div className="invalid-feedback">{errors.user}</div>
+            )}
           </div>
-
-          <TextField
-            className="commentFormInput"
-            id="outlined-with-placeholder"
-            label="Leave a Comment:"
-            placeholder=""
-            margin="normal"
-            variant="outlined"
-            type="text"
-            name="message"
-            value={this.state.message}
-            onChange={this.onChange}
-            errorform={errors.message}
-          />
-          {errors.message && (
-            <div className="invalid-feedback">{errors.message}</div>
-          )}
-
+          {/* minlength="10"
+              maxlength="300" */}
           <div>
+            <TextField
+              className="commentFormInput"
+              id="outlined-with-placeholder"
+              label="Leave a Comment:"
+              placeholder=""
+              margin="normal"
+              variant="outlined"
+              type="text"
+              name="message"
+              value={this.state.message}
+              onChange={this.onChange}
+              errorform={errors.message}
+            />
+            {errors.message && (
+              <div className="invalid-feedback">{errors.message}</div>
+            )}
+          </div>
+          <div>
+            {/* TERN */}
             <button className="submitCommentBtn" type="submit" value="Submit">
               Submit
             </button>
@@ -164,9 +194,20 @@ class Comments extends Component {
           )}
 
           <div>
-            <button className="submitCommentBtn" type="submit" value="Submit">
-              Submit
-            </button>
+            {this.state.input.length > 7 && this.state.input.length < 300 ? (
+              <button className="submitCommentBtn" type="submit" value="Submit">
+                Submit
+              </button>
+            ) : (
+              <button
+                disabled
+                className="loginButtonDisabled"
+                type="submit"
+                value="Submit"
+              >
+                *minimum 8 characters required
+              </button>
+            )}
           </div>
         </form>
       </Card>
@@ -190,6 +231,10 @@ class Comments extends Component {
   }
 }
 
+Comments.propTypes = {
+  errors: PropTypes.object.isRequired
+};
+
 const mapStateToProps = state => {
   return {
     comments: state.comments,
@@ -205,12 +250,6 @@ const mapStateToProps = state => {
 //     }
 //   };
 // };
-
-// export default connect(
-//   mapDispatchToProps,
-//   mapStateToProps,
-//   { fetchAxiosComments, postAxiosComments }
-// )(Comments);
 
 export default connect(
   mapStateToProps,

@@ -9,7 +9,8 @@ const CommentSchema = new Schema({
   },
   // _id: { type: Number },
   user: {
-    type: String
+    type: String,
+    required: true
   },
   timestamp: {
     type: String

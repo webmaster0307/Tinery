@@ -26,13 +26,20 @@ router.get("/itin/:cityurl", (req, res) => {
 // @desc Get Itinerary by ID
 // @access Public
 
-router.get("/itinid/:id", (req, res) => {
-  Itinmodel.findById(req.params.id).then(itin => res.json(itin));
-});
+// router.get("/itinid/:id", (req, res) => {
+//   Itinmodel.findById(req.params.id).then(itin => res.json(itin));
+// });
 
 //-------------------------------------------------------------
 //POST
-//-------------------------------------------------------------
+//
+
+router.post("/itinid/", (req, res) => {
+  Itinmodel.find({ _id: { $in: req.body.favid } })
+  .then(itin => res.json(itin));
+});
+
+// -------------------------------------------------------------
 // @route /api/itin/
 // @desc Post Itineraries
 // @access Public

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import BtnHome from "../components/layout/BtnHome";
 import Navbar from "../components/layout/Navbar";
-import { fetchAxiosCities } from "../actions/fetchCities";
+import { fetchAxiosCities } from "../actions/citiesActions";
 // import { debounce } from "lodash";
 
 import Card from "@material-ui/core/Card";

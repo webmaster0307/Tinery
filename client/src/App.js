@@ -27,14 +27,14 @@ import Dashboard from "./views/Dashboard";
 import PrivateRoute from "./components/layout/PrivateRoute";
 
 // Check for token
-if (localStorage.jwtToken) {
-  //if (sessionStorage.jwtToken) {
+// if (localStorage.jwtToken) {
+if (sessionStorage.jwtToken) {
   // Set auth token header auth
-  setAuthToken(localStorage.jwtToken);
-  //  setAuthToken(sessionStorage.jwtToken);
+  // setAuthToken(localStorage.jwtToken);
+  setAuthToken(sessionStorage.jwtToken);
   // Decode token and get user info and exp
-  const decoded = jwt_decode(localStorage.jwtToken);
-  // const decoded = jwt_decode(sessionStorage.jwtToken);
+  // const decoded = jwt_decode(localStorage.jwtToken);
+  const decoded = jwt_decode(sessionStorage.jwtToken);
   // Set user and isAuthenticated
   store.dispatch(setCurrentUser(decoded));
 
