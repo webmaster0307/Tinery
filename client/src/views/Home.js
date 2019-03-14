@@ -17,10 +17,12 @@ class Home extends Component {
     const loginState = (
       <div className="flexIcons">
         <div className="flexLink">
+          <NavLink to="/dashboard">Dashboard</NavLink>
+        </div>
+        <div className="flexLink">
           <NavLink onClick={this.onLogoutClick.bind(this)} to="/login">
             Log Out
           </NavLink>
-          {/* <div>{this.props.auth.user.username}</div> */}
         </div>
       </div>
     );
@@ -72,14 +74,6 @@ class Home extends Component {
 
         <div>
           <BtnHome />
-          {/* <Link to="/">
-            <img
-              to="/"
-              className="homeIcon"
-              alt="logo_image"
-              src={require("../images/client/homeIcon.png")}
-            />
-          </Link> */}
         </div>
       </div>
     );

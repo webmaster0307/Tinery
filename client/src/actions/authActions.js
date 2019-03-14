@@ -23,7 +23,7 @@ export const loginUser = userData => dispatch => {
   axios
     .post("/auth/user/login", userData)
     .then(res => {
-      // console.log(res.data);
+      console.log(res.data);
       // Save to localStorage
       const { token } = res.data;
       // Set token to ls
@@ -35,6 +35,7 @@ export const loginUser = userData => dispatch => {
       const decoded = jwt_decode(token);
       // Set current user
       dispatch(setCurrentUser(decoded));
+      // console.log(decoded);
     })
     .catch(err =>
       dispatch({

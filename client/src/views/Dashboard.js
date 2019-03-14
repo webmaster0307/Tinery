@@ -3,16 +3,14 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getCurrentProfile } from "./../actions/profileActions";
 import { removeFavorites } from "../actions/profileActions";
-import { fetchAxiosItinerariesID } from "../actions/itinerariesActions";
+import { fetchAxiosItinerariesID } from "../actions/profileActions";
+import BtnHome from "../components/layout/BtnHome";
 
 import Navbar from "../components/layout/Navbar";
 // import Favorites from "../components/Favorites";
-
 // import Spinner from "../components/layout/Spinner";
 // import { Link } from "react-router-dom";
 // import { NavLink } from "react-router-dom";
-
-// import ProfileActions from './ProfileActions';
 
 import Typography from "@material-ui/core/Typography";
 // import Avatar from "@material-ui/core/Avatar";
@@ -20,6 +18,7 @@ import Typography from "@material-ui/core/Typography";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Grid from "@material-ui/core/Grid";
+import Icon from "@material-ui/core/Icon";
 
 // import Button from "@material-ui/core/Button";
 // import Dialog from "@material-ui/core/Dialog";
@@ -27,7 +26,6 @@ import Grid from "@material-ui/core/Grid";
 // import DialogContent from "@material-ui/core/DialogContent";
 // import DialogContentText from "@material-ui/core/DialogContentText";
 // import DialogTitle from "@material-ui/core/DialogTitle";
-import Icon from "@material-ui/core/Icon";
 // import Favorite from "@material-ui/icons/Favorite";
 
 class Dashboard extends Component {
@@ -37,37 +35,20 @@ class Dashboard extends Component {
       // isBtn: false,
       // eventId: "",
       itineraries: [],
-      itinid: []
+      favid: [],
+      itinID: [],
       // favoriteIDs: this.props.auth.user.favorites,
-      // favorites: [],
-      // profile: []
-      // activities: [],
-      // comments: [],
+      favorites: [],
+      profile: []
       // open: false
     };
     this.removeFav = this.removeFav.bind(this);
   }
-  componentDidMount() {
-    // getCurrentProfile(this.props.auth.user.id);
-    // console.log("didmount", this.props.auth.user.id);
-    // console.log("didmount", this.props.auth.user.favorites);
-    // console.log("state.profile", this.state);
-    // console.log("didmount updated user info", this.props.auth.user.id);
-    // if (this.props.itineraries.itinid.length === 0) {
-    let favoritesArray = this.props.auth.user.favorites;
 
+  componentDidMount() {
+    let favoritesArray = this.props.profile.favid;
     this.props.fetchAxiosItinerariesID(favoritesArray);
-    this.setState({
-      itineraries: this.props.itineraries.itineraries,
-      itinid: this.props.itineraries.itinid
-    });
-    // }
-    // console.log(this.state);
-    // console.log(this.props.itineraries);
   }
-  // onDeleteClick(e) {
-  //   this.props.deleteAccount();
-  // }
 
   removeFav = event => {
     let eventTargetId = event;
@@ -75,8 +56,8 @@ class Dashboard extends Component {
       favorites: eventTargetId
     };
     let userID = this.props.auth.user.id;
-    console.log("user id", userID);
-    console.log("itin id", favData.favorites);
+    // console.log("user id", userID);
+    // console.log("itin id", favData.favorites);
     // console.log("itin id", favData);
     // console.log(eventTargetId);
     // this.props.removeFavorites();
@@ -85,64 +66,26 @@ class Dashboard extends Component {
     console.log("state", this.state);
   };
 
-  refreshProfile = event => {
-    console.log("This Props ID", this.props.auth.user.id);
-    getCurrentProfile(this.props.auth.user.id);
-  };
-
   render() {
     // getCurrentProfile(this.props.auth.user.id);
-    const { isAuthenticated, user } = this.props.auth;
-    // const { profile, loading } = this.props.profile;
-    // console.log(this.props.itineraries);
-    // console.log("itin.itin", this.props.itineraries.itineraries);
-    // console.log("itin.id", this.props.itineraries.itinid);
+    // const { isAuthenticated, user } = this.props.auth;
+    const { user } = this.props.auth;
+
+    // console.log("favid", this.props.profile);
+    // console.log("props", this.props);
     // console.log("state", this.state);
 
-    // const { profile, loading } = this.props.profile;
+    // FETCH IN RENDER
+    // let favoritesArray = this.props.profile.favid;
+    // this.props.fetchAxiosItinerariesID(favoritesArray);
 
-    // const listID = user.favorites.map((favorite, i) => (
-    //   <div key={i}>
-    //     <Card>
-    //       <div>{favorite}</div>
-    //       <FavoriteBorder onClick={this.removeFav.bind(this, favorite)} />
+    // console.log(this.state);
+    // console.log(this.props);
 
-    //       {/* <Favorites key={i + favorite} favoriteID={favorite} /> */}
-    //     </Card>
-    //   </div>
-    // ));
+    let favid = this.props.profile.itinID;
+    console.log("props.profile.itinID", favid);
 
-    // let itinstate = this.props.itineraries.itineraries;
-    let itinid = this.props.itineraries.itinid;
-    // console.log("itinid", this.props.itineraries.itinid[0]);
-    // let uniqueitin = [...new Set(itinid)];
-
-    // const listFavorites = itinstate.map((itin, i) => (
-    //   <Card key={i} raised className="dashboardCard">
-    //     <FavoriteBorder onClick={this.removeFav.bind(this, itin._id)} />
-    //     <div>{itin.title}</div>
-    //     <Avatar className="authorIcon" src={itin.authorimage} />
-    //     <div>{itin.author}</div>
-
-    //     <div>${itin.price}</div>
-    //     <div>Hours : {itin.duration}</div>
-    //     {/* <img src={itin.authorimage} /> */}
-    //   </Card>
-    // ));
-    // const listNestedArray = itinid.map((itinerary, i) => (
-    //   <div key={i} className="dashboardCard">
-    //     {itinerary.title}
-    //     {itinerary.map((subitem, i) => {
-    //       return (
-    //         <ul>
-    //           <li>{subitem.title}</li>
-    //         </ul>
-    //       );
-    //     })}
-    //   </div>
-    // ));
-
-    const listFavoriteIDs = itinid.map((itinerary, i) => (
+    const listFavoriteIDs = favid.map((itinerary, i) => (
       <div key={i} className="dashboardCard">
         <Card raised>
           <Grid container spacing={24}>
@@ -196,7 +139,7 @@ class Dashboard extends Component {
         </Card>
       </div>
     ));
-    console.log(this.state);
+
     return (
       <React.Fragment>
         <Navbar />
@@ -209,30 +152,28 @@ class Dashboard extends Component {
           >
             Dashboard
           </Typography>
-          <button onClick={this.refreshProfile}>Refresh Profile</button>
         </div>
         <div>
           <p>Welcome {user.username}.</p>
           {/* {isAuthenticated ? <p>Welcome {user.username}.</p> : guestContent} */}
         </div>
+        {this.props.profile.favid.map(i => (
+          <div key={i + 1}>{i}</div>
+        ))}
         {/* <div>{listID}</div> */}
-        {/* 
-        {itinid.length > itinstate.length ? (
-          <div>{listFavoriteIDs}</div>
-        ) : (
-          <div>{listFavorites}</div>
-        )} */}
 
         {/* <div>{listFavorites}</div> */}
-        <div>{listFavoriteIDs}</div>
+        {/* <div>{listFavoriteIDs}</div> */}
         {/* <div>{listNestedArray}</div> */}
+        <div>{listFavoriteIDs}</div>
+        <BtnHome />
       </React.Fragment>
     );
   }
 }
 
 Dashboard.propTypes = {
-  // getCurrentProfile: PropTypes.func.isRequired,
+  getCurrentProfile: PropTypes.func.isRequired,
   // favorites: PropTypes.array,
   // // deleteAccount: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
@@ -241,12 +182,11 @@ Dashboard.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  // favorites: state.favorites,
+  favid: state.favid,
   // errors: state.errors,
   profile: state.profile,
   auth: state.auth,
-  itineraries: state.itineraries,
-  itinid: state.itinid
+  itinID: state.itinID
 });
 
 // export default Dashboard;

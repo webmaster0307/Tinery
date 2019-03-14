@@ -156,7 +156,6 @@ class Signup extends Component {
         <button
           disabled
           className="loginButtonDisabled"
-          onClick={this.uploadHandler}
           type="submit"
           value="Submit"
         >
@@ -169,7 +168,7 @@ class Signup extends Component {
       <div>
         <button
           className="loginButton"
-          onClick={this.uploadHandler}
+          onClick={this.onSubmit}
           type="submit"
           value="Submit"
         >

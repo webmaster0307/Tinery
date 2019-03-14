@@ -12,7 +12,7 @@ const CitySchema = new Schema({
   url: {
     type: String
   },
-  id: {
+  flagimg: {
     type: String
   }
 });

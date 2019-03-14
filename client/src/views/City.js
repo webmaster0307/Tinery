@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import { getCurrentProfile } from "./../actions/profileActions";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { fetchAxiosCities } from "../actions/citiesActions";
 import { fetchAxiosItineraries } from "../actions/itinerariesActions";
-import { fetchAxiosActivities } from "../actions/activitiesActions";
+// import { fetchAxiosActivities } from "../actions/activitiesActions";
 import Itinerary from "../components/Itinerary";
 import Navbar from "../components/layout/Navbar";
 import Typography from "@material-ui/core/Typography";
@@ -14,14 +15,15 @@ class City extends Component {
     super(props);
     this.state = {
       cities: this.props.cities.cities,
-      // activities: [],
       city: [],
-      itineraries: []
+      itineraries: [],
+      favid: []
     };
   }
   componentDidMount() {
     this.props.fetchAxiosItineraries(this.props.match.params.city_name);
     this.props.fetchAxiosCities();
+    this.props.getCurrentProfile();
   }
   render() {
     // console.log("clog", this.state);
@@ -75,7 +77,9 @@ const mapStateToProps = (state, ownProps) => {
   let id = ownProps.match.params.city_name;
   return {
     city: state.cities.cities.find(city => city.id === id),
-    cities: state.cities
+    cities: state.cities,
+    favid: state.favid,
+    profile: state.profile
     // itineraries: state.itineraries
     // eventId: state.event.target.id,
   };
@@ -87,5 +91,10 @@ City.propTypes = {
 
 export default connect(
   mapStateToProps,
-  { fetchAxiosItineraries, fetchAxiosActivities, fetchAxiosCities }
+  {
+    fetchAxiosItineraries,
+
+    fetchAxiosCities,
+    getCurrentProfile
+  }
 )(City);

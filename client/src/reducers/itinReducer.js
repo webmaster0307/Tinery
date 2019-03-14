@@ -1,8 +1,9 @@
-import { FETCH_ITINERARIES, FETCH_ITINERARIES_ID } from "../actions/Types";
+// import { FETCH_ITINERARIES, FETCH_ITINERARIES_ID } from "../actions/Types";
+import { FETCH_ITINERARIES } from "../actions/Types";
 
 const initialState = {
-  itineraries: [],
-  itinid: []
+  itineraries: []
+  // itinid: []
 };
 
 export default function(state = initialState, action) {
@@ -13,22 +14,13 @@ export default function(state = initialState, action) {
         // itineraries: [action.payload, ...state.itineraries]
         itineraries: action.payload
       };
-    case FETCH_ITINERARIES_ID:
-      console.log(action.payload);
-      return {
-        ...state,
-        itinid: action.payload
-        // itinid: [action.payload, ...state.itinid]
-        // itinid: [...state.itinid, action.payload]
-        // itineraries: [action.payload, ...state.itineraries]
-        // itineraries: [...state.itineraries, action.payload],
-        // itinid: [action.payload]
-        // itinid: [...state.itinid]
-        // itinid: [action.payload, ...state.itinid]
-        // itinid: [...state.itineraries]
-        // itineraries: action.payload
-        // itineraries: [...state.itineraries]
-      };
+    // case FETCH_ITINERARIES_ID:
+    //   console.log(action.payload);
+    //   return {
+    //     ...state,
+    //     itinid: action.payload
+    //     // itinid: [action.payload, ...state.itinid]
+    //   };
     default:
       return state;
   }

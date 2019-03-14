@@ -13,7 +13,7 @@ export default combineReducers({
   itineraries: itinReducer,
   activities: activityReducer,
   comments: commentReducer,
-  auth: authReducer,
   errors: errorReducer,
+  auth: authReducer,
   profile: profileReducer
 });

@@ -1,10 +1,12 @@
 import React, { Component } from "react";
+// import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./actions/utils/setAuthToken";
 import { setCurrentUser, logoutUser } from "./actions/authActions";
 import { clearCurrentProfile } from "./actions/profileActions";
+import { getCurrentProfile } from "./actions/profileActions";
 
 import store from "./store";
 import { Provider } from "react-redux";
@@ -13,7 +15,6 @@ import { Provider } from "react-redux";
 import "./styles/App.css";
 import CssBaseline from "@material-ui/core/CssBaseline";
 // import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
-
 // import Navbar from "./components/Navbar";
 import City from "./views/City";
 import Home from "./views/Home";
@@ -21,7 +22,9 @@ import Cities from "./views/Cities";
 import Login from "./views/Login";
 import Signup from "./views/Signup";
 // import Favorites from "./components/Favorites";
-import Cms from "./views/Cms";
+import Cmsitin from "./views/Cmsitin";
+import Cmsactivity from "./views/Cmsactivity";
+import Cmscity from "./views/Cmscity";
 import Dashboard from "./views/Dashboard";
 
 import PrivateRoute from "./components/layout/PrivateRoute";
@@ -37,6 +40,12 @@ if (sessionStorage.jwtToken) {
   const decoded = jwt_decode(sessionStorage.jwtToken);
   // Set user and isAuthenticated
   store.dispatch(setCurrentUser(decoded));
+  // Get favorites from User Account
+  // store.dispatch(getCurrentProfile(decoded));
+  // store.dispatch(getCurrentProfile());
+
+  // console.log(decoded);
+  // console.log(decoded.favorites);
 
   // Check for expired token
   const currentTime = Date.now() / 1000;
@@ -51,6 +60,13 @@ if (sessionStorage.jwtToken) {
 }
 
 class App extends Component {
+  componentDidMount() {
+    store.dispatch(getCurrentProfile());
+    // this.props.getCurrentProfile();
+    // this.setState({
+    //   favid: this.props.profile.favid
+    // });
+  }
   render() {
     return (
       <Provider store={store}>
@@ -64,10 +80,16 @@ class App extends Component {
               <Route exact path="/Signup" component={Signup} />
               <Route exact path="/Cities" component={Cities} />
               {/* <PrivateRoute exact path="/Favorites" component={Favorites} /> */}
-              <Route exact path="/Cms" component={Cms} />
-              {/* <Route exact path="/Dashboard" component={Dashboard} /> */}
-              <PrivateRoute exact path="/Dashboard" component={Dashboard} />
-
+              <PrivateRoute exact path="/Cmsitin" component={Cmsitin} />
+              <PrivateRoute exact path="/Cmsactivity" component={Cmsactivity} />
+              <PrivateRoute exact path="/Cmscity" component={Cmscity} />
+              {/* <Route exact path="/Cms" component={Cms} /> */}
+              {/* <PrivateRoute exact path="/Dashboard" component={Dashboard} /> */}
+              {/* <PrivateRoute exact path="/Dashboard" component={Dashboard} /> */}
+              <Route
+                path="/Dashboard"
+                render={props => <Dashboard {...props} isAuthed={true} />}
+              />
               {/* <Route exact path="/City/:city_name" component={City} /> */}
               <Route
                 path="/Cities/:city_name"
@@ -89,4 +111,13 @@ App.protoTypes = {
   cities: PropTypes.array
 };
 
+// const mapStateToProps = state => ({
+//   favid: state.favid
+// });
+
 export default App;
+
+// export default connect(
+//   mapStateToProps,
+//   { getCurrentProfile }
+// )(App);

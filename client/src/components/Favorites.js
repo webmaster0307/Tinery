@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { getCurrentProfile } from "../actions/profileActions";
-import { fetchFavorites } from "../actions/profileActions";
-import { fetchAxiosItineraries } from "../actions/fetchItineraries";
+// import { getCurrentProfile } from "../actions/profileActions";
+// import { fetchFavorites } from "../actions/profileActions";
+// import { fetchAxiosItineraries } from "../actions/fetchItineraries";
 import { removeFavorites } from "../actions/profileActions";
+import { fetchAxiosItinerariesID } from "../actions/profileActions";
 
 // import Card from "@material-ui/core/Card";
 // import CardContent from "@material-ui/core/CardContent";
@@ -13,18 +14,15 @@ import { removeFavorites } from "../actions/profileActions";
 // import FavoriteBorder from "@material-ui/icons/FavoriteBorder";
 // import Favorite from "@material-ui/icons/Favorite";
 
-// REMOVE FAVORITES
-
 class Favorites extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      // isBtn: false,
-      // eventId: "",
-      itineraries: [],
-      favoriteIDs: this.props.auth.user.favorites,
+      favid: [],
+
       favorites: [],
-      profile: []
+      profile: [],
+      itinID: []
       // activities: [],
       // comments: [],
       // open: false
@@ -32,21 +30,15 @@ class Favorites extends Component {
     this.removeFav = this.removeFav.bind(this);
   }
   componentDidMount() {
-    // let favoritesArr = this.props.auth.user.favorites;
-    // // this.props.fetchFavorites("5c6162cee7179a22d682ef84");
-    // favoritesArr.forEach(favorite => {
-    //   this.props.fetchFavorites(favorite);
-    //   // console.log(favorite);
-    // });
-    // this.setState({
-    //   cities: this.props.cities.cities
-    // });
-    // console.log(this.state.profile);
-    // console.log(this.props);
-  }
+    // let favoritesArray = this.props.id;
+    let favoritesArray = this.props.profile.favid;
+    // console.log("cdm favorites", favoritesArray);
+    // console.log("cdm favorites", this.props.profile.favid);
 
-  componentWillUnmount() {
-    // console.log("will unmount");
+    this.props.fetchAxiosItinerariesID(favoritesArray);
+    // this.setState({
+
+    // });
   }
 
   removeFav = event => {
@@ -55,54 +47,25 @@ class Favorites extends Component {
       favorites: eventTargetId
     };
     let userID = this.props.auth.user.id;
-    console.log("user id", userID);
-    console.log("itin id", favData);
-    // console.log(eventTargetId);
-    // this.props.removeFavorites();
-    this.props.removeFavorites(userID, favData);
+
+    this.props.removeFavorites(userID, favData.favorites);
   };
 
   render() {
-    const { isAuthenticated, user } = this.props.auth;
-    const { profile } = this.props;
-    // console.log("props", this.props.auth);
-    console.log("props.profile", this.props);
-    console.log("state.profile", this.state);
-    // console.log("path", this.props.auth.user.favorites);
-
-    // const listFavorites = this.props.profile.favorites
-    //   .toString()
-    //   .map(favorites => (
-    //     <Card key={favorites}>
-    //       <div>{favorites}</div>
-    //       <FavoriteBorder onClick={this.removeFav.bind(this, favorites)} />
-    //     </Card>
-    //   ));
-
-    // const listFavorites = this.props.auth.user.favorites.map(favorites => (
-    //   <Card key={favorites}>
-    //     <div>{favorites}</div>
-    //     <FavoriteBorder onClick={this.removeFav.bind(this, favorites)} />
-    //   </Card>
-    // ));
-
-    // const favorites = (
-    //   <div>
-    //   <p>Favorites App</p>
-
-    //   </div>
-    // );
     return (
       <React.Fragment>
         <p>Favorites App</p>
-        {/* {this.state.favoriteIDs} */}
+        {this.props.id}
+        {this.props.profile.favid}
+        {console.log("from fav state", this.state)}
+        {console.log("from fav props", this.props)}
       </React.Fragment>
     );
   }
 }
 
 Favorites.propTypes = {
-  getCurrentProfile: PropTypes.func.isRequired,
+  // getCurrentProfile: PropTypes.func.isRequired,
   // deleteAccount: PropTypes.func.isRequired,
   favorites: PropTypes.array,
   auth: PropTypes.object.isRequired,
@@ -111,11 +74,11 @@ Favorites.propTypes = {
 
 const mapStateToProps = state => {
   return {
+    favid: state.favid,
+    itinID: state.itinID,
+    // errors: state.errors,
     profile: state.profile,
-    auth: state.auth,
-    errors: state.errors,
-    itineraries: state.itineraries,
-    favorites: state.favorites
+    auth: state.auth
   };
 };
 
@@ -123,5 +86,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { getCurrentProfile, fetchFavorites, removeFavorites, fetchAxiosItineraries }
+  { fetchAxiosItinerariesID, removeFavorites }
 )(Favorites);

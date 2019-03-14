@@ -19,10 +19,11 @@ const citydb = require("./routes/api/citydb");
 const itinerarydb = require("./routes/api/itinerarydb");
 const activitydb = require("./routes/api/activitydb");
 const commentdb = require("./routes/api/commentdb");
-const usersdb = require("./routes/api/usersdb");
-const authdb = require("./routes/api/authdb");
-const imagedb = require("./routes/api/imagedb");
+
+// const authdb = require("./routes/api/authdb");
+const cmsdb = require("./routes/api/cmsdb");
 const profiledb = require("./routes/api/profiledb");
+const usersdb = require("./routes/api/usersdb");
 
 require("./models/usermodel");
 
@@ -63,7 +64,7 @@ app.use("/api", citydb);
 app.use("/api", itinerarydb);
 app.use("/api", activitydb);
 app.use("/api", commentdb);
-app.use("/api", imagedb);
+app.use("/api", cmsdb);
 
 // ROUTES
 //==============================================
@@ -91,7 +92,7 @@ app.use((req, res, next) => {
 // AUTH ROUTES
 
 app.use("/auth", usersdb);
-app.use("/auth", authdb);
+// app.use("/auth", authdb);
 app.use("/auth", profiledb);
 
 //PASSPORT CONFIG

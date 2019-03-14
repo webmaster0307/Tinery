@@ -6,11 +6,13 @@ import { Link } from "react-router-dom";
 import { postFavorites } from "../actions/profileActions";
 import { fetchAxiosActivities } from "../actions/activitiesActions";
 import { fetchAxiosComments } from "../actions/commentActions";
+import { getCurrentProfile } from "./../actions/profileActions";
 
 import Activity from "./Activity";
 import Comments from "./Comments";
 
 // import CardHeader from "@material-ui/core/CardHeader";
+
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 // import TextField from "@material-ui/core/TextField";
@@ -138,7 +140,7 @@ class Itinerary extends Component {
                 <div>
                   {/* 1st TERNARY */}
                   {isAuthenticated &&
-                  !user.favorites.includes(itinerary._id) ? (
+                  !this.props.profile.favid.includes(itinerary._id) ? (
                     <div>
                       <Icon
                         value={itinerary.title}
@@ -154,10 +156,11 @@ class Itinerary extends Component {
                   ) : (
                     <div />
                   )}
-
                   {/* 2nd TERNARY */}
-
-                  {isAuthenticated && user.favorites.includes(itinerary._id) ? (
+                  {console.log("props", this.props)}
+                  {console.log("state", this.state)}
+                  {isAuthenticated &&
+                  this.props.profile.favid.includes(itinerary._id) ? (
                     <div>
                       <Icon
                         value={itinerary.title}
@@ -185,9 +188,14 @@ class Itinerary extends Component {
                 <Grid container spacing={24}>
                   <Grid item xs={3}>
                     <div>
-                      <Avatar
+                      {/* <Avatar
                         className="authorIcon"
                         src={itinerary.authorimage}
+                      /> */}
+                      <img
+                        alt="profile"
+                        src={itinerary.authorimage}
+                        className="dashboardImg"
                       />
                     </div>
                   </Grid>
@@ -272,6 +280,8 @@ const mapStateToProps = state => {
   // console.log(state.itineraries);
   return {
     itineraries: state.itineraries,
+    profile: state.profile,
+    favid: state.favid,
     // eventId: state.event.target.id,
     activities: state.activities,
     comments: state.comments,
@@ -282,5 +292,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { fetchAxiosActivities, fetchAxiosComments, postFavorites }
+  { fetchAxiosActivities, fetchAxiosComments, postFavorites, getCurrentProfile }
 )(Itinerary);

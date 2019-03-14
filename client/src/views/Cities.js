@@ -12,6 +12,7 @@ import CardActionArea from "@material-ui/core/CardActionArea";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
+import { getCurrentProfile } from "./../actions/profileActions";
 
 class Cities extends Component {
   constructor(props) {
@@ -158,6 +159,11 @@ class Cities extends Component {
                 >
                   <CardActionArea>
                     <CardContent>
+                      <img
+                        alt="proflagfile"
+                        src={city.flagimg}
+                        className="dashboardImg"
+                      />
                       <Typography gutterBottom variant="h5" component="h2">
                         {/* <Link
                         to={"/cities/" + city.url}
@@ -185,7 +191,9 @@ class Cities extends Component {
 
 const mapStateToProps = state => {
   return {
-    cities: state.cities
+    cities: state.cities,
+    favid: state.favid,
+    profile: state.profile
   };
 };
 
@@ -195,5 +203,5 @@ Cities.propTypes = {
 
 export default connect(
   mapStateToProps,
-  { fetchAxiosCities }
+  { fetchAxiosCities, getCurrentProfile }
 )(Cities);

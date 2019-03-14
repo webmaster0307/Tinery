@@ -6,9 +6,9 @@ const ItinSchema = new Schema({
     type: String
     // required: [true, "Name field is required"]
   },
-  // rating: {
-  //   type: Number
-  // },
+  rating: {
+    type: Number
+  },
   likes: {
     type: Number
   },
@@ -21,7 +21,7 @@ const ItinSchema = new Schema({
   author: {
     type: String
   },
-  image: {
+  authorimage: {
     type: String
   },
   cityurl: {
@@ -29,7 +29,7 @@ const ItinSchema = new Schema({
   },
   hashtag: {
     type: Array
-  },
+  }
   // likes: [
   //   {
   //     user: {
@@ -38,17 +38,17 @@ const ItinSchema = new Schema({
   //     }
   //   }
   // ],
-  ratings: [
-    {
-      user: {
-        type: Schema.Types.ObjectId,
-        ref: "users"
-      },
-      rating: {
-        type: Number
-      }
-    }
-  ]
+  // ratings: [
+  //   {
+  //     user: {
+  //       type: Schema.Types.ObjectId,
+  //       ref: "users"
+  //     },
+  //     rating: {
+  //       type: Number
+  //     }
+  //   }
+  // ]
 });
 
 // // EXPORT CITY

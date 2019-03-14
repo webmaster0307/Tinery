@@ -6,77 +6,91 @@ const passport = require("passport");
 //  Load User model
 const User = require("../../models/usermodel");
 // Load Profile model
-// const Itinerary = require("../../models/itinerary");
+// const Profile = require("../../models/profilemodel");
 
 //-------------------------------------------------------------
-
-// @route   GET auth/profile/
+// @route   GET auth/profile/test
 // @desc    Tests Profile Route
 // @access  Public
-router.get("/profile", (req, res) => res.json({ msg: "profile Works" }));
+router.get("/profile/test", (req, res) => res.json({ msg: "profile Works" }));
 
 //-------------------------------------------------------------
-
-// @route   GET auth/profile/:id
-// @desc    Tests profile route by User ID
-// @access  Public
-
-router.get(
-  "/profile/get/:id",
-  // passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    console.log(req.params.id);
-    console.log("from profiledb");
-    User.findById(req.params.id)
-      // .populate("user", ["username", "avatar", "favorites"])
-      .then(user => res.json(user))
-      .catch(err => res.status(404).json(err));
-  }
-);
-
-// @route   GET auth/current
-// @desc    Tests profile route by User ID
-// @access  Public
-
-router.get(
-  "/current",
-  // passport.authenticate('jwt', { session: false }),
-  (req, res) => {
-    res.json({
-      // id: req.user._id,
-      // name: req.user.username,
-      email: req.user.email
-    });
-  }
-);
-
-// @route   GET auth/profile/:currentid
-// @desc    Get Profile route by User ID
-// @access  Public
+// @route   GET auth/profile/getprofile
+// @desc    Get current users profile
+// @access  Private
 
 // router.get(
-//   "/profile/:id",
-//   // passport.authenticate("jwt", { session: true }),
+//   "/profile/getprofile",
+//   passport.authenticate("jwt", { session: false }),
 //   (req, res) => {
-//     console.log(req.params.id);
-//     console.log("hello");
-//     // const errors = {};
+//     const errors = {};
 
-//     // User.findOne({ user: req.user._id })
-//     User.findById(req.params.id)
-//       // User.findOneAndUpdate()
-//       // .populate("user", ["username", "avatar", "favorites"])
-//       .then(user => {
-//         // if (!user) {
-//         //   errors.nouser = "There is no user for this account";
-//         //   return res.status(404).json(errors);
-//         // }
-//         res.json(user);
+//     Profile.findOne({ user: req.user.id })
+//       .populate("user", ["username", "avatar"])
+//       .then(profile => {
+//         if (!profile) {
+//           errors.noprofile = "There is no profile for this user";
+//           return res.status(404).json(errors);
+//         }
+//         res.json(profile);
 //       })
 //       .catch(err => res.status(404).json(err));
 //   }
 // );
 
+//-------------------------------------------------------------
+// @route   GET auth/profile/:user_id
+// @desc    Get profile by user ID
+// @access  Public
+
+// router.get("/profile/:user_id", (req, res) => {
+//   const errors = {};
+
+//   Profile.findOne({ user: req.params.user_id })
+//     .populate("user", ["username", "avatar"])
+//     .then(profile => {
+//       if (!profile) {
+//         errors.noprofile = "There is no profile for this user";
+//         res.status(404).json(errors);
+//       }
+
+//       res.json(profile);
+//     })
+//     .catch(err =>
+//       res.status(404).json({ profile: "There is no profile for this user" })
+//     );
+// });
+
+// GET USER INFO
+//-------------------------------------------------------------
+
+// @route   GET auth/profile/:user_id
+// @desc    Get profile by user ID
+// @access  Public
+
+router.get(
+  // "/profile/get/:user_id",
+  "/profileget",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    // console.log(req.params.user_id);
+    // console.log(req.user.id);
+    // console.log(req.body.favorites);
+    // const errors = {};
+    User.findById(req.user.id)
+      // GET FAVORITES BY USER ID
+      .then(user => {
+        res.json(user.favorites);
+      })
+      .catch(err =>
+        res.status(404).json({ User: "There is no user info for this user" })
+      );
+  }
+);
+
+// FAVORITE ADD & DELETE
+
+//-------------------------------------------------------------
 //-------------------------------------------------------------
 
 // @route   POST auth/profile/:id
@@ -91,6 +105,7 @@ router.post(
     console.log(req.body.favorites);
     // console.log(req.params);
     // console.log(req.params.id);
+
     User.findById(req.params.id).then(user => {
       // Check if new Favorites does not exist in Array of Favorites
       if (!user.favorites.includes(req.body.favorites)) {
@@ -117,7 +132,7 @@ router.post(
 
 //-------------------------------------------------------------
 
-// @route   DELETE auth/profile/:id
+// @route   DELETE auth/profile/removefav/:id/:favid
 // @desc    Delete Favorite from User
 // @access  Private
 router.delete(
@@ -132,21 +147,32 @@ router.delete(
 
     console.log("req params user id", req.params.id);
     console.log("req params fav id", req.params.favid);
-    // User.findById(req.params.id).then(user => {
-    //   // User.findOne({ user: req.user.id }).then(user => {
-    //   console.log("from fav", user.favorites);
+    User.findOneAndUpdate(
+      { _id: req.params.id },
+      { $pull: { favorites: req.params.favid } }
+    )
+      .then(user => {
+        // User.findOne({ user: req.user.id }).then(user => {
+        console.log("from fav", user.favorites);
+        res.json(user);
+        // Item.findById(req.params.id)
+        // .then(item => item.remove().then(() => res.json({ success: true })))
+        // .catch(err => res.status(404).json({ success: false }));
 
-    //   // console.log(req.body);
-    //   // console.log(req.body.favorites);
-    //   user.favorites
-    //     .findByIdAndRemove(req.body)
-    //     .then(() => res.json({ success: true }))
+        // ({ _id: { $in: req.body.favid } })
 
-    //     // Delete
-    //     // favorite.remove().then(() => res.json({ success: true }));
-    //     // })
-    //     .catch(err => res.status(404).json({ success: false }));
-    // });
+        // User.favorites.findById(req.params.favid).then(fav => {
+        //   console.log("from user favorites", fav);
+        //   // fav.remove().then(() => res.json({ success: true }));
+        // });
+        // .catch(err => res.status(404).json({ success: false }));
+        //   .findById(req.params.favid)
+        //   .then(() => res.json({ success: true }));
+
+        // // Delete
+        // user.favorites.remove().then(() => res.json({ success: true }));
+      })
+      .catch(err => res.status(404).json({ success: false }));
   }
 );
 

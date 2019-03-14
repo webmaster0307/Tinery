@@ -31,14 +31,15 @@ router.get("/itin/:cityurl", (req, res) => {
 // });
 
 //-------------------------------------------------------------
-//POST
-//
+// @route /api/itinid/
+// @desc Get Itinerary by posting Array of IDs
+// @access Public
 
 router.post("/itinid/", (req, res) => {
-  Itinmodel.find({ _id: { $in: req.body.favid } })
-  .then(itin => res.json(itin));
+  Itinmodel.find({ _id: { $in: req.body.favid } }).then(itin => res.json(itin));
 });
 
+//POST
 // -------------------------------------------------------------
 // @route /api/itin/
 // @desc Post Itineraries

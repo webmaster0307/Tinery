@@ -4,7 +4,7 @@ const gravatar = require("gravatar");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const keys = require("../../config/keys");
-// const passport = require("passport");
+const passport = require("passport");
 const multer = require("multer");
 
 // MULTER CONFIGURATION
@@ -32,7 +32,6 @@ const upload = multer({
 });
 
 // IMPORT USER MODEL
-
 const User = require("../../models/usermodel");
 
 // Load Input Validation
@@ -119,8 +118,7 @@ router.post("/user/registersocial", (req, res, next) => {
       const payload = {
         id: user.id,
         username: user.username,
-        avatar: user.avatar,
-        favorites: user.favorites
+        avatar: user.avatar
       };
       // SIGN IN
       jwt.sign(payload, keys.secretOrKey, { expiresIn: 3600 }, (err, token) => {
@@ -162,8 +160,7 @@ router.post("/user/registersocial", (req, res, next) => {
       const payload = {
         id: req.body.id,
         username: req.body.username,
-        avatar: req.body.avatar,
-        favorites: req.body.favorites
+        avatar: req.body.avatar
       };
       // const payload = {
       //   id: user.id,
@@ -217,8 +214,7 @@ router.post("/user/login", (req, res) => {
         const payload = {
           id: user.id,
           username: user.username,
-          avatar: user.avatar,
-          favorites: user.favorites
+          avatar: user.avatar
         };
         // Sign Token
         jwt.sign(
@@ -240,6 +236,24 @@ router.post("/user/login", (req, res) => {
     });
   });
 });
+
+//GET CURRENT USER ROUTE
+
+// @route   GET auth/current
+// @desc    Return current user
+// @access  Private
+router.get(
+  "/current",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    res.json({
+      id: req.user.id,
+      name: req.user.name,
+      email: req.user.email,
+      avatar: req.user.avatar
+    });
+  }
+);
 
 // EXPORT
 module.exports = router;

@@ -26,7 +26,7 @@ class MenuAppBar extends React.Component {
   };
 
   toggleDrawer = open => () => {
-    console.log(this.state);
+    // console.log(this.state);
     this.setState({
       left: open
     });
@@ -58,38 +58,45 @@ class MenuAppBar extends React.Component {
       <div>
         <ListItem button>
           <NavLink onClick={this.onLogoutClick.bind(this)} to="/">
+            <Icon className="navIcon">exit_to_app</Icon>
             Log Out
           </NavLink>
         </ListItem>
         <Divider />
         <ListItem button>
-          <Icon>dashboard</Icon>
-          <NavLink to="/dashboard">Dashboard</NavLink>
+          <NavLink to="/dashboard">
+            <Icon className="navIcon">dashboard</Icon>Dashboard
+          </NavLink>
         </ListItem>
-        {/* <ListItem button> */}
-        {/* <ListItemIcon> */}
-        {/* <InboxIcon /> */}
-        {/* <NavLink to="/favorites">My Favorites</NavLink>
-        </ListItem> */}
         <ListItem button>
-          {/* <IconButton>create</IconButton> */}
-          <NavLink to="/cms">Create Your Own</NavLink>
+          <NavLink to="/cmsitin">
+            <Icon className="navIcon">create</Icon>Create Itinerary
+          </NavLink>
+        </ListItem>
+        <ListItem button>
+          <NavLink to="/cmsactivity">
+            <Icon className="navIcon">create</Icon>Create Activity
+          </NavLink>
+        </ListItem>
+        <ListItem button>
+          <NavLink to="/cmscity">
+            <Icon className="navIcon">create</Icon>Create City
+          </NavLink>
         </ListItem>
       </div>
     );
     const logoutState = (
       <div>
         <ListItem button>
-          {/* <ListItemIcon> */}
-          <NavLink to="/login">Log In</NavLink>
-          {/* </ListItemIcon> */}
+          <NavLink to="/login">
+            <Icon className="navIcon">portrait</Icon>Log In
+          </NavLink>
         </ListItem>
         <ListItem button>
-          <NavLink to="/signup">Create Account</NavLink>
+          <NavLink to="/signup">
+            <Icon className="navIcon">person_add</Icon>Create Account
+          </NavLink>
         </ListItem>
-        {/* <ListItem button>
-          <NavLink to="/cms">Create Your Own</NavLink>
-        </ListItem> */}
       </div>
     );
 
@@ -98,7 +105,9 @@ class MenuAppBar extends React.Component {
         {isAuthenticated ? loginState : logoutState}
         <Divider />
         <ListItem button>
-          <NavLink to="/cities"> Cites</NavLink>
+          <NavLink to="/cities">
+            <Icon className="navIcon">location_city</Icon>Cites
+          </NavLink>
         </ListItem>
         <Divider />
       </div>
