@@ -119,6 +119,7 @@ router.post("/user/registersocial", (req, res, next) => {
         id: user.id,
         username: user.username,
         avatar: user.avatar
+        // favorites: user.favorites
       };
       // SIGN IN
       jwt.sign(payload, keys.secretOrKey, { expiresIn: 3600 }, (err, token) => {
@@ -161,6 +162,7 @@ router.post("/user/registersocial", (req, res, next) => {
         id: req.body.id,
         username: req.body.username,
         avatar: req.body.avatar
+        // favorites: user.favorites
       };
       // const payload = {
       //   id: user.id,
@@ -215,6 +217,7 @@ router.post("/user/login", (req, res) => {
           id: user.id,
           username: user.username,
           avatar: user.avatar
+          // favorites: user.favoritesuser.favorites
         };
         // Sign Token
         jwt.sign(

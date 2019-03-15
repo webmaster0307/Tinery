@@ -2,8 +2,8 @@ import { FETCH_COMMENTS, POST_COMMENTS } from "../actions/Types";
 
 const initialState = {
   comments: [],
-  comment: {},
-  loading: false
+  comment: {}
+  // loading: false
 };
 
 export default function(state = initialState, action) {

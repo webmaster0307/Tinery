@@ -121,11 +121,13 @@ class MenuAppBar extends React.Component {
           Status : Logged In
         </Link> */}
         <div>
-          <Avatar
-            alt={user.name}
-            src={user.avatar}
-            title="You must have a Gravatar connected to your email to display an image"
-          />
+          <NavLink to="/">
+            <Avatar
+              alt={user.name}
+              src={user.avatar}
+              title="You must have a Gravatar connected to your email to display an image"
+            />
+          </NavLink>
           {/* <Avatar
             alt={user.name}
             src={user.avatar}

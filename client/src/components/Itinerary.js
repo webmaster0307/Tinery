@@ -12,7 +12,6 @@ import Activity from "./Activity";
 import Comments from "./Comments";
 
 // import CardHeader from "@material-ui/core/CardHeader";
-
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 // import TextField from "@material-ui/core/TextField";
@@ -21,9 +20,8 @@ import Typography from "@material-ui/core/Typography";
 // import CardActions from "@material-ui/core/CardActions";
 // import CardMedia from "@material-ui/core/CardMedia";
 // import Button from "@material-ui/core/Button";
-import Avatar from "@material-ui/core/Avatar";
+// import Avatar from "@material-ui/core/Avatar";
 import Grid from "@material-ui/core/Grid";
-
 // import Paper from "@material-ui/core/Paper";
 import Icon from "@material-ui/core/Icon";
 
@@ -54,8 +52,8 @@ class Itinerary extends Component {
     // this.props.fetchAxiosItineraries();
     // this.props.fetchAxiosItineraries(this.props.match.params.city_name);
   }
-  // ADD FAVORITES
 
+  // ADD FAVORITES
   addToFav = event => {
     let eventTargetId = event;
     let favData = {
@@ -65,10 +63,12 @@ class Itinerary extends Component {
     // console.log("user id", userID);
     // console.log("itin id", favData);
     this.props.postFavorites(userID, favData);
+    // this.props.getCurrentProfile();
 
     this.setState({ open: true });
   };
 
+  // OPEN DIALOG
   handleClose = () => {
     this.setState({ open: false });
   };
@@ -82,13 +82,12 @@ class Itinerary extends Component {
       eventId: eventTargetId,
       isBtn: !state.isBtn
     }));
-    console.log(this.props.errors);
+    // console.log(this.props.errors);
   }
   render() {
     // const { isAuthenticated, user } = this.props.auth;
-    console.log(this.props);
-    console.log(this.state);
-    const { isAuthenticated, user } = this.props.auth;
+    const { isAuthenticated } = this.props.auth;
+
     const favDialog = (
       <div>
         <Dialog
@@ -157,8 +156,8 @@ class Itinerary extends Component {
                     <div />
                   )}
                   {/* 2nd TERNARY */}
-                  {console.log("props", this.props)}
-                  {console.log("state", this.state)}
+                  {/* {console.log("props", this.props)}
+                  {console.log("state", this.state)} */}
                   {isAuthenticated &&
                   this.props.profile.favid.includes(itinerary._id) ? (
                     <div>
@@ -195,7 +194,7 @@ class Itinerary extends Component {
                       <img
                         alt="profile"
                         src={itinerary.authorimage}
-                        className="dashboardImg"
+                        className="itinImg"
                       />
                     </div>
                   </Grid>

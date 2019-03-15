@@ -195,7 +195,7 @@
   padding-right: 10px; */
   /* margin-left: 10px;
   margin-right: 10px; */
-  max-height: 400px;
+  /* max-height: 500px; */
   /* max-width: 500px; */
   border: 1px solid white;
   margin-bottom: 20px;
@@ -204,12 +204,19 @@
 .sliderInnerCard {
   margin-left: 5px;
   margin-right: 5px;
+  /* max-height: 420px; */
+
 }
 
 .sliderImg {
-  max-height: 390px;
-  max-width: 500px;
-  padding-bottom: 10px;
+  max-height: 270px;
+  object-fit: fill;
+
+  /* .fill {object-fit: fill;}
+.contain {object-fit: contain;}
+.cover {object-fit: cover;} */
+  /* max-width: 800px; */
+  /* padding-bottom: 20px; */
   /* max-height: auto; */
 
   /* max-width: 340px;
@@ -532,7 +539,19 @@
 }
 
 .dashboardImg {
-  max-width: 100px;
+  max-width: 120px;
+  border: 2px solid black;
+  border-radius: 5px
+}
+
+.cityImg {
+  max-width: 200px;
+}
+
+.itinImg {
+  max-width: 90px;
+  border: 2px solid black;
+  border-radius: 5px
 }
 
 /* CMS */
@@ -543,5 +562,6 @@
   /* padding: 15px; */
   padding-top: 10px;
   padding-bottom: 10px;
-  margin: 10px 30px 10px 30px
+  margin: 10px 30px 10px 30px;
+  border-radius: 10px
 }

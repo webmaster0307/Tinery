@@ -162,7 +162,7 @@ class Cities extends Component {
                       <img
                         alt="proflagfile"
                         src={city.flagimg}
-                        className="dashboardImg"
+                        className="cityImg"
                       />
                       <Typography gutterBottom variant="h5" component="h2">
                         {/* <Link

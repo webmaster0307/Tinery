@@ -3,7 +3,6 @@ import { FETCH_ITINERARIES } from "../actions/Types";
 
 const initialState = {
   itineraries: []
-  // itinid: []
 };
 
 export default function(state = initialState, action) {
@@ -18,8 +17,7 @@ export default function(state = initialState, action) {
     //   console.log(action.payload);
     //   return {
     //     ...state,
-    //     itinid: action.payload
-    //     // itinid: [action.payload, ...state.itinid]
+
     //   };
     default:
       return state;

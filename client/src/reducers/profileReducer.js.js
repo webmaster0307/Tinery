@@ -11,18 +11,18 @@ import {
   DELETE_FAVORITES,
   GET_PROFILE,
   PROFILE_LOADING,
+  GET_FAVID,
   CLEAR_CURRENT_PROFILE
 } from "../actions/Types";
 
 const initialState = {
   // userID: [],
-  itinID: [],
+  // favorites: [],
+  user: {},
   itineraries: [],
-  favorites: [],
+  favitin: [],
   favid: [],
-
   profile: [],
-
   loading: false
 };
 
@@ -33,24 +33,32 @@ export default function(state = initialState, action) {
       // console.log(action.payload);
       return {
         ...state,
-        // itinID: action.payload,
+        // favid: action.payload,
         favid: action.payload,
         loading: false
       };
+    // case GET_FAVID:
+    //   return {
+    //     // favid: [...state]
+    //     // user.favorites : favid,
+    //     // ...state.favid
+    //     ...state
+    //   };
     // GETS FAVORITES FROM ITINERARIES USING ITIN ID
     case FETCH_ITINERARIES_ID:
-      console.log("fetchid", action.payload);
+      // console.log("fetchid favid", action.payload);
       return {
         ...state,
-        itinID: action.payload
+        favitin: action.payload
 
-        // itinid: [action.payload, ...state.itinid]
+        // favid: [action.payload, ...state.favid]
       };
 
     case POST_FAVORITES:
       return {
         ...state,
-        favorites: [action.payload, ...state.favorites]
+        favid: [action.payload, ...state.favid]
+        // LINE WAS ENABLED favorites: [action.payload, ...state.favorites]
         // favorites: [action.payload, ...state.favorites]
         // favorites: action.payload
       };
@@ -64,7 +72,10 @@ export default function(state = initialState, action) {
         // favorites: state.favorites.filter(
         //   favorite => favorite._id !== action.payload
         // )
-        itinID: state.itinID.filter(favorite => favorite._id !== action.payload)
+        // favid: state.favid.filter(favorite => favorite._id !== action.payload)
+        favitin: state.favitin.filter(
+          favorite => favorite._id !== action.payload
+        )
       };
 
     case PROFILE_LOADING:

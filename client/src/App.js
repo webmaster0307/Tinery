@@ -7,6 +7,7 @@ import setAuthToken from "./actions/utils/setAuthToken";
 import { setCurrentUser, logoutUser } from "./actions/authActions";
 import { clearCurrentProfile } from "./actions/profileActions";
 import { getCurrentProfile } from "./actions/profileActions";
+// import { getProfileFavorites } from "./actions/profileActions";
 
 import store from "./store";
 import { Provider } from "react-redux";
@@ -40,8 +41,9 @@ if (sessionStorage.jwtToken) {
   const decoded = jwt_decode(sessionStorage.jwtToken);
   // Set user and isAuthenticated
   store.dispatch(setCurrentUser(decoded));
+
   // Get favorites from User Account
-  // store.dispatch(getCurrentProfile(decoded));
+  store.dispatch(getCurrentProfile(decoded));
   // store.dispatch(getCurrentProfile());
 
   // console.log(decoded);
@@ -62,10 +64,7 @@ if (sessionStorage.jwtToken) {
 class App extends Component {
   componentDidMount() {
     store.dispatch(getCurrentProfile());
-    // this.props.getCurrentProfile();
-    // this.setState({
-    //   favid: this.props.profile.favid
-    // });
+    // store.dispatch(getProfileFavorites());
   }
   render() {
     return (
@@ -85,11 +84,11 @@ class App extends Component {
               <PrivateRoute exact path="/Cmscity" component={Cmscity} />
               {/* <Route exact path="/Cms" component={Cms} /> */}
               {/* <PrivateRoute exact path="/Dashboard" component={Dashboard} /> */}
-              {/* <PrivateRoute exact path="/Dashboard" component={Dashboard} /> */}
-              <Route
+              <PrivateRoute exact path="/Dashboard" component={Dashboard} />
+              {/* <Route
                 path="/Dashboard"
                 render={props => <Dashboard {...props} isAuthed={true} />}
-              />
+              /> */}
               {/* <Route exact path="/City/:city_name" component={City} /> */}
               <Route
                 path="/Cities/:city_name"

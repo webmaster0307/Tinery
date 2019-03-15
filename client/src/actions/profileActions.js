@@ -8,6 +8,7 @@ import {
   PROFILE_LOADING,
   CLEAR_CURRENT_PROFILE,
   GET_PROFILE,
+  GET_FAVID,
   GET_ERRORS
 } from "./Types";
 
@@ -17,7 +18,7 @@ import {
 export const getCurrentProfile = () => dispatch => {
   dispatch(setProfileLoading());
   axios.get("/auth/profileget").then(res => {
-    // console.log(res.data);
+    console.log(res.data);
     dispatch({
       type: GET_PROFILE,
       payload: res.data
@@ -29,6 +30,12 @@ export const getCurrentProfile = () => dispatch => {
   //     payload: null
   //   })
   // );
+};
+
+export const getProfileFavorites = () => {
+  return {
+    type: GET_FAVID
+  };
 };
 
 // SET PROFILE LOADING
@@ -48,16 +55,6 @@ export const clearCurrentProfile = () => {
 //-------------------------------------------------------------
 
 // FETCH FAVORITES
-// export const fetchAxiosItinerariesID = favid => dispatch => {
-//   axios.post(`/api/itinid`, { favid: favid }).then(res => {
-//     console.log("fetched from actions", res.data);
-//     dispatch({
-//       type: FETCH_ITINERARIES_ID,
-//       payload: res.data
-//     });
-//   });
-// };
-
 export const fetchAxiosItinerariesID = favid => dispatch => {
   // console.log("test");
   // console.log("from fetchaxios", favid);
@@ -78,13 +75,15 @@ export const fetchAxiosItinerariesID = favid => dispatch => {
 export const postFavorites = (id, favData) => dispatch => {
   // let id = userData.userID;
   //   console.log("from actions", id);
-  //   console.log("from actions", favData);
+  console.log("from actions", favData);
   axios
-    .post(`/auth/profile/${id}`, favData)
+    .post(`/auth/profile/${id}`, { favData: favData.favorites })
     .then(res => {
+      console.log(res.data);
+
       dispatch({
         type: POST_FAVORITES,
-        payload: res.data
+        payload: favData.favorites
       });
       // console.log("then posted actions:", res.data);
     })
@@ -113,7 +112,7 @@ export const removeFavorites = (id, favData) => dispatch => {
     )
     // CHECK ERROR payload: err.response.data
     .catch(err => {
-      console.log(err);
+      // console.log(err);
       dispatch({
         type: GET_ERRORS,
         payload: err.response.data

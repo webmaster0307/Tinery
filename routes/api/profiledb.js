@@ -101,20 +101,25 @@ router.post(
   "/profile/:id",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    console.log(req.body);
-    console.log(req.body.favorites);
+    // console.log(req.body);
+    // console.log(req.body.favorites);
     // console.log(req.params);
     // console.log(req.params.id);
 
-    User.findById(req.params.id).then(user => {
-      // Check if new Favorites does not exist in Array of Favorites
-      if (!user.favorites.includes(req.body.favorites)) {
-        // Add Favorite to array of Favorites
-        user.favorites.unshift(req.body.favorites);
-        user.save().then(user => res.json(user));
-        // console.log(user);
-      }
-    });
+    // User.findById(req.params.id).then(user => {
+    //   // Check if new Favorites does not exist in Array of Favorites
+    //   if (!user.favorites.includes(req.body.favorites)) {
+    //     // Add Favorite to array of Favorites
+    //     user.favorites.unshift(req.body.favorites);
+    //     user.save().then(user => res.json(user.favorites));
+    //     // console.log(user);
+    //   }
+    // });
+    console.log(req.body);
+    User.findOneAndUpdate(
+      { _id: req.params.id },
+      { $push: { favorites: req.body.favData } }
+    ).then(user => res.json(user.favorites));
   }
 );
 

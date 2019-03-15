@@ -50,6 +50,11 @@ class Cmsactivity extends Component {
     console.log(this.state);
     axios.post("api/cms/activity", formData, {});
     alert("Upload successful");
+    this.setState({
+      title: "",
+      activitykey: "",
+      image: null
+    });
   };
 
   // FORM INFO
@@ -163,8 +168,7 @@ const mapStateToProps = state => ({
   favid: state.favid,
   // errors: state.errors,
   profile: state.profile,
-  auth: state.auth,
-  itinID: state.itinID
+  auth: state.auth
 });
 
 // export default Dashboard;

@@ -70,6 +70,16 @@ class Cmsitin extends Component {
       // }
     });
     alert("Upload successful");
+    this.setState({
+      title: "",
+      rating: "",
+      duration: "",
+      price: "",
+      likes: "",
+      authorimage: null,
+      cityurl: "",
+      activitykey: ""
+    });
   };
 
   // FORM INFO
@@ -281,8 +291,7 @@ const mapStateToProps = state => ({
   favid: state.favid,
   // errors: state.errors,
   profile: state.profile,
-  auth: state.auth,
-  itinID: state.itinID
+  auth: state.auth
 });
 
 // export default Dashboard;
