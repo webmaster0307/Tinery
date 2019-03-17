@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { registerUser } from "../actions/authActions";
 
-import BtnHome from "../components/layout/BtnHome";
-import Navbar from "../components/layout/Navbar";
+import IconHome from "../components/layout/IconHome";
 
 import Checkbox from "@material-ui/core/Checkbox";
 import Button from "@material-ui/core/Button";
@@ -32,6 +32,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 // import Icon from "@material-ui/core/Icon";
 import DeleteIcon from "@material-ui/icons/Delete";
+import Fab from "@material-ui/core/Fab";
 
 // import axios from "axios";
 
@@ -78,10 +79,10 @@ class Signup extends Component {
 
   tccheckbox = () => {
     this.setState(state => ({
-      checkbox: !state.checkbox,
+      // checkbox: !state.checkbox,
+      checkbox: true,
       open: false
     }));
-    // console.log(this.state.checkbox);
   };
 
   // ROUTE LOGIC
@@ -228,7 +229,12 @@ class Signup extends Component {
           </div>
         </div>
         <div>
-          <p>* Gravatar is supported.</p>
+          <p>*Gravatar is Supported.</p>
+          <Link to="/login">
+            <p className="homepageLinkText">
+              *Google Registration is Supported.
+            </p>
+          </Link>
         </div>
       </Card>
     );
@@ -236,13 +242,13 @@ class Signup extends Component {
     const preview = (
       <Card className="commentForm">
         <div className="previewPhoto">
-          <div>
-            <img
-              className="previewImage"
-              alt="imageuploader"
-              src={this.state.previewAvatar}
-            />
-          </div>
+          {/* <div className="previewPhotoContainer"> */}
+          <img
+            className="previewImage"
+            alt="imageuploader"
+            src={this.state.previewAvatar}
+          />
+          {/* </div> */}
         </div>
         <div className="removePhotoDiv">
           <Button
@@ -451,20 +457,29 @@ class Signup extends Component {
                     </DialogContentText>
                   </DialogContent>
                   <DialogActions>
+                    <Fab
+                      className="confirmFabButton"
+                      variant="extended"
+                      size="medium"
+                      color="primary"
+                      onClick={this.handleCloseAgree}
+                    >
+                      {/* <Button color="primary"> */}
+                      Agree
+                      {/* </Button> */}
+                    </Fab>
                     <Button onClick={this.handleClose} color="primary">
                       Disagree
-                    </Button>
-                    <Button onClick={this.handleCloseAgree} color="primary">
-                      Agree
                     </Button>
                   </DialogActions>
                 </Dialog>
               </div>
               {/* SUBMIT BUTTON */}
-
-              {this.state.checkbox === false
-                ? checkboxFalseBtn
-                : checkboxTrueBtn}
+              <div>
+                {this.state.checkbox === false
+                  ? checkboxFalseBtn
+                  : checkboxTrueBtn}
+              </div>
             </form>
           </Card>
         </div>
@@ -473,9 +488,8 @@ class Signup extends Component {
 
     return (
       <div>
-        <Navbar />
         {registerForm}
-        <BtnHome />
+        <IconHome />
       </div>
     );
   }

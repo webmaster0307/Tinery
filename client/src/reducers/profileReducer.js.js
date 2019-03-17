@@ -1,17 +1,9 @@
-// import {
-//   POST_FAVORITES,
-//   DELETE_FAVORITES,
-//   GET_PROFILE,
-//   PROFILE_LOADING,
-//   CLEAR_CURRENT_PROFILE
-// } from "../actions/Types";
 import {
   FETCH_ITINERARIES_ID,
   POST_FAVORITES,
   DELETE_FAVORITES,
   GET_PROFILE,
   PROFILE_LOADING,
-  GET_FAVID,
   CLEAR_CURRENT_PROFILE
 } from "../actions/Types";
 
@@ -22,20 +14,25 @@ const initialState = {
   itineraries: [],
   favitin: [],
   favid: [],
-  profile: [],
-  loading: false
+  profile: []
+  // loading: false
 };
 
 export default function(state = initialState, action) {
   switch (action.type) {
+    case PROFILE_LOADING:
+      return {
+        ...state
+        // loading: true
+      };
     // GETS FAVORITES IDS FROM PROFILE
     case GET_PROFILE:
       // console.log(action.payload);
       return {
         ...state,
         // favid: action.payload,
-        favid: action.payload,
-        loading: false
+        favid: action.payload
+        // loading: false
       };
     // case GET_FAVID:
     //   return {
@@ -50,6 +47,7 @@ export default function(state = initialState, action) {
       return {
         ...state,
         favitin: action.payload
+        // loading: false
 
         // favid: [action.payload, ...state.favid]
       };
@@ -76,12 +74,6 @@ export default function(state = initialState, action) {
         favitin: state.favitin.filter(
           favorite => favorite._id !== action.payload
         )
-      };
-
-    case PROFILE_LOADING:
-      return {
-        ...state,
-        loading: true
       };
 
     case CLEAR_CURRENT_PROFILE:

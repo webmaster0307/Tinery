@@ -8,7 +8,6 @@ import {
   PROFILE_LOADING,
   CLEAR_CURRENT_PROFILE,
   GET_PROFILE,
-  GET_FAVID,
   GET_ERRORS
 } from "./Types";
 
@@ -18,7 +17,7 @@ import {
 export const getCurrentProfile = () => dispatch => {
   dispatch(setProfileLoading());
   axios.get("/auth/profileget").then(res => {
-    console.log(res.data);
+    // console.log(res.data);
     dispatch({
       type: GET_PROFILE,
       payload: res.data
@@ -32,11 +31,11 @@ export const getCurrentProfile = () => dispatch => {
   // );
 };
 
-export const getProfileFavorites = () => {
-  return {
-    type: GET_FAVID
-  };
-};
+// export const getProfileFavorites = () => {
+//   return {
+//     type: GET_FAVID
+//   };
+// };
 
 // SET PROFILE LOADING
 export const setProfileLoading = () => {
@@ -75,11 +74,11 @@ export const fetchAxiosItinerariesID = favid => dispatch => {
 export const postFavorites = (id, favData) => dispatch => {
   // let id = userData.userID;
   //   console.log("from actions", id);
-  console.log("from actions", favData);
+  // console.log("from actions", favData);
   axios
     .post(`/auth/profile/${id}`, { favData: favData.favorites })
     .then(res => {
-      console.log(res.data);
+      // console.log(res.data);
 
       dispatch({
         type: POST_FAVORITES,
@@ -101,7 +100,7 @@ export const postFavorites = (id, favData) => dispatch => {
 export const removeFavorites = (id, favData) => dispatch => {
   // let id = userData.userID;
   //   console.log("from actions", id);
-  console.log("from actions", favData);
+  // console.log("from actions", favData);
   axios
     .delete(`/auth/profile/removefav/${id}/${favData}`)
     .then(res =>

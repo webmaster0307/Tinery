@@ -59,28 +59,33 @@ class MenuAppBar extends React.Component {
         <ListItem button>
           <NavLink onClick={this.onLogoutClick.bind(this)} to="/">
             <Icon className="navIcon">exit_to_app</Icon>
-            Log Out
+            <span className="navText">Log Out</span>
           </NavLink>
         </ListItem>
         <Divider />
         <ListItem button>
           <NavLink to="/dashboard">
-            <Icon className="navIcon">dashboard</Icon>Dashboard
+            <Icon className="navIcon">dashboard</Icon>
+            <span className="navText">Dashboard</span>
+          </NavLink>
+        </ListItem>
+        <Divider />
+        <ListItem button>
+          <NavLink to="/cmscity">
+            <Icon className="navIcon">edit_location</Icon>
+            <span className="navText">Create City</span>
           </NavLink>
         </ListItem>
         <ListItem button>
           <NavLink to="/cmsitin">
-            <Icon className="navIcon">create</Icon>Create Itinerary
+            <Icon className="navIcon">add_to_photos</Icon>
+            <span className="navText">Create Itinerary</span>
           </NavLink>
         </ListItem>
         <ListItem button>
           <NavLink to="/cmsactivity">
-            <Icon className="navIcon">create</Icon>Create Activity
-          </NavLink>
-        </ListItem>
-        <ListItem button>
-          <NavLink to="/cmscity">
-            <Icon className="navIcon">create</Icon>Create City
+            <Icon className="navIcon">add_a_photo</Icon>
+            <span className="navText">Create Activity</span>
           </NavLink>
         </ListItem>
       </div>
@@ -89,12 +94,14 @@ class MenuAppBar extends React.Component {
       <div>
         <ListItem button>
           <NavLink to="/login">
-            <Icon className="navIcon">portrait</Icon>Log In
+            <Icon className="navIcon">portrait</Icon>
+            <span className="navText">Log In</span>
           </NavLink>
         </ListItem>
         <ListItem button>
           <NavLink to="/signup">
-            <Icon className="navIcon">person_add</Icon>Create Account
+            <Icon className="navIcon">person_add</Icon>
+            <span className="navText">Create Account</span>
           </NavLink>
         </ListItem>
       </div>
@@ -106,7 +113,8 @@ class MenuAppBar extends React.Component {
         <Divider />
         <ListItem button>
           <NavLink to="/cities">
-            <Icon className="navIcon">location_city</Icon>Cites
+            <Icon className="navIcon">location_city</Icon>
+            <span className="navText">Cites</span>
           </NavLink>
         </ListItem>
         <Divider />
@@ -117,9 +125,6 @@ class MenuAppBar extends React.Component {
 
     const authLinks = (
       <div>
-        {/* <Link className="nav-link" to="/">
-          Status : Logged In
-        </Link> */}
         <div>
           <NavLink to="/">
             <Avatar
@@ -128,24 +133,7 @@ class MenuAppBar extends React.Component {
               title="You must have a Gravatar connected to your email to display an image"
             />
           </NavLink>
-          {/* <Avatar
-            alt={user.name}
-            src={user.avatar}
-            to="/dashboard"
-            title="You must have a Gravatar connected to your email to display an image"
-          /> */}
-          {/* <div>{user.username}</div> */}
         </div>
-        {/* LOGOUT LINK */}
-        {/* <div>]
-          <a
-            href="/"
-            onClick={this.onLogoutClick.bind(this)}
-            className="nav-link"
-          >
-            Logout
-          </a>
-        </div> */}
       </div>
     );
     const guestLinks = (
@@ -153,11 +141,6 @@ class MenuAppBar extends React.Component {
         <Link className="nav-link" to="/login">
           <AccountCircle className="IconaAccountCircle" fontSize="large" />
         </Link>
-        {/* <Avatar
-          alt={user.name}
-          src={user.avatar}
-          title="You must have a Gravatar connected to your email to display an image"
-        /> */}
       </div>
     );
 
@@ -165,9 +148,8 @@ class MenuAppBar extends React.Component {
       <div>
         <AppBar className="appBar" position="static" color="default">
           <Toolbar className="toolBarFlex">
-            {/* MENU PROFILE ICON */}
             <div>{isAuthenticated ? authLinks : guestLinks}</div>
-            {/* MENU BURGER ICON */}
+
             <div>
               <IconButton aria-label="Menu" onClick={this.toggleDrawer(true)}>
                 <MenuIcon />
@@ -208,5 +190,3 @@ export default connect(
   mapStateToProps,
   { logoutUser }
 )(MenuAppBar);
-
-// export default withStyles(styles)(MenuAppBar);

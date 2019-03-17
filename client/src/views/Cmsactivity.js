@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-import Navbar from "../components/layout/Navbar";
-
 import { connect } from "react-redux";
+import PropTypes from "prop-types";
 import axios from "axios";
 
 // import Button from "@material-ui/core/Button";
@@ -30,8 +29,8 @@ class Cmsactivity extends Component {
   // IMAGE INFO
 
   fileChangedHandler = event => {
-    console.log("this file", this.state.selectedFile);
-    console.log("this state", this.state);
+    // console.log("this file", this.state.selectedFile);
+    // console.log("this state", this.state);
     this.setState({
       image: event.target.files[0],
       previewFile: URL.createObjectURL(event.target.files[0])
@@ -46,8 +45,8 @@ class Cmsactivity extends Component {
     formData.append("title", this.state.title);
     formData.append("activitykey", this.state.activitykey);
     formData.append("image", this.state.image);
-    console.log(formData);
-    console.log(this.state);
+    // console.log(formData);
+    // console.log(this.state);
     axios.post("api/cms/activity", formData, {});
     alert("Upload successful");
     this.setState({
@@ -122,6 +121,7 @@ class Cmsactivity extends Component {
             </div>
           </form>
           <div className="cmsImage">
+            Upload Activity Image Here.
             <input type="file" onChange={this.fileChangedHandler} />
           </div>
           <button className="submitCommentBtn" onClick={this.onSubmit}>
@@ -152,26 +152,24 @@ class Cmsactivity extends Component {
     );
     return (
       <React.Fragment>
-        <Navbar />
         {cmstitle}
         {cmsbody}
-
         {previewFile === null ? noPreview : preview}
       </React.Fragment>
     );
   }
 }
 
-// export default cms;
+Cmsactivity.propTypes = {
+  auth: PropTypes.object
+};
 
 const mapStateToProps = state => ({
-  favid: state.favid,
+  // favid: state.favid,
   // errors: state.errors,
   profile: state.profile,
   auth: state.auth
 });
-
-// export default Dashboard;
 
 export default connect(
   mapStateToProps,

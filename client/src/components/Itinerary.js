@@ -24,7 +24,7 @@ import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 // import Paper from "@material-ui/core/Paper";
 import Icon from "@material-ui/core/Icon";
-
+import Fab from "@material-ui/core/Fab";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -106,10 +106,16 @@ class Itinerary extends Component {
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Link to="/dashboard">
-              <Button onClick={this.handleClose} color="primary" autoFocus>
+            <Link to="/dashboard" className="gotoFav">
+              <Fab
+                className="confirmFabButton"
+                variant="extended"
+                size="medium"
+                color="primary"
+                onClick={this.handleClose}
+              >
                 Go To Favorites
-              </Button>
+              </Fab>
             </Link>
             <Button onClick={this.handleClose} color="inherit" autoFocus>
               Close
@@ -123,34 +129,35 @@ class Itinerary extends Component {
       <div key={itinerary.title}>
         <div className="itineraryCard">
           <Card raised>
-            <Grid container spacing={24}>
-              <Grid item xs={10}>
+            <Grid container spacing={32} direction="row">
+              <Grid item xs={9}>
                 <Typography
                   className="activtytitle"
                   gutterBottom
-                  variant="h4"
-                  component="h2"
+                  variant="h5"
+                  component="h5"
                 >
                   {itinerary.title}
                 </Typography>
               </Grid>
               {/* ADD TO FAVORITES */}
-              <Grid item xs={2}>
+              <Grid item xs={3}>
                 <div>
                   {/* 1st TERNARY */}
                   {isAuthenticated &&
                   !this.props.profile.favid.includes(itinerary._id) ? (
-                    <div>
-                      <Icon
-                        value={itinerary.title}
-                        color="inherit"
-                        variant="outlined"
-                        fontSize="large"
-                        onClick={this.addToFav.bind(this, itinerary._id)}
-                      >
-                        add_location
-                      </Icon>
-                      {favDialog}
+                    <div className="favIconDiv">
+                      <Fab>
+                        <Icon
+                          value={itinerary.title}
+                          variant="outlined"
+                          fontSize="large"
+                          onClick={this.addToFav.bind(this, itinerary._id)}
+                        >
+                          add_location
+                        </Icon>
+                        {favDialog}
+                      </Fab>
                     </div>
                   ) : (
                     <div />
@@ -160,15 +167,16 @@ class Itinerary extends Component {
                   {console.log("state", this.state)} */}
                   {isAuthenticated &&
                   this.props.profile.favid.includes(itinerary._id) ? (
-                    <div>
-                      <Icon
-                        value={itinerary.title}
-                        color="inherit"
-                        variant="outlined"
-                        fontSize="large"
-                      >
-                        star
-                      </Icon>
+                    <div className="favIconDiv">
+                      <Fab disabled>
+                        <Icon
+                          value={itinerary.title}
+                          variant="outlined"
+                          fontSize="large"
+                        >
+                          star
+                        </Icon>
+                      </Fab>
                     </div>
                   ) : (
                     <div />
@@ -178,53 +186,52 @@ class Itinerary extends Component {
                 {/* <div> {itinerary._id}</div> */}
               </Grid>
             </Grid>
+
             <CardContent>
-              {/* AVATAR */}
-              {/* <Grid item xs={3}> */}
-              {/* <Avatar src={itinerary.authorimage} /> */}
-              {/* </Grid> */}
-              <div>
-                <Grid container spacing={24}>
-                  <Grid item xs={3}>
-                    <div>
-                      {/* <Avatar
-                        className="authorIcon"
-                        src={itinerary.authorimage}
-                      /> */}
-                      <img
-                        alt="profile"
-                        src={itinerary.authorimage}
-                        className="itinImg"
-                      />
-                    </div>
+              <Grid container spacing={32} direction="row">
+                <Grid item xs={4}>
+                  <img
+                    alt="profile"
+                    src={itinerary.authorimage}
+                    className="dashboardImg"
+                  />
+                </Grid>
+                <Grid item xs={8}>
+                  {/* <Grid
+                item
+                xs={4}
+                container
+                spacing={24}
+                direction="column"
+                alignItems="center"
+                justify="center"
+              > */}
+                  <Grid item xs={8}>
+                    <div>• Time: {itinerary.duration} Hours</div>
                   </Grid>
-                  <Grid item xs={3}>
-                    <div>Likes : {itinerary.likes}</div>
+                  <Grid item xs={8}>
+                    <div>• Cost ${itinerary.price}</div>
                   </Grid>
-                  <Grid item xs={3}>
-                    <div className={this.state.paper}>
-                      {itinerary.duration} Hours
-                    </div>
+                  <Grid item xs={8}>
+                    <div>• Likes: {itinerary.likes}</div>
                   </Grid>
-                  <Grid item xs={3}>
-                    <div>${itinerary.price}</div>
+                  <Grid item xs={8}>
+                    <div>• Rating: {itinerary.rating}/5</div>
                   </Grid>
-                  {/* 2nd line */}
-                  <Grid item xs={3} container wrap="nowrap">
-                    <div>
-                      <span className="authorName">{itinerary.author}</span>
-                    </div>
+                  <Grid item xs={8}>
+                    <div>• Hashtags: {itinerary.hashtag}</div>
                   </Grid>
-                  <Grid item xs={3}>
-                    <div>Rating: {itinerary.rating}/5</div>
-                  </Grid>
-                  <Grid item xs={6} container wrap="nowrap">
-                    <Typography>
-                      {itinerary.hashtag.toString() + " "}
-                    </Typography>
+                  {/* <Grid item xs={8}>
+                  <div>By: {itinerary.author}</div>
+                </Grid> */}
+                  <Grid item xs={8}>
+                    <br />
                   </Grid>
                 </Grid>
-              </div>
+              </Grid>
+              <Grid item xs={8}>
+                <div>By: {itinerary.author}</div>
+              </Grid>
             </CardContent>
           </Card>
         </div>

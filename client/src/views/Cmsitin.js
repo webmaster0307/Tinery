@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-import Navbar from "../components/layout/Navbar";
-
 import { connect } from "react-redux";
+import PropTypes from "prop-types";
 import axios from "axios";
 
 // import Button from "@material-ui/core/Button";
@@ -37,8 +36,8 @@ class Cmsitin extends Component {
   // IMAGE INFO
 
   fileChangedHandler = event => {
-    console.log("this file", this.state.selectedFile);
-    console.log("this state", this.state);
+    // console.log("this file", this.state.selectedFile);
+    // console.log("this state", this.state);
     this.setState({
       authorimage: event.target.files[0],
       previewFile: URL.createObjectURL(event.target.files[0])
@@ -62,11 +61,11 @@ class Cmsitin extends Component {
     formData.append("activitykey", this.state.activitykey);
     // formData.append("hashtag", this.state.hashtag);
 
-    console.log(formData);
-    console.log(this.state);
+    // console.log(formData);
+    // console.log(this.state);
     axios.post("api/cms/itin", formData, {
       // onUploadProgress: progressEvent => {
-      //   console.log(progressEvent.loaded / progressEvent.total);
+      //  console.log(progressEvent.loaded / progressEvent.total);
       // }
     });
     alert("Upload successful");
@@ -245,6 +244,7 @@ class Cmsitin extends Component {
             </div> */}
           </form>
           <div className="cmsImage">
+            Upload Author Image Here.
             <input type="file" onChange={this.fileChangedHandler} />
           </div>
           <button className="submitCommentBtn" onClick={this.onSubmit}>
@@ -275,7 +275,6 @@ class Cmsitin extends Component {
     );
     return (
       <React.Fragment>
-        <Navbar />
         {cmstitle}
         {cmsbody}
 
@@ -285,8 +284,6 @@ class Cmsitin extends Component {
   }
 }
 
-// export default cms;
-
 const mapStateToProps = state => ({
   favid: state.favid,
   // errors: state.errors,
@@ -294,7 +291,9 @@ const mapStateToProps = state => ({
   auth: state.auth
 });
 
-// export default Dashboard;
+Cmsitin.propTypes = {
+  auth: PropTypes.object
+};
 
 export default connect(
   mapStateToProps,

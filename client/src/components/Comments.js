@@ -9,6 +9,9 @@ import {
 import Card from "@material-ui/core/Card";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
+import Avatar from "@material-ui/core/Avatar";
+
+import Grid from "@material-ui/core/Grid";
 
 class Comments extends Component {
   componentDidMount() {
@@ -106,12 +109,30 @@ class Comments extends Component {
     //COMMENT LIST
     const commentList = this.props.comments.comments.map(comment => (
       <div className="comments" key={comment._id + comment.user}>
-        {/* <Paper elevation={3}> */}
-        <p>
-          <span className="commentUser">{comment.user}</span> :{comment.message}
-        </p>
-        <p className="commentTimestamp">{comment.timestamp}</p>
-        {/* </Paper> */}
+        <Grid container spacing={24} direction="row">
+          <Grid item xs={2}>
+            <div className="commentAvatar">
+              <Avatar
+                alt={comment.name}
+                src={comment.avatar}
+                title="You must have a Gravatar connected to your email to display an image"
+              />
+            </div>
+          </Grid>
+          <Grid item xs={10}>
+            <div className="commentUsername">
+              <span className="commentUser">{comment.user}</span>
+              <span className="commentTimestamp">
+                {" "}
+                on : {comment.timestamp}
+              </span>
+            </div>
+          </Grid>
+
+          <Grid item xs={12}>
+            <div className="commentContent">• {comment.message}</div>
+          </Grid>
+        </Grid>
       </div>
     ));
 

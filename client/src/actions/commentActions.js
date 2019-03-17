@@ -1,15 +1,6 @@
 import axios from "axios";
 import { FETCH_COMMENTS, GET_ERRORS, POST_COMMENTS } from "./Types";
 
-// export const fetchAxiosComments = () => dispatch => {
-//   axios.get(`/api/comment/`).then(res => {
-//     dispatch({
-//       type: FETCH_COMMENTS,
-//       payload: res.data
-//     });
-//   });
-// };
-
 export const fetchAxiosComments = activitykey => dispatch => {
   axios.get(`/api/comment/${activitykey}`).then(res => {
     dispatch({
@@ -43,7 +34,6 @@ export const postAxiosComments = ({
     return axios
       .post("/api/comment", { user, message, timestamp, activitykey, avatar })
       .then(res => {
-        // console.log("redux:", res.data);
         dispatch(postAxiosCommentSuccess(res.data));
       })
       .catch(err =>

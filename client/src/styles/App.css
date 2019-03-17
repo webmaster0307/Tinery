@@ -34,12 +34,10 @@
 
 /* COMPONENTS */
 
-
-
 /* CITY LIST */
 
 .citycard {
-  margin-bottom: 15px;
+  margin-bottom: 25px;
 }
 
 .citylist {
@@ -65,15 +63,42 @@
 
 .comments {
   /* background-color: lightskyblue; */
-  padding-left: 10px;
+  /* padding-left: 10px; */
   border-bottom: 1px dotted black;
+  /* margin-bottom: 10px; */
+  padding-left: 15px;
+  /* justify-content: center */
+  /* padding: 10px; */
+  /* text-align: center; */
+}
+
+.commentContent {
+  text-align: center;
+  margin-bottom: 10px;
+  margin-top: -20px;
 }
 
 .commentUser {
   font-size: 15px;
   font-weight: bold;
   text-decoration: underline;
+
   /* padding-left: 10px; */
+}
+.commentAvatar {
+  padding-left: 5px;
+  padding-top: 10px;
+
+  /* padding-right: 10px;
+  margin-right: 10px; */
+}
+
+.commentUsername {
+  padding-top: 15px;
+
+  text-align: left;
+  justify-content: center;
+  margin-left: -5px;
 }
 
 .commentTimestamp {
@@ -111,7 +136,7 @@
   display: flex;
 }
 
-.activitycard>div {
+.activitycard > div {
   flex: 1;
 }
 
@@ -130,7 +155,11 @@
 }
 
 .activtytitle {
+  /* margin-top: 15px; */
+  padding-top: 10px;
   text-align: center;
+  justify-content: center;
+  text-decoration: underline;
   /* margin: 20px; */
 }
 
@@ -205,7 +234,6 @@
   margin-left: 5px;
   margin-right: 5px;
   /* max-height: 420px; */
-
 }
 
 .sliderImg {
@@ -257,7 +285,13 @@
   margin-right: auto; */
 }
 
-.flexIcons>a {
+.homepageLinkText {
+  color: #039be5;
+  text-decoration: underline;
+  text-align: center;
+}
+
+.flexIcons > a {
   /* flex: 1; */
   color: black;
 }
@@ -321,10 +355,10 @@
 
 .addPhoto {
   /* width: 300px; */
-  margin-top: 10px;
+  margin-top: 20px;
   padding: 20px;
   background-color: gainsboro;
-  border: 1px solid gray;
+  border: 2px solid black;
   height: 145px;
   width: 145px;
   border-radius: 50%;
@@ -336,8 +370,25 @@
   max-height: 145px;
   border-radius: 50%;
   background-color: gainsboro;
-  border: 1px solid black;
+  border: 2px solid black;
+  object-fit: cover;
+
+  /* max-width: 120px; */
+  /* max-height: 100px; */
+  /* border: 2px solid black;
+  border-radius: 5px; */
+  /* display: block; */
+
+  margin-left: auto;
+  margin-right: auto;
 }
+
+/* .previewPhotoContainer { */
+/* max-height: 100px;
+  max-width: 100px;
+  display: block;
+  border: 1px solid black; */
+/* } */
 
 .tandc {
   color: #039be5;
@@ -485,13 +536,61 @@
   border-radius: 5px;
 }
 
+/* ICONS */
+
+.homeIcon {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  color: black;
+  /* font-size: 40px; */
+  /* border: 1px solid black; */
+}
+
+.cityIcon {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  color: black;
+  /* font-size: 100px; */
+}
+
+.cityIconText {
+  text-align: center;
+  font-style: italic;
+
+  color: black;
+  text-decoration: none;
+}
+
+.confirmFabButton {
+  color: #039be5;
+}
+
+.gotoFav {
+  text-decoration: none;
+}
+
+.favIconDiv {
+  /* margin-right: 10px;
+  padding-right: 10px; */
+  margin-top: 5px;
+  margin-left: 10px;
+  /* padding-top: 10px; */
+}
+
 /* NAVIGATION */
 
 .navIcon {
-  padding-right: 5px;
-  margin-right: 5px;
+  /* /* padding-right: 5px; */
+  margin-right: 10px;
   color: black;
+  text-align: center;
+  color: black;
+}
 
+.navText {
+  text-align: center;
+  color: black;
+  text-decoration: none;
 }
 
 .toolBarFlex {
@@ -512,9 +611,7 @@
 .removePhoto {
   border: 1px solid black;
   font-size: 12px;
-
   border-radius: 12px;
-
   display: block;
 }
 
@@ -524,10 +621,22 @@
 }
 
 .previewPhoto {
-  margin-top: 10px;
+  margin-top: 20px;
 }
 
 /* DASHBOARD */
+
+.dashboardUsername {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.dashboardNoFavMessage {
+  padding: 20px;
+  text-align: center;
+  margin-left: 5px;
+  margin-right: 5px;
+}
 
 .dashboardCard {
   color: black;
@@ -540,18 +649,22 @@
 
 .dashboardImg {
   max-width: 120px;
+  /* max-height: 100px; */
   border: 2px solid black;
-  border-radius: 5px
+  border-radius: 5px;
+  display: block;
+  object-fit: cover;
 }
 
 .cityImg {
-  max-width: 200px;
+  max-width: 180px;
+  max-height: 100px;
 }
 
 .itinImg {
   max-width: 90px;
   border: 2px solid black;
-  border-radius: 5px
+  border-radius: 5px;
 }
 
 /* CMS */
@@ -563,5 +676,5 @@
   padding-top: 10px;
   padding-bottom: 10px;
   margin: 10px 30px 10px 30px;
-  border-radius: 10px
+  border-radius: 10px;
 }

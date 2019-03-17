@@ -6,8 +6,7 @@ import jwt_decode from "jwt-decode";
 import setAuthToken from "./actions/utils/setAuthToken";
 import { setCurrentUser, logoutUser } from "./actions/authActions";
 import { clearCurrentProfile } from "./actions/profileActions";
-import { getCurrentProfile } from "./actions/profileActions";
-// import { getProfileFavorites } from "./actions/profileActions";
+// import { getCurrentProfile } from "./actions/profileActions";
 
 import store from "./store";
 import { Provider } from "react-redux";
@@ -16,7 +15,7 @@ import { Provider } from "react-redux";
 import "./styles/App.css";
 import CssBaseline from "@material-ui/core/CssBaseline";
 // import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
-// import Navbar from "./components/Navbar";
+import Navbar from "./components/layout/Navbar";
 import City from "./views/City";
 import Home from "./views/Home";
 import Cities from "./views/Cities";
@@ -43,9 +42,8 @@ if (sessionStorage.jwtToken) {
   store.dispatch(setCurrentUser(decoded));
 
   // Get favorites from User Account
-  store.dispatch(getCurrentProfile(decoded));
+  // store.dispatch(getCurrentProfile(decoded));
   // store.dispatch(getCurrentProfile());
-
   // console.log(decoded);
   // console.log(decoded.favorites);
 
@@ -63,7 +61,9 @@ if (sessionStorage.jwtToken) {
 
 class App extends Component {
   componentDidMount() {
-    store.dispatch(getCurrentProfile());
+    // console.log(this.props);
+    // console.log(this.state);
+    // store.dispatch(getCurrentProfile());
     // store.dispatch(getProfileFavorites());
   }
   render() {
@@ -72,12 +72,13 @@ class App extends Component {
         <BrowserRouter>
           <div>
             <CssBaseline />
+            <Navbar />
             {/* <Navbar /> */}
             <Switch>
               <Route exact path="/" component={Home} />
-              <Route exact path="/Login" component={Login} />
-              <Route exact path="/Signup" component={Signup} />
-              <Route exact path="/Cities" component={Cities} />
+              <Route exact path="/login" component={Login} />
+              <Route exact path="/signup" component={Signup} />
+              <Route exact path="/cities" component={Cities} />
               {/* <PrivateRoute exact path="/Favorites" component={Favorites} /> */}
               <PrivateRoute exact path="/Cmsitin" component={Cmsitin} />
               <PrivateRoute exact path="/Cmsactivity" component={Cmsactivity} />
@@ -91,13 +92,9 @@ class App extends Component {
               /> */}
               {/* <Route exact path="/City/:city_name" component={City} /> */}
               <Route
-                path="/Cities/:city_name"
+                path="/cities/:city_name"
                 render={props => <City {...props} isAuthed={true} />}
               />
-              {/* <Route
-                path="/Cities/:city_name/:activitykey"
-                render={props => <City {...props} isAuthed={true} />}
-              /> */}
             </Switch>
           </div>
         </BrowserRouter>

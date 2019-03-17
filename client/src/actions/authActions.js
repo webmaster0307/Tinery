@@ -2,11 +2,10 @@ import axios from "axios";
 import setAuthToken from "../actions/utils/setAuthToken";
 import jwt_decode from "jwt-decode";
 import { GET_ERRORS, SET_CURRENT_USER } from "./Types";
+// import { getCurrentProfile } from "./profileActions/getCurrentProfile";
 
 // REGISTER USER
 export const registerUser = (userData, history) => dispatch => {
-  // console.log("from actions", userData.avatar);
-  // console.log("from actions", userData);
   axios
     .post("/auth/user/register", userData)
     .then(res => history.push("/login"))
@@ -23,7 +22,7 @@ export const loginUser = userData => dispatch => {
   axios
     .post("/auth/user/login", userData)
     .then(res => {
-      console.log(res.data);
+      // console.log(res.data);
       // Save to localStorage
       const { token } = res.data;
       // Set token to ls
@@ -35,7 +34,6 @@ export const loginUser = userData => dispatch => {
       const decoded = jwt_decode(token);
       // Set current user
       dispatch(setCurrentUser(decoded));
-      // console.log(decoded);
     })
     .catch(err =>
       dispatch({
@@ -74,12 +72,9 @@ export const loginUser = userData => dispatch => {
 
 // SOCIAL USER
 export const socialRegisterUser = (userData, history) => dispatch => {
-  // console.log("from actions", userData.avatar);
-  // console.log("from actions", userData);
   axios
     .post("/auth/user/registersocial", userData)
     .then(res => {
-      // console.log(res.data);
       // Save to localStorage
       const { token } = res.data;
       // Set token to ls
@@ -104,12 +99,15 @@ export const socialRegisterUser = (userData, history) => dispatch => {
 };
 
 // Set logged in user
-export const setCurrentUser = decoded => {
+export const setCurrentUser = (decoded, dispatch) => {
+  // dispatch(getCurrentProfile());
   return {
     type: SET_CURRENT_USER,
     payload: decoded
   };
 };
+
+// GET PROFILE FAVORITES
 
 // Log user out
 export const logoutUser = () => dispatch => {

@@ -1,14 +1,19 @@
 import React, { Component } from "react";
 import { NavLink, Link } from "react-router-dom";
-import BtnHome from "../components/layout/BtnHome";
-import Navbar from "../components/layout/Navbar";
+import IconHome from "../components/layout/IconHome";
 import { logoutUser } from "../actions/authActions";
 import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { getCurrentProfile } from "../actions/profileActions";
 
 class Home extends Component {
+  componentDidMount() {
+    if (this.props.auth.isAuthenticated === true) {
+      this.props.getCurrentProfile();
+    }
+  }
   onLogoutClick(e) {
     e.preventDefault();
-    // this.props.clearCurrentProfile();
     this.props.logoutUser();
   }
   render() {
@@ -17,11 +22,14 @@ class Home extends Component {
     const loginState = (
       <div className="flexIcons">
         <div className="flexLink">
-          <NavLink to="/dashboard">Dashboard</NavLink>
+          <NavLink to="/dashboard">
+            {" "}
+            <span className="homepageLinkText">Dashboard</span>
+          </NavLink>
         </div>
         <div className="flexLink">
           <NavLink onClick={this.onLogoutClick.bind(this)} to="/login">
-            Log Out
+            <span className="homepageLinkText">Log Out</span>
           </NavLink>
         </div>
       </div>
@@ -29,17 +37,20 @@ class Home extends Component {
     const logoutState = (
       <div className="flexIcons">
         <div className="flexLink">
-          <NavLink to="/login">Log In</NavLink>
+          <NavLink to="/login">
+            <span className="homepageLinkText">Log In</span>
+          </NavLink>
         </div>
         <div className="flexLink">
-          <NavLink to="/signup">Create Account</NavLink>
+          <NavLink to="/signup">
+            <span className="homepageLinkText">Create Account</span>
+          </NavLink>
         </div>
       </div>
     );
-    // console.log(this.props.auth);
+
     return (
       <div className="Home">
-        <Navbar />
         <div>
           <img
             className="homeBrand"
@@ -73,20 +84,23 @@ class Home extends Component {
         {isAuthenticated ? loginState : logoutState}
 
         <div>
-          <BtnHome />
+          <IconHome />
         </div>
       </div>
     );
   }
 }
 
-const mapStateToProps = state => ({
-  auth: state.auth
-});
+Home.propTypes = {
+  auth: PropTypes.object
+};
 
-// export default Home;
+const mapStateToProps = state => ({
+  auth: state.auth,
+  profile: state.profile
+});
 
 export default connect(
   mapStateToProps,
-  { logoutUser }
+  { logoutUser, getCurrentProfile }
 )(Home);

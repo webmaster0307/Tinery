@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 // import { fetchAxiosActivities } from "../actions/fetchActivities";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Slider from "react-slick";
 import Card from "@material-ui/core/Card";
@@ -72,6 +73,10 @@ const mapStateToProps = state => {
     // itineraries: state.itineraries,
     activities: state.activities
   };
+};
+
+Activity.propTypes = {
+  Activity: PropTypes.object
 };
 
 export default connect(

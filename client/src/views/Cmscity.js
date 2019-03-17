@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import Navbar from "../components/layout/Navbar";
-
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import axios from "axios";
 
@@ -10,7 +9,7 @@ import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 
-class Cmsciyu extends Component {
+class Cmscity extends Component {
   constructor() {
     super();
     this.state = {
@@ -30,8 +29,8 @@ class Cmsciyu extends Component {
   // IMAGE INFO
 
   fileChangedHandler = event => {
-    console.log("this file", this.state.selectedFile);
-    console.log("this state", this.state);
+    // console.log("this file", this.state.selectedFile);
+    // console.log("this state", this.state);
     this.setState({
       flagimg: event.target.files[0],
       previewFile: URL.createObjectURL(event.target.files[0])
@@ -47,8 +46,8 @@ class Cmsciyu extends Component {
     formData.append("country", this.state.country);
     formData.append("flagimg", this.state.flagimg);
     formData.append("url", this.state.url);
-    console.log(formData);
-    console.log(this.state);
+    // console.log(formData);
+    // console.log(this.state);
     axios.post("api/cms/city", formData, {});
     alert("Upload successful");
     this.setState({
@@ -138,6 +137,7 @@ class Cmsciyu extends Component {
             </div>
           </form>
           <div className="cmsImage">
+            Upload Country Flag Here.
             <input type="file" onChange={this.fileChangedHandler} />
           </div>
           <button className="submitCommentBtn" onClick={this.onSubmit}>
@@ -168,7 +168,6 @@ class Cmsciyu extends Component {
     );
     return (
       <React.Fragment>
-        <Navbar />
         {cmstitle}
         {cmsbody}
         {previewFile === null ? noPreview : preview}
@@ -177,8 +176,6 @@ class Cmsciyu extends Component {
   }
 }
 
-// export default cms;
-
 const mapStateToProps = state => ({
   favid: state.favid,
   // errors: state.errors,
@@ -186,9 +183,11 @@ const mapStateToProps = state => ({
   auth: state.auth
 });
 
-// export default Dashboard;
+Cmscity.propTypes = {
+  auth: PropTypes.object
+};
 
 export default connect(
   mapStateToProps,
   {}
-)(Cmsciyu);
+)(Cmscity);

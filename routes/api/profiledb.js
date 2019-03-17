@@ -115,7 +115,7 @@ router.post(
     //     // console.log(user);
     //   }
     // });
-    console.log(req.body);
+    // console.log(req.body);
     User.findOneAndUpdate(
       { _id: req.params.id },
       { $push: { favorites: req.body.favData } }
@@ -150,15 +150,15 @@ router.delete(
     // console.log("fav", req.body.favorite);
     // console.log("fav", req.body.favorites);
 
-    console.log("req params user id", req.params.id);
-    console.log("req params fav id", req.params.favid);
+    // console.log("req params user id", req.params.id);
+    // console.log("req params fav id", req.params.favid);
     User.findOneAndUpdate(
       { _id: req.params.id },
       { $pull: { favorites: req.params.favid } }
     )
       .then(user => {
         // User.findOne({ user: req.user.id }).then(user => {
-        console.log("from fav", user.favorites);
+        // console.log("from fav", user.favorites);
         res.json(user);
         // Item.findById(req.params.id)
         // .then(item => item.remove().then(() => res.json({ success: true })))

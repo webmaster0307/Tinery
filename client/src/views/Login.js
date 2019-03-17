@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 // import TextFieldGroup from "../components/TextFieldGroup";
-import BtnHome from "../components/layout/BtnHome";
-import Navbar from "../components/layout/Navbar";
+import IconHome from "../components/layout/IconHome";
+
 // import LoginFacebook from "../components/LoginFacebook";
 // import LoginGoogle from "../components/LoginGoogle";
 // import { FacebookLogout } from "react-facebook-logout";
@@ -56,14 +56,14 @@ class Login extends Component {
   componentDidMount() {
     if (this.props.auth.isAuthenticated) {
       this.props.history.push("/");
-      console.log(this.props.history);
+      // console.log(this.props.history);
     }
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.auth.isAuthenticated) {
       this.props.history.push("/");
-      console.log(this.props.history);
+      // console.log(this.props.history);
     }
     if (nextProps.errors) {
       this.setState({ errors: nextProps.errors });
@@ -86,7 +86,7 @@ class Login extends Component {
   };
 
   // logoutGoogle = response => {
-  //   // console.log(response);
+  // console.log(response);
 
   //   this.setState({
   //     isLoggedIn: false,
@@ -227,17 +227,18 @@ class Login extends Component {
                     <div>
                       <div className="invalid-feedback">{errors.password}</div>
                       <div className="removePhotoDiv">
-                        <Button className="removePhoto" variant="contained">
+                        {/* <Button className="removePhoto" variant="contained">
                           Reset Password
-                        </Button>
+                        </Button> */}
                       </div>
                     </div>
                   )}
                 </div>
-                <div>
+                {/* REMEMBER ME CHECKBOX */}
+                {/* <div>
                   <Checkbox value="t&c" color="primary" name="t&c_checkbox" />
                   <span>Remember Me</span>
-                </div>
+                </div> */}
                 {/* SUBMIT BUTTON */}
                 <div>
                   <button className="loginButton" type="submit" value="Submit">
@@ -314,11 +315,10 @@ class Login extends Component {
     // );
     return (
       <div>
-        <Navbar />
         {loginComponent}
         {/* {socialLogin} */}
         {noAccountMessage}
-        <BtnHome />
+        <IconHome />
       </div>
     );
   }

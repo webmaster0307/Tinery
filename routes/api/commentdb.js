@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
-
-const mongoose = require("mongoose");
+// const mongoose = require("mongoose");
 const passport = require("passport");
 
 // Comment model
@@ -21,9 +20,6 @@ const validateCommentInput = require("../../validation/comments");
 // @access Public
 
 router.get("/comment", (req, res) => {
-  console.log(req.body[0]);
-  console.log(req.body);
-  console.log(req.params);
   Commentmodel.find().then(comment => res.json(comment));
 });
 
@@ -32,7 +28,6 @@ router.get("/comment", (req, res) => {
 // @access Public
 
 router.get("/comment/:activitykey", (req, res) => {
-  console.log(req.body);
   Commentmodel.find({ activitykey: req.params.activitykey }).then(comment =>
     res.json(comment)
   );
@@ -43,7 +38,7 @@ router.get("/comment/:activitykey", (req, res) => {
 // @access Public
 
 router.get("/commentid/:id", (req, res) => {
-  console.log(req.params.id);
+  // console.log(req.params.id);
   Commentmodel.findById(req.params.id).then(comment => res.json(comment));
 });
 
@@ -82,85 +77,7 @@ router.post("/comment", (req, res) => {
     });
 });
 
-// router.get("/comment/:id", (req, res) => {
-//   Commentmodel.find({ id: req.params.id }).then(comment => res.json(comment));
-// });
-
-// router.get("/comment/:id", (req, res) => {
-//   console.log(req.params);
-//   Commentmodel.findById(req.params._id)
-//     .then(post => {
-//       if (post) {
-//         res.json(post);
-//       } else {
-//         res.status(404).json({ nopostfound: "No post found with that ID" });
-//       }
-//     })
-//     .catch(err =>
-//       res.status(404).json({ nopostfound: "No post found with that ID" })
-//     );
-// });
-
-//PUT
-
-// @route
-// @desc
-// @access
-
-// router.put("/comment/:activitykey", (req, res) => res.send({ type: "PUT" }));
-
-// EXAMPLE UPDATE/PUT
-
-// EmailModel.findOneAndUpdate(
-//   {
-//     email: "ada.lovelace@gmail.com" // search query
-//   },
-//   {
-//     email: "theoutlander@live.com" // field:values to update
-//   },
-//   {
-//     new: true, // return updated doc
-//     runValidators: true // validate before update
-//   }
-// )
-//   .then(doc => {
-//     console.log(doc);
-//   })
-//   .catch(err => {
-//     console.error(err);
-//   });
-
-//DELETE
-
-// @route
-// @desc
-// @access
-
-router.delete("/comment/:activitykey", (req, res) =>
-  res.send({ type: "DELETE" })
-);
-
-// router.delete(
-//   "/:id",
-//   passport.authenticate("jwt", { session: false }),
-//   (req, res) => {
-//     Profile.findOne({ user: req.user.id }).then(profile => {
-//       Post.findById(req.params.id)
-//         .then(post => {
-//           // Check for post owner
-//           if (post.user.toString() !== req.user.id) {
-//             return res
-//               .status(401)
-//               .json({ notauthorized: "User not authorized" });
-//           }
-
-//           // Delete
-//           post.remove().then(() => res.json({ success: true }));
-//         })
-//         .catch(err => res.status(404).json({ postnotfound: "No post found" }));
-//     });
-//   }
-// );
+// LOGIC FOR LIKE FUNCTIONALITY
 
 // @route   POST api/posts/like/:id
 // @desc    Like post

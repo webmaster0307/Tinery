@@ -36,21 +36,21 @@ const upload = multer({
 
 const Imagemodel = require("../../models/imagemodel");
 
-// @route
-// @desc
-// @access
+// // @route api/image
+// // @desc
+// // @access
 
-router.get("/image", (req, res) => {
-  Imagemodel.find().then(city => res.json(city));
-});
+// router.get("/image", (req, res) => {
+//   Imagemodel.find().then(city => res.json(city));
+// });
 
 // @route api/image
 // @desc Post Images (testing)
 // @access Public
 
 router.post("/image", upload.any(), (req, res, next) => {
-  console.log(req.body);
-  console.log(req.files[0].filename);
+  // console.log(req.body);
+  // console.log(req.files[0].filename);
   const image = new Imagemodel({
     name: req.body.name,
     avatar: "/uploads/" + req.files[0].filename
@@ -58,7 +58,7 @@ router.post("/image", upload.any(), (req, res, next) => {
   image
     .save()
     .then(result => {
-      console.log(result);
+      // console.log(result);
       res.status(201).json({
         message: "Created image successfully",
         createdImage: {
@@ -76,7 +76,7 @@ router.post("/image", upload.any(), (req, res, next) => {
       });
     })
     .catch(err => {
-      console.log(err);
+      // console.log(err);
       res.status(500).json({
         error: err
       });
@@ -91,8 +91,8 @@ router.post("/image", upload.any(), (req, res, next) => {
 // @access Public
 
 router.post("/cms/itin", upload.any(), (req, res, next) => {
-  console.log(req.body);
-  console.log(req.files[0].filename);
+  // console.log(req.body);
+  // console.log(req.files[0].filename);
 
   const avatar = "/uploads/" + req.files[0].filename;
   // const avatar = "/uploads/" + req.body.avatar;
@@ -112,7 +112,7 @@ router.post("/cms/itin", upload.any(), (req, res, next) => {
   itinerary
     .save()
     .then(result => {
-      console.log(result);
+      // console.log(result);
       res.status(201).json({
         message: "Created Itin successfully"
         // createdImage: {
@@ -130,7 +130,7 @@ router.post("/cms/itin", upload.any(), (req, res, next) => {
       });
     })
     .catch(err => {
-      console.log(err);
+      // console.log(err);
       res.status(500).json({
         error: err
       });
@@ -144,8 +144,8 @@ router.post("/cms/itin", upload.any(), (req, res, next) => {
 // @access Public
 
 router.post("/cms/activity", upload.any(), (req, res, next) => {
-  console.log(req.body);
-  console.log(req.files[0].filename);
+  // console.log(req.body);
+  // console.log(req.files[0].filename);
 
   const image = "/uploads/" + req.files[0].filename;
   // const avatar = "/uploads/" + req.body.avatar;
@@ -158,13 +158,13 @@ router.post("/cms/activity", upload.any(), (req, res, next) => {
   activity
     .save()
     .then(result => {
-      console.log(result);
+      // console.log(result);
       res.status(201).json({
         message: "Created Itin successfully"
       });
     })
     .catch(err => {
-      console.log(err);
+      // console.log(err);
       res.status(500).json({
         error: err
       });
@@ -178,8 +178,8 @@ router.post("/cms/activity", upload.any(), (req, res, next) => {
 // @access Public
 
 router.post("/cms/city", upload.any(), (req, res, next) => {
-  console.log(req.body);
-  console.log(req.files[0].filename);
+  // console.log(req.body);
+  // console.log(req.files[0].filename);
 
   const flagimg = "/uploads/" + req.files[0].filename;
   // const avatar = "/uploads/" + req.body.avatar;
@@ -193,13 +193,13 @@ router.post("/cms/city", upload.any(), (req, res, next) => {
   city
     .save()
     .then(result => {
-      console.log(result);
+      // console.log(result);
       res.status(201).json({
         message: "Created City successfully"
       });
     })
     .catch(err => {
-      console.log(err);
+      // console.log(err);
       res.status(500).json({
         error: err
       });

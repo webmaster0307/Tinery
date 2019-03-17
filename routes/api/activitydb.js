@@ -2,27 +2,19 @@ const express = require("express");
 const router = express.Router();
 const Activitymodel = require("../../models/activitymodel");
 
-// router.get("/activitydb", (req, res) => res.json({ msg: "activity Works" }));
-
 //GET
 
-// @route
-// @desc
-// @access
+// @route GET api/activity
+// @desc GET all activity
+// @access Public
 
 router.get("/activity", (req, res) => {
   Activitymodel.find().then(activity => res.json(activity));
 });
 
-// router.get("/activity/:activitykey", (req, res) => {
-//   Activitymodel.find({
-//     activitykey: this.props.activities.activities.activitykey
-//   }).then(activity => res.json(activity));
-// });
-
-// @route
-// @desc
-// @access
+// @route GET api/activity/activitykey
+// @desc GET activity by activitykey
+// @access Public
 
 router.get("/activity/:activitykey", (req, res) => {
   Activitymodel.find({ activitykey: req.params.activitykey }).then(activity =>
@@ -32,18 +24,16 @@ router.get("/activity/:activitykey", (req, res) => {
 
 //POST
 
-// @route
-// @desc
-// @access
+// @route api/activity
+// @desc POST activity to MongoDB
+// @access Public
 
 router.post("/activity", (req, res) => {
-  //   console.log(req.body);
   const activity = new Activitymodel({
     title: req.body.title,
     image: req.body.image,
     activitykey: req.body.activitykey
   });
-
   activity
     .save()
     .then(doc => {
@@ -54,41 +44,6 @@ router.post("/activity", (req, res) => {
       console.error(err);
     });
 });
-
-//PUT
-
-// @route
-// @desc
-// @access
-
-router.put("/activity/:id", (req, res) => res.send({ type: "PUT" }));
-
-// EXAMPLE UPDATE/PUT
-
-// EmailModel.findOneAndUpdate(
-//   {
-//     email: "ada.lovelace@gmail.com" // search query
-//   },
-//   {
-//     email: "theoutlander@live.com" // field:values to update
-//   },
-//   {
-//     new: true, // return updated doc
-//     runValidators: true // validate before update
-//   }
-// )
-//   .then(doc => {
-//     console.log(doc);
-//   })
-//   .catch(err => {
-//     console.error(err);
-//   });
-
-//DELETE
-
-// @route
-// @desc
-// @access
 
 router.delete("/activity/:id", (req, res) => res.send({ type: "DELETE" }));
 

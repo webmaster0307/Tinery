@@ -2,13 +2,13 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import BtnHome from "../components/layout/BtnHome";
-import Navbar from "../components/layout/Navbar";
+import IconHome from "../components/layout/IconHome";
+// import City from "../views/City";
 import { fetchAxiosCities } from "../actions/citiesActions";
 // import { debounce } from "lodash";
 
 import Card from "@material-ui/core/Card";
-import CardActionArea from "@material-ui/core/CardActionArea";
+
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
@@ -19,6 +19,8 @@ class Cities extends Component {
     super(props);
     this.state = {
       cities: [],
+      city: "",
+      country: "",
       query: "",
       error: null
       // filteredCities: []
@@ -97,6 +99,8 @@ class Cities extends Component {
   };
 
   render() {
+    // console.log(this.props.match.params);
+
     // console.log(this.props.cities.cities);
     // let filteredCities = this.props.cities.cities.filter(
     //   debounce(city => {
@@ -113,7 +117,6 @@ class Cities extends Component {
     });
     return (
       <div>
-        <Navbar />
         {/* <Card className="city" raised> */}
         {/* <CardHeader> */}
         <Typography
@@ -148,42 +151,39 @@ class Cities extends Component {
           /> */}
         </div>
         {/* CITIES */}
+
         {filteredCities.map(city => {
           return (
             <div key={city._id}>
-              <Card className="city citycard">
+              <Card className="city citycard" raised>
                 <Link
-                  to={"/cities/" + city.url}
-                  cities={this.props.cities.cities}
+                  to={{
+                    pathname: "/cities/" + city.url,
+                    state: {
+                      city: city.cityname,
+                      country: city.country
+                    }
+                  }}
                   className="citylist"
                 >
-                  <CardActionArea>
-                    <CardContent>
-                      <img
-                        alt="proflagfile"
-                        src={city.flagimg}
-                        className="cityImg"
-                      />
-                      <Typography gutterBottom variant="h5" component="h2">
-                        {/* <Link
-                        to={"/cities/" + city.url}
-                        cities={this.props.cities.cities}
-                        className="citylist"
-                      > */}
-                        <Typography variant="button" gutterBottom>
-                          <span>{city.cityname}</span>
-                        </Typography>
-                        {/* </Link> */}
-                      </Typography>
-                      <Typography>{city.country}</Typography>
-                    </CardContent>
-                  </CardActionArea>
+                  <CardContent>
+                    <img
+                      alt="proflagfile"
+                      src={city.flagimg}
+                      className="cityImg"
+                    />
+
+                    <Typography variant="button" gutterBottom>
+                      {city.cityname}
+                    </Typography>
+                    <Typography>{city.country}</Typography>
+                  </CardContent>
                 </Link>
               </Card>
             </div>
           );
         })}
-        <BtnHome />
+        <IconHome />
       </div>
     );
   }

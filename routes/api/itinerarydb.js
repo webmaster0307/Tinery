@@ -62,7 +62,7 @@ router.post("/itin", (req, res) => {
   itinerary
     .save()
     .then(doc => {
-      console.log(doc);
+      // console.log(doc);
       res.json(doc);
     })
     .catch(err => {

@@ -3,16 +3,14 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getCurrentProfile } from "./../actions/profileActions";
 import { removeFavorites } from "../actions/profileActions";
-// import { getProfileFavorites } from "../actions/profileActions";
 import { fetchAxiosItinerariesID } from "../actions/profileActions";
-import BtnHome from "../components/layout/BtnHome";
+import IconHome from "../components/layout/IconHome";
+import IconCity from "../components/layout/IconCity";
 
-import Navbar from "../components/layout/Navbar";
 // import Favorites from "../components/Favorites";
 // import Spinner from "../components/layout/Spinner";
 // import { Link } from "react-router-dom";
 // import { NavLink } from "react-router-dom";
-
 import Typography from "@material-ui/core/Typography";
 // import Avatar from "@material-ui/core/Avatar";
 // import FavoriteBorder from "@material-ui/icons/FavoriteBorder";
@@ -20,8 +18,7 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Grid from "@material-ui/core/Grid";
 import Icon from "@material-ui/core/Icon";
-
-// import { Link } from "react-router-dom";
+// import Paper from "@material-ui/core/Paper";
 
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
@@ -29,6 +26,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import Fab from "@material-ui/core/Fab";
 
 class Dashboard extends Component {
   constructor() {
@@ -51,10 +49,12 @@ class Dashboard extends Component {
   }
 
   componentDidMount() {
-    this.props.getCurrentProfile();
     let favoritesArray = this.props.profile.favid;
     // let favoritesArray = this.props.auth.user.favorites;
-    this.props.fetchAxiosItinerariesID(favoritesArray);
+
+    if (this.state.favid.length === 0) {
+      this.props.fetchAxiosItinerariesID(favoritesArray);
+    }
     this.setState({
       favitin: this.props.profile.favid
     });
@@ -102,29 +102,25 @@ class Dashboard extends Component {
     }
   };
 
-  // removeFav = event => {
-  //   let eventTargetId = event;
-  //   let favData = {
-  //     favorites: eventTargetId
-  //   };
-  //   let userID = this.props.auth.user.id;
-  //   // console.log("user id", userID);
-  //   // console.log("itin id", favData.favorites);
-  //   // console.log("itin id", favData);
-  //   // console.log(eventTargetId);
-  //   // this.props.removeFavorites();
-  //   // this.props.removeFavorites(userID, favData);
-  //   if (this.state.confirm === true) {
-  //     this.props.removeFavorites(userID, favData.favorites);
-  //   }
-  //   // this.setState({ open: true });
-  //   // console.log("state", this.state);
-  // };
-
   render() {
     // getCurrentProfile(this.props.auth.user.id);
     // const { isAuthenticated, user } = this.props.auth;
     const { user } = this.props.auth;
+
+    const noFavouritesMessage = (
+      <div className="dashboardCard">
+        <Card raised>
+          <div className="dashboardNoFavMessage">
+            <p> You have not added any favorites to your profile.</p>
+            <p>
+              To add favourites please browse itineraries in cities and click on
+              the add to favorite icon.
+            </p>
+            <IconCity />
+          </div>
+        </Card>
+      </div>
+    );
 
     const favDialog = (
       <div>
@@ -145,13 +141,17 @@ class Dashboard extends Component {
           </DialogContent>
           <DialogActions>
             {/* <Link to="/dashboard"> */}
-            <Button
-              onClick={this.confirmButton.bind(this)}
+            <Fab
+              className="confirmFabButton"
+              variant="extended"
+              size="medium"
               color="primary"
-              autoFocus
+              onClick={this.confirmButton.bind(this)}
             >
+              {/* <Button color="inherit" autoFocus> */}
               Confirm
-            </Button>
+              {/* </Button> */}
+            </Fab>
             {/* </Link> */}
             <Button onClick={this.handleClose} color="inherit" autoFocus>
               Close
@@ -161,68 +161,91 @@ class Dashboard extends Component {
       </div>
     );
 
-    let favid = this.props.profile.favitin;
-    // console.log("props.profile.favid", favid);
-
-    const listFavoriteIDs = favid.map((itinerary, i) => (
+    let favitin = this.props.profile.favitin;
+    const listFavoriteIDs = favitin.map((itinerary, i) => (
       <div key={i} className="dashboardCard">
         <Card raised>
           <Grid container spacing={24}>
             {/* CARD HEADER */}
-            <Grid item xs={10}>
-              <Typography
+            <Grid item xs={9}>
+              {/* <Card> */}
+              {/* <Typography
                 className="activtytitle"
-                gutterBottom
-                variant="h4"
-                component="h2"
+                variant="h5"
+                align="center"
+                inline
               >
                 {itinerary.title}
-              </Typography>
+              </Typography> */}
+              <div className="activtytitle">
+                <h3>{itinerary.title}</h3>
+              </div>
+
+              {/* </Card> */}
             </Grid>
-            <Grid item xs={2}>
-              {/* REMOVE FAVORITES */}
-              {/* <Icon
-                value={itinerary.title}
-                color="inherit"
-                variant="outlined"
-                fontSize="large"
-                onClick={this.removeFav.bind(this, itinerary._id)}
-              >
-                favorite
-              </Icon> */}
-              <Icon
-                value={itinerary.title}
-                color="inherit"
-                variant="outlined"
-                fontSize="large"
-                onClick={this.handleOpen.bind(this, itinerary._id)}
-              >
-                favorite
-              </Icon>
+            <Grid item xs={3}>
+              {/* <Card raised> */}
+              <div className="favIconDiv">
+                <Fab>
+                  <Icon
+                    value={itinerary.title}
+                    variant="outlined"
+                    fontSize="large"
+                    onClick={this.handleOpen.bind(this, itinerary._id)}
+                  >
+                    favorite
+                  </Icon>
+                </Fab>
+              </div>
+              {/* </Card> */}
               {favDialog}
             </Grid>
           </Grid>
-          {/* CARD BODY */}
+
           <CardContent>
-            <Grid container spacing={24}>
+            <Grid container spacing={32} direction="row">
               <Grid item xs={4}>
-                {/* <Avatar className="authorIcon" src={itinerary.authorimage} />{" "} */}
                 <img
                   alt="profile"
                   src={itinerary.authorimage}
                   className="dashboardImg"
                 />
               </Grid>
-              <Grid item xs={4}>
-                <div>Time: {itinerary.duration} Hours</div>
-              </Grid>
-              <Grid item xs={4}>
-                <div>Cost ${itinerary.price}</div>
+              <Grid item xs={8}>
+                {/* <Grid
+                item
+                xs={4}
+                container
+                spacing={24}
+                direction="column"
+                alignItems="center"
+                justify="center"
+              > */}
+                <Grid item xs={8}>
+                  <div>• Time: {itinerary.duration} Hours</div>
+                </Grid>
+                <Grid item xs={8}>
+                  <div>• Cost ${itinerary.price}</div>
+                </Grid>
+                <Grid item xs={8}>
+                  <div>• Likes: {itinerary.likes}</div>
+                </Grid>
+                <Grid item xs={8}>
+                  <div>• Rating: {itinerary.rating}/5</div>
+                </Grid>
+                <Grid item xs={8}>
+                  <div>• Hashtags: {itinerary.hashtag}</div>
+                </Grid>
+                {/* <Grid item xs={8}>
+                  <div>By: {itinerary.author}</div>
+                </Grid> */}
+                <Grid item xs={8}>
+                  <br />
+                </Grid>
               </Grid>
             </Grid>
-
-            <Grid item xs={4}>
-              <div>{itinerary.author}</div>
+            <Grid item xs={8}>
+              <div>By: {itinerary.author}</div>
             </Grid>
           </CardContent>
         </Card>
@@ -231,7 +254,6 @@ class Dashboard extends Component {
 
     return (
       <React.Fragment>
-        <Navbar />
         <div>
           <Typography
             className="city"
@@ -242,20 +264,16 @@ class Dashboard extends Component {
             Dashboard
           </Typography>
         </div>
-        <div>
-          <p>Welcome {user.username}.</p>
-          {/* {isAuthenticated ? <p>Welcome {user.username}.</p> : guestContent} */}
-        </div>
-        {/* {this.props.profile.favid.map(i => (
-          <div key={i + 1}>{i}</div>
-        ))} */}
-        {/* <div>{listID}</div> */}
 
-        {/* <div>{listFavorites}</div> */}
-        {/* <div>{listFavoriteIDs}</div> */}
-        {/* <div>{listNestedArray}</div> */}
-        <div>{listFavoriteIDs}</div>
-        <BtnHome />
+        <div className="dashboardUsername">Welcome {user.username}. </div>
+
+        {this.props.profile.favitin.length > 0 ? (
+          <div>{listFavoriteIDs}</div>
+        ) : (
+          <div>{noFavouritesMessage}</div>
+        )}
+
+        <IconHome />
       </React.Fragment>
     );
   }
