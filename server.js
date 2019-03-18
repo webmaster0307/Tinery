@@ -39,7 +39,6 @@ mongoose
 // ==============================================
 
 const app = express();
-const port = process.env.port || 5000;
 
 // CORS
 var corsOption = {
@@ -98,6 +97,18 @@ app.use("/auth", profiledb);
 //PASSPORT CONFIG
 require("./config/passport")(passport);
 // require("./config/passportGoogle")(passport);
+
+// Serve Static assets if in production
+if (process.env.NODE_ENV === "production") {
+  // Set client/build folder
+  app.use(express.static("client/build"));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+  });
+}
+
+const port = process.env.port || 5000;
 
 // START THE SERVER
 // =============================================
