@@ -9,6 +9,7 @@ import IconCity from "../components/layout/IconCity";
 
 // import Favorites from "../components/Favorites";
 // import Spinner from "../components/layout/Spinner";
+
 // import { Link } from "react-router-dom";
 // import { NavLink } from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
@@ -27,6 +28,9 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Fab from "@material-ui/core/Fab";
+import Snackbar from "@material-ui/core/Snackbar";
+import Fade from "@material-ui/core/Fade";
+import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 
 class Dashboard extends Component {
   constructor() {
@@ -41,6 +45,7 @@ class Dashboard extends Component {
       // favorites: [],
       profile: [],
       open: false,
+      snackbar: false,
       confirm: false,
       favdataid: ""
     };
@@ -61,11 +66,11 @@ class Dashboard extends Component {
   }
 
   handleClose = () => {
-    this.setState({ open: false });
+    this.setState({ open: false, snackbar: false });
   };
 
   handleOpen = event => {
-    this.setState({ open: true });
+    this.setState({ open: true, snackbar: false });
     // let eventTargetId = event;
     let eventTargetId = event;
     let favData = {
@@ -95,7 +100,8 @@ class Dashboard extends Component {
     // console.log("confirm button id", this.state.favdataid);
     this.setState({
       open: false,
-      confirm: true
+      confirm: true,
+      snackbar: true
     });
     if (this.state.confirm === true) {
       this.props.removeFavorites(userID, favData.favorites);
@@ -114,7 +120,7 @@ class Dashboard extends Component {
             <p> You have not added any favorites to your profile.</p>
             <p>
               To add favourites please browse itineraries in cities and click on
-              the add to favorite icon.
+              the <span className="addToFavText">add to favorite</span> icon.
             </p>
             <IconCity />
           </div>
@@ -148,10 +154,9 @@ class Dashboard extends Component {
               color="primary"
               onClick={this.confirmButton.bind(this)}
             >
-              {/* <Button color="inherit" autoFocus> */}
               Confirm
-              {/* </Button> */}
             </Fab>
+
             {/* </Link> */}
             <Button onClick={this.handleClose} color="inherit" autoFocus>
               Close
@@ -272,6 +277,17 @@ class Dashboard extends Component {
         ) : (
           <div>{noFavouritesMessage}</div>
         )}
+
+        <Snackbar
+          open={this.state.snackbar}
+          autoHideDuration={1000}
+          variant="success"
+          TransitionComponent={Fade}
+          ContentProps={{
+            "aria-describedby": "message-id"
+          }}
+          message={<div className="snackbartext">Favorite Removed!</div>}
+        />
 
         <IconHome />
       </React.Fragment>

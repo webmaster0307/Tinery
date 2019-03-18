@@ -85,6 +85,7 @@
 
   /* padding-left: 10px; */
 }
+
 .commentAvatar {
   padding-left: 5px;
   padding-top: 10px;
@@ -136,7 +137,7 @@
   display: flex;
 }
 
-.activitycard > div {
+.activitycard>div {
   flex: 1;
 }
 
@@ -291,7 +292,7 @@
   text-align: center;
 }
 
-.flexIcons > a {
+.flexIcons>a {
   /* flex: 1; */
   color: black;
 }
@@ -556,7 +557,6 @@
 .cityIconText {
   text-align: center;
   font-style: italic;
-
   color: black;
   text-decoration: none;
 }
@@ -565,8 +565,22 @@
   color: #039be5;
 }
 
+/* .snackbar {
+  background-color: green;
+  color: green
+}
+
+.snackbartext {
+  justify-content: center;
+  text-align: center;
+} */
+
 .gotoFav {
   text-decoration: none;
+}
+
+.addToFavText {
+  text-decoration: underline;
 }
 
 .favIconDiv {
