@@ -117,9 +117,9 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-const port = process.env.port || 5000;
+const PORT = process.env.PORT || 5000;
 
 // START THE SERVER
 // =============================================
 
-app.listen(port, () => console.log(`Listening on port ${port}`));
+app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
