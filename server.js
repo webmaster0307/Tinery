@@ -27,7 +27,7 @@ const usersdb = require("./routes/api/usersdb");
 
 require("./models/usermodel");
 
-mongoose.Promise = global.Promise;
+// mongoose.Promise = global.Promise;
 
 // Connect to MongoDB
 mongoose
