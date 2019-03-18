@@ -5,7 +5,7 @@ const passport = require("passport");
 const cookierParser = require("cookie-parser");
 const session = require("express-session");
 const path = require("path");
-// const logger = require("morgan");
+
 const cors = require("cors");
 // const passportGoogle = require("./config/passportGoogle");
 
@@ -99,12 +99,21 @@ require("./config/passport")(passport);
 // require("./config/passportGoogle")(passport);
 
 // Serve Static assets if in production
-if (process.env.NODE_ENV === "production") {
-  // Set client/build folder
-  app.use(express.static("client/build"));
+// if (process.env.NODE_ENV === "production") {
+//   // Set client/build folder
+//   app.use(express.static("client/build"));
 
+//   app.get("*", (req, res) => {
+//     res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+//   });
+// }
+
+//production mode
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "client/build")));
+  //
   app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+    res.sendfile(path.join((__dirname = "client/build/index.html")));
   });
 }
 
