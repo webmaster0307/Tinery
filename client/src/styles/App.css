@@ -357,9 +357,9 @@
 .addPhoto {
   /* width: 300px; */
   margin-top: 20px;
-  padding: 20px;
+  padding: 18px;
   background-color: gainsboro;
-  border: 2px solid black;
+  border: 4px dotted white;
   height: 145px;
   width: 145px;
   border-radius: 50%;

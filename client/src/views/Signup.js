@@ -212,6 +212,7 @@ class Signup extends Component {
     const noPreview = (
       <Card className="commentForm">
         <div className="addPhoto">
+          {/* <div> */}
           <div>
             <CloudUploadIcon />
             <Input

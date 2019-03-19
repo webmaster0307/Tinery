@@ -66,7 +66,11 @@ class Dashboard extends Component {
   }
 
   handleClose = () => {
-    this.setState({ open: false, snackbar: false });
+    this.setState({ open: false });
+  };
+
+  snackbarClose = () => {
+    this.setState({ snackbar: false });
   };
 
   handleOpen = event => {
@@ -280,7 +284,8 @@ class Dashboard extends Component {
 
         <Snackbar
           open={this.state.snackbar}
-          autoHideDuration={1000}
+          onClose={this.snackbarClose}
+          autoHideDuration={2500}
           variant="success"
           TransitionComponent={Fade}
           ContentProps={{
