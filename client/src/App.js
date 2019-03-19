@@ -73,29 +73,35 @@ class App extends Component {
           <div>
             <CssBaseline />
             <Navbar />
-            {/* <Navbar /> */}
-            <Switch>
-              <Route exact path="/" component={Home} />
-              <Route exact path="/login" component={Login} />
-              <Route exact path="/signup" component={Signup} />
-              <Route exact path="/cities" component={Cities} />
-              {/* <PrivateRoute exact path="/Favorites" component={Favorites} /> */}
-              <PrivateRoute exact path="/Cmsitin" component={Cmsitin} />
-              <PrivateRoute exact path="/Cmsactivity" component={Cmsactivity} />
-              <PrivateRoute exact path="/Cmscity" component={Cmscity} />
-              {/* <Route exact path="/Cms" component={Cms} /> */}
-              {/* <PrivateRoute exact path="/Dashboard" component={Dashboard} /> */}
-              <PrivateRoute exact path="/Dashboard" component={Dashboard} />
-              {/* <Route
+            <div className="navApp">
+              {/* <Navbar /> */}
+              <Switch>
+                <Route exact path="/" component={Home} />
+                <Route exact path="/login" component={Login} />
+                <Route exact path="/signup" component={Signup} />
+                <Route exact path="/cities" component={Cities} />
+                {/* <PrivateRoute exact path="/Favorites" component={Favorites} /> */}
+                <PrivateRoute exact path="/Cmsitin" component={Cmsitin} />
+                <PrivateRoute
+                  exact
+                  path="/Cmsactivity"
+                  component={Cmsactivity}
+                />
+                <PrivateRoute exact path="/Cmscity" component={Cmscity} />
+                {/* <Route exact path="/Cms" component={Cms} /> */}
+                {/* <PrivateRoute exact path="/Dashboard" component={Dashboard} /> */}
+                <PrivateRoute exact path="/Dashboard" component={Dashboard} />
+                {/* <Route
                 path="/Dashboard"
                 render={props => <Dashboard {...props} isAuthed={true} />}
               /> */}
-              {/* <Route exact path="/City/:city_name" component={City} /> */}
-              <Route
-                path="/cities/:city_name"
-                render={props => <City {...props} isAuthed={true} />}
-              />
-            </Switch>
+                {/* <Route exact path="/City/:city_name" component={City} /> */}
+                <Route
+                  path="/cities/:city_name"
+                  render={props => <City {...props} isAuthed={true} />}
+                />
+              </Switch>
+            </div>
           </div>
         </BrowserRouter>
       </Provider>

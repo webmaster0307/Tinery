@@ -12,7 +12,7 @@ const path = require("path");
 
 // DB Config & Internal Links
 
-const db = require("./config/keys").mongoURI;
+// const db = require("./config/keys").mongoURI;
 
 //ROUTES
 

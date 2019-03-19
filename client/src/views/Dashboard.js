@@ -213,14 +213,14 @@ class Dashboard extends Component {
 
           <CardContent>
             <Grid container spacing={32} direction="row">
-              <Grid item xs={4}>
+              <Grid item xs={5}>
                 <img
                   alt="profile"
                   src={itinerary.authorimage}
                   className="dashboardImg"
                 />
               </Grid>
-              <Grid item xs={8}>
+              <Grid item xs={7}>
                 {/* <Grid
                 item
                 xs={4}

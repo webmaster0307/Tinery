@@ -298,7 +298,7 @@
 }
 
 .homeBrand {
-  max-height: 160px;
+  max-height: 120px;
   max-width: auto;
   padding: 10px;
   margin-top: 10px;
@@ -327,7 +327,7 @@
 
 .homeCircle {
   max-width: auto;
-  max-height: 130px;
+  max-height: 100px;
   display: block;
   margin-left: auto;
   margin-right: auto;
@@ -585,10 +585,12 @@
 
 .favIconDiv {
   /* margin-right: 10px;
-  padding-right: 10px; */
-  margin-top: 5px;
-  margin-left: 10px;
-  /* padding-top: 10px; */
+
+  /* margin-top: 5px;
+  margin-left: 10px; */
+  /* margin-right: 10px; */
+  padding-top: 10px;
+  padding-right: 10px;
 }
 
 /* NAVIGATION */
@@ -615,6 +617,11 @@
 
 .appBar {
   margin-bottom: 20px;
+}
+
+.navApp {
+  margin-top: 80px;
+  ;
 }
 
 .IconaAccountCircle {

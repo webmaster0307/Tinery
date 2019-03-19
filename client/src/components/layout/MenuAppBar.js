@@ -146,7 +146,7 @@ class MenuAppBar extends React.Component {
 
     return (
       <div>
-        <AppBar className="appBar" position="static" color="default">
+        <AppBar className="appBar" position="fixed" color="default">
           <Toolbar className="toolBarFlex">
             <div>{isAuthenticated ? authLinks : guestLinks}</div>
 

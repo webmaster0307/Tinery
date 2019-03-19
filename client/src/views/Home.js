@@ -50,7 +50,7 @@ class Home extends Component {
     );
 
     return (
-      <div className="Home">
+      <div>
         <div>
           <img
             className="homeBrand"
