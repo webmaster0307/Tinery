@@ -51,7 +51,8 @@
   "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
   "main": "server.js",
   "devDependencies": {
-    "nodemon": "^1.18.9"
+    "nodemon": "^1.18.9",
+    "redux-devtools-extension": "^2.13.8"
   },
   "repository": {
     "type": "git",
