@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const passport = require("passport");
 const cookierParser = require("cookie-parser");
-const session = require("express-session");
+// const session = require("express-session");
 const path = require("path");
 
 // const cors = require("cors");
@@ -70,23 +70,24 @@ app.use("/api", cmsdb);
 
 // EXPRESS MIDDLWARE
 app.use(cookierParser());
-app.use(
-  session({
-    secret: "secret",
-    resave: false,
-    saveUninitialized: false
-  })
-);
+
+// app.use(
+//   session({
+//     secret: "secret",
+//     resave: false,
+//     saveUninitialized: false
+//   })
+// );
 
 // PASSPORT MIDDLEWARE
 app.use(passport.initialize());
 app.use(passport.session());
 
 // Set Global Variables
-app.use((req, res, next) => {
-  res.locals.user = req.user || null;
-  next();
-});
+// app.use((req, res, next) => {
+//   res.locals.user = req.user || null;
+//   next();
+// });
 
 // AUTH ROUTES
 
