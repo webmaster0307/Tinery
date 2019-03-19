@@ -6,7 +6,7 @@ const cookierParser = require("cookie-parser");
 const session = require("express-session");
 const path = require("path");
 
-const cors = require("cors");
+// const cors = require("cors");
 // const passportGoogle = require("./config/passportGoogle");
 
 // DB Config & Internal Links
@@ -41,14 +41,14 @@ mongoose
 const app = express();
 
 // CORS
-var corsOption = {
-  origin: true,
-  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-  credentials: true,
-  exposedHeaders: ["x-auth-token"]
-};
+// var corsOption = {
+//   origin: true,
+//   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+//   credentials: true,
+//   exposedHeaders: ["x-auth-token"]
+// };
 
-app.use(cors(corsOption));
+// app.use(cors(corsOption));
 
 // BODY PARSER MIDDLEWARE
 app.use(bodyParser.json());
@@ -99,23 +99,23 @@ require("./config/passport")(passport);
 // require("./config/passportGoogle")(passport);
 
 // Serve Static assets if in production
-// if (process.env.NODE_ENV === "production") {
-//   // Set client/build folder
-//   app.use(express.static("client/build"));
-
-//   app.get("*", (req, res) => {
-//     res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
-//   });
-// }
-
-//production mode
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "client/build")));
-  //
+  // Set client/build folder
+  app.use(express.static("client/build"));
+
   app.get("*", (req, res) => {
-    res.sendfile(path.join((__dirname = "client/build/index.html")));
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
   });
 }
+
+//production mode
+// if (process.env.NODE_ENV === "production") {
+//   app.use(express.static(path.join(__dirname, "client/build")));
+//   //
+//   app.get("*", (req, res) => {
+//     res.sendfile(path.join((__dirname = "client/build/index.html")));
+//   });
+// }
 
 const PORT = process.env.PORT || 5000;
 
