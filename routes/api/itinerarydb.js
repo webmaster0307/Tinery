@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const Itinmodel = require("../../models/itinerary");
+const Itinmodel = require("../../models/itinerarymodel");
 
 //-------------------------------------------------------------
 //GET

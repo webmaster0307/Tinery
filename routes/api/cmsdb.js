@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 // const path = require("path");
 
-const Itinmodel = require("../../models/itinerary");
+const Itinmodel = require("../../models/itinerarymodel");
 const Citymodel = require("../../models/citymodel");
 const Activitymodel = require("../../models/activitymodel");
 

@@ -3,16 +3,14 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import IconHome from "../components/layout/IconHome";
-// import City from "../views/City";
 import { fetchAxiosCities } from "../actions/citiesActions";
-// import { debounce } from "lodash";
+import { getCurrentProfile } from "./../actions/profileActions";
+import { debounce } from "lodash";
 
 import Card from "@material-ui/core/Card";
-
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
-import { getCurrentProfile } from "./../actions/profileActions";
 
 class Cities extends Component {
   constructor(props) {
@@ -22,94 +20,35 @@ class Cities extends Component {
       city: "",
       country: "",
       query: "",
-      error: null
+      error: null,
+      text: ""
       // filteredCities: []
     };
   }
 
   componentDidMount() {
-    // console.log(this.props);
     this.props.fetchAxiosCities();
-    // CONVERT REDUX TO LOCAL STATE
-    // this.setState({
-    //   cities: this.props.cities.cities
-    // });
   }
-  // makeRemoteRequest = () => {
-  //   this.setState({ loading: true });
 
-  //   fetchAxiosCities(this.state.query)
-  //     .then(users => {
-  //       this.setState({
-  //         loading: false,
-  //         cities: users,
-  //         fullCities: users
-  //       });
-  //     })
-  //     .catch(error => {
-  //       this.setState({ error, loading: false });
-  //     });
-  // };
-  // handleSearch = text => {
-  //   console.log("text", text);
-  //   this.setState({
-  //     query: text
-  //   });
-  // };
+  // SEARCH WITH DEBOUNCE
 
-  // handleSearch = debounce(text => {
-  //   this.setState({
-  //     query: text
-  //   });
-  // }, 100);
-
-  // debounceEvent(...args) {
-  //   this.debouncedEvent = debounce(...args);
-  //   console.log(this.query);
-  //   return e => {
-  //     e.persist();
-  //     return this.debouncedEvent(e);
-  //   };
-  // }
-  // onChange={this.debounceEvent(this.handleSearch, 500)}
-  // handleSearch = e => {
-  //   this.setState({
-  //     query: e.target.value
-  //   });
-  // };
-  // handleFilter = debounce(
-  //   text => this.setState({ cities: this.filteredCities(text) }),
-  //   500
-  // );
-
-  // handleSearch = text => {
-  //   this.setState(
-  //     {
-  //       query: text
-  //     },
-  //     () => {
-  //       this.handleFilter(text);
-  //     }
-  //   );
-  // };
-  handleSearch = event => {
+  handleSearch = debounce(text => {
     this.setState({
-      query: event.target.value
+      query: text
     });
-  };
+  }, 2000);
+
+  // handleSearch = event => {
+  //   event.persist();
+  //   this.setState({
+  //     query: event.target.value
+  //   });
+  // };
 
   render() {
     // console.log(this.props.match.params);
-
     // console.log(this.props.cities.cities);
-    // let filteredCities = this.props.cities.cities.filter(
-    //   debounce(city => {
-    //     return city.cityname
-    //       .toLowerCase()
-    //       .includes(this.state.query.toLowerCase());
-    //   }),
-    //   500
-    // );
+
     let filteredCities = this.props.cities.cities.filter(city => {
       return city.cityname
         .toLowerCase()
@@ -117,8 +56,6 @@ class Cities extends Component {
     });
     return (
       <div>
-        {/* <Card className="city" raised> */}
-        {/* <CardHeader> */}
         <Typography
           className="city"
           component="h2"
@@ -127,11 +64,10 @@ class Cities extends Component {
         >
           Cities List
         </Typography>
-        {/* </CardHeader> */}
-        {/* </Card> */}
+
         <div className="citysearchflex">
           {/* INPUT */}
-          <TextField
+          {/* <TextField
             id="filled-with-placeholder"
             label="Search Cities"
             type="text"
@@ -140,16 +76,19 @@ class Cities extends Component {
             margin="normal"
             className="cityfilter"
             variant="outlined"
-          />
-          {/* <input
-            type="text"
-            id="filter"
-            value={this.state.query}
-            placeholder="Type to Search Destinations"
-            onChange={this.handleSearch}
-            className="cityfilter"
           /> */}
+          <TextField
+            id="filled-with-placeholder"
+            label="Search Cities"
+            type="text"
+            placeholder="Type to Search Destinations"
+            onChange={e => this.handleSearch(e.target.value)}
+            margin="normal"
+            className="cityfilter"
+            variant="outlined"
+          />
         </div>
+
         {/* CITIES */}
 
         {filteredCities.map(city => {
@@ -173,9 +112,7 @@ class Cities extends Component {
                       className="cityImg"
                     />
 
-                    <Typography variant="button" gutterBottom>
-                      {city.cityname}
-                    </Typography>
+                    <Typography variant="button">{city.cityname}</Typography>
                     <Typography>{city.country}</Typography>
                   </CardContent>
                 </Link>
@@ -198,7 +135,9 @@ const mapStateToProps = state => {
 };
 
 Cities.propTypes = {
-  cities: PropTypes.object
+  cities: PropTypes.object,
+  fetchAxiosCities: PropTypes.func,
+  getCurrentProfile: PropTypes.func
 };
 
 export default connect(
