@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { registerUser } from "../actions/authActions";
 
-import IconHome from "../components/layout/IconHome";
+import BottomNav from "../components/layout/BottomNav";
 
 import Checkbox from "@material-ui/core/Checkbox";
 import Button from "@material-ui/core/Button";
@@ -490,7 +490,9 @@ class Signup extends Component {
     return (
       <div>
         {registerForm}
-        <IconHome />
+        <div className="bottomNav">
+          <BottomNav />
+        </div>
       </div>
     );
   }

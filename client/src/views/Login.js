@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 // import TextFieldGroup from "../components/TextFieldGroup";
-import IconHome from "../components/layout/IconHome";
+import BottomNav from "../components/layout/BottomNav";
 
 // import LoginFacebook from "../components/LoginFacebook";
 // import LoginGoogle from "../components/LoginGoogle";
@@ -24,9 +24,13 @@ import Card from "@material-ui/core/Card";
 // import TwitterLogin from "react-twitter-auth";
 // import FacebookLogin from "react-facebook-login";
 import { GoogleLogin } from "react-google-login";
+import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
+
 // import { GoogleLogout } from "react-google-login";
 
 import { googleClientID } from "./../keys.js";
+// import { facebookAppID } from "./../keys.js";
+
 // import { PostData } from "../actions/utils/PostData";
 // import { CircularProgress } from "@material-ui/core";
 
@@ -104,6 +108,8 @@ class Login extends Component {
     alert(error);
   };
 
+  componentClicked = () => console.log("clicked");
+
   // SUBMIT
 
   onSubmit = e => {
@@ -132,30 +138,31 @@ class Login extends Component {
     //FACEBOOK LOGIN
     // console.log(this.props);
     // console.log(this.state);
-    // const responseFacebook = response => {
-    //   // console.log(this.props.history);
-    //   // console.log(this.props);
-    //   let facebookData;
-    //   facebookData = {
-    //     facebookID: response.id,
-    //     email: response.email,
-    //     password: "",
-    //     username: response.name,
-    //     firstname: "",
-    //     lastname: "",
-    //     avatar: response.picture.data.url,
-    //     accesstoken: response.accessToken
-    //   };
-    //   // this.props.socialRegisterUser(facebookData);
-    //   // console.log("facebook console");
-    //   // console.log(response);
-    //   // console.log("username", response.name);
-    //   // console.log("email", response.email);
-    //   // console.log("avatar", response.picture.data.url);
-    //   // console.log("id", response.id);
-    //   // console.log("accesstoken", response.accessToken);
-    //   console.log(facebookData);
-    // };
+    const responseFacebook = response => {
+      // console.log(this.props.history);
+      // console.log(this.props);
+      console.log(response);
+      let facebookData;
+      facebookData = {
+        facebookID: response.id,
+        email: response.email,
+        password: "",
+        username: response.name,
+        firstname: "",
+        lastname: "",
+        avatar: response.picture.data.url,
+        accesstoken: response.accessToken
+      };
+      this.props.socialRegisterUser(facebookData);
+      // console.log("facebook console");
+      // console.log(response);
+      // console.log("username", response.name);
+      // console.log("email", response.email);
+      // console.log("avatar", response.picture.data.url);
+      // console.log("id", response.id);
+      // console.log("accesstoken", response.accessToken);
+      // console.log(facebookData);
+    };
 
     const responseGoogle = response => {
       let googleData;
@@ -246,30 +253,38 @@ class Login extends Component {
                   </button>
                 </div>
                 <div>Sign Up or Register using third party services.</div>
-                <div className="googleDiv">
+
+                <div className="socialDiv">
                   <GoogleLogin
                     clientId={googleClientID}
-                    buttonText="Login"
+                    render={renderProps => (
+                      <img
+                        className="googleBtn"
+                        src={require("../images/googlebtn3.png")}
+                        alt="googleLogo"
+                        onClick={renderProps.onClick}
+                      />
+                    )}
+                    buttonText="Log in with Google"
                     onSuccess={responseGoogle}
                     onFailure={responseGoogle}
                     className="googleComponentBtn"
                     theme="dark"
                   />
-                  {/* <GoogleLogin
-                    clientId="24280000651-bvmpenmvj4p7dila2kni75utafi5sqc4.apps.googleusercontent.com"
+                  <br />
+                  <FacebookLogin
+                    appId="284220635589707"
+                    callback={responseFacebook}
+                    fields="name,email,picture"
                     render={renderProps => (
-                      <button
+                      <img
+                        className="facebookBtn"
+                        src={require("../images/facebook.png")}
+                        alt="facebookLogo"
                         onClick={renderProps.onClick}
-                        className="loginGBtn"
-                      >
-                        Login with Google
-                      </button>
+                      />
                     )}
-                    buttonText="Login"
-                    onSuccess={responseGoogle}
-                    onFailure={responseGoogle}
-                    className="googleComponent"
-                  /> */}
+                  />
                 </div>
               </form>
             </Card>
@@ -318,7 +333,9 @@ class Login extends Component {
         {loginComponent}
         {/* {socialLogin} */}
         {noAccountMessage}
-        <IconHome />
+        <div className="bottomNav">
+          <BottomNav />
+        </div>
       </div>
     );
   }

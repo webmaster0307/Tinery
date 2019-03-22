@@ -33,6 +33,7 @@
     "redux-thunk": "^2.3.0",
     "request": "^2.88.0",
     "slick-carousel": "^1.8.1",
+    "source-map-explorer": "^1.8.0",
     "validator": "^10.11.0"
   },
   "scripts": {
