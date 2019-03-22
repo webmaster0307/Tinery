@@ -1,6 +1,14 @@
 Welcome to the MYtinerary App courtesy of Ubiqum.
 Heroku Deployment Link : https://guarded-sands-60894.herokuapp.com/
 
+<p>You will need to create a .env file in your root folder with the following info : </p>
+<pre><code>
+MONGO_URI = "YOUR_OWN_MONGO_URI"
+SECRET_OR_KEY = "YOUR_OWN_SECRET"
+googleClientID = "YOUR_GOOGLECLIENTID_SECRET"
+googleClientSecret = "YOUR_GOOGLECLIENT_SECRET"
+</code></pre>
+
 Quick Start
 
 # Install dependencies for server
@@ -24,11 +32,3 @@ npm run server
 npm run client
 
 # Server runs on http://localhost:5000 and client on http://localhost:3000
-
-<p>You will need to create a .env file in your root folder with the following info : </p>
-<pre><code>
-MONGO_URI = "YOUR_OWN_MONGO_URI"
-SECRET_OR_KEY = "YOUR_OWN_SECRET"
-googleClientID = "YOUR_GOOGLECLIENTID_SECRET"
-googleClientSecret = "YOUR_GOOGLECLIENT_SECRET"
-</code></pre>
