@@ -2,10 +2,11 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import IconHome from "../components/layout/IconHome";
+// import IconHome from "../components/layout/IconHome";
 import { fetchAxiosCities } from "../actions/citiesActions";
 import { getCurrentProfile } from "./../actions/profileActions";
 import { debounce } from "lodash";
+import BottomNav from "../components/layout/BottomNav";
 
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
@@ -36,7 +37,7 @@ class Cities extends Component {
     this.setState({
       query: text
     });
-  }, 2000);
+  }, 750);
 
   // handleSearch = event => {
   //   event.persist();
@@ -90,37 +91,38 @@ class Cities extends Component {
         </div>
 
         {/* CITIES */}
+        <div className="bottomNav">
+          {filteredCities.map(city => {
+            return (
+              <div key={city._id}>
+                <Card className="city citycard" raised>
+                  <Link
+                    to={{
+                      pathname: "/cities/" + city.url,
+                      state: {
+                        city: city.cityname,
+                        country: city.country
+                      }
+                    }}
+                    className="citylist"
+                  >
+                    <CardContent>
+                      <img
+                        alt="proflagfile"
+                        src={city.flagimg}
+                        className="cityImg"
+                      />
 
-        {filteredCities.map(city => {
-          return (
-            <div key={city._id}>
-              <Card className="city citycard" raised>
-                <Link
-                  to={{
-                    pathname: "/cities/" + city.url,
-                    state: {
-                      city: city.cityname,
-                      country: city.country
-                    }
-                  }}
-                  className="citylist"
-                >
-                  <CardContent>
-                    <img
-                      alt="proflagfile"
-                      src={city.flagimg}
-                      className="cityImg"
-                    />
-
-                    <Typography variant="button">{city.cityname}</Typography>
-                    <Typography>{city.country}</Typography>
-                  </CardContent>
-                </Link>
-              </Card>
-            </div>
-          );
-        })}
-        <IconHome />
+                      <Typography variant="button">{city.cityname}</Typography>
+                      <Typography>{city.country}</Typography>
+                    </CardContent>
+                  </Link>
+                </Card>
+              </div>
+            );
+          })}
+        </div>
+        <BottomNav />
       </div>
     );
   }

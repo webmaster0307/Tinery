@@ -90,6 +90,7 @@ class MenuAppBar extends React.Component {
         </ListItem>
       </div>
     );
+
     const logoutState = (
       <div>
         <ListItem button>
@@ -122,7 +123,6 @@ class MenuAppBar extends React.Component {
     );
 
     // LINKS
-
     const authLinks = (
       <div>
         <div>

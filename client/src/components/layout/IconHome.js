@@ -5,7 +5,8 @@ import Icon from "@material-ui/core/Icon";
 class IconHome extends Component {
   render() {
     return (
-      <div className="flexIcons">
+      <React.Fragment>
+        {/* <div className="flexIcons"> */}
         <div className="flexLink">
           <Link to="/">
             <Icon fontSize="large" className="homeIcon">
@@ -13,7 +14,8 @@ class IconHome extends Component {
             </Icon>
           </Link>
         </div>
-      </div>
+        {/*   </div> */}
+      </React.Fragment>
     );
   }
 }

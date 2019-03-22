@@ -621,7 +621,10 @@
 
 .navApp {
   margin-top: 80px;
-  ;
+}
+
+.bottomNav {
+  padding-bottom: 50px;
 }
 
 .IconaAccountCircle {

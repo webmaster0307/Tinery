@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { getCurrentProfile } from "./../actions/profileActions";
 import { removeFavorites } from "../actions/profileActions";
 import { fetchAxiosItinerariesID } from "../actions/profileActions";
-import IconHome from "../components/layout/IconHome";
+import BottomNav from "../components/layout/BottomNav";
 import IconCity from "../components/layout/IconCity";
 
 // import Favorites from "../components/Favorites";
@@ -275,12 +275,13 @@ class Dashboard extends Component {
         </div>
 
         <div className="dashboardUsername">Welcome {user.username}. </div>
-
-        {this.props.profile.favitin.length > 0 ? (
-          <div>{listFavoriteIDs}</div>
-        ) : (
-          <div>{noFavouritesMessage}</div>
-        )}
+        <div className="bottomNav">
+          {this.props.profile.favitin.length > 0 ? (
+            <div>{listFavoriteIDs}</div>
+          ) : (
+            <div>{noFavouritesMessage}</div>
+          )}
+        </div>
 
         <Snackbar
           open={this.state.snackbar}
@@ -294,7 +295,7 @@ class Dashboard extends Component {
           message={<div className="snackbartext">Favorite Removed!</div>}
         />
 
-        <IconHome />
+        <BottomNav className="bottomNav" />
       </React.Fragment>
     );
   }

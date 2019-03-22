@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import { NavLink, Link } from "react-router-dom";
-import IconHome from "../components/layout/IconHome";
+// import IconHome from "../components/layout/IconHome";
 import { logoutUser } from "../actions/authActions";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { getCurrentProfile } from "../actions/profileActions";
+import BottomNav from "../components/layout/BottomNav";
 
 class Home extends Component {
   componentDidMount() {
@@ -84,7 +85,8 @@ class Home extends Component {
         {isAuthenticated ? loginState : logoutState}
 
         <div>
-          <IconHome />
+          {/* <IconHome /> */}
+          <BottomNav />
         </div>
       </div>
     );
