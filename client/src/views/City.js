@@ -1,15 +1,12 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { getCurrentProfile } from "./../actions/profileActions";
-
 import { connect } from "react-redux";
 import { fetchAxiosCities } from "../actions/citiesActions";
 import { fetchAxiosItineraries } from "../actions/itinerariesActions";
 import IconCity from "../components/layout/IconCity";
-// import { fetchAxiosActivities } from "../actions/activitiesActions";
 import Itinerary from "../components/Itinerary";
-
-import Typography from "@material-ui/core/Typography";
+import Header from "../components/layout/Header";
 
 class City extends Component {
   constructor(props) {
@@ -19,7 +16,6 @@ class City extends Component {
       city: "",
       country: "",
       itineraries: []
-      // favid: []
     };
   }
   componentDidMount() {
@@ -39,22 +35,11 @@ class City extends Component {
     return (
       <div>
         <div>
-          <Typography
-            className="city"
-            component="h2"
-            variant="display2"
-            gutterBottom
-          >
-            {showCity}
-          </Typography>
+          <Header title={showCity} />
         </div>
-
         <div>
           <Itinerary />
-
-          <div>
-            <IconCity />
-          </div>
+          <IconCity />
         </div>
       </div>
     );
@@ -66,12 +51,8 @@ const mapStateToProps = (state, ownProps) => {
   return {
     city: state.cities.cities.find(city => city.id === id),
     cities: state.cities,
-    // favid: state.favid,
     profile: state.profile,
     auth: state.auth
-
-    // itineraries: state.itineraries
-    // eventId: state.event.target.id,
   };
 };
 

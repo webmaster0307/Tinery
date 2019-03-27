@@ -6,13 +6,14 @@ import { removeFavorites } from "../actions/profileActions";
 import { fetchAxiosItinerariesID } from "../actions/profileActions";
 import BottomNav from "../components/layout/BottomNav";
 import IconCity from "../components/layout/IconCity";
+import Header from "../components/layout/Header";
 
 // import Favorites from "../components/Favorites";
 // import Spinner from "../components/layout/Spinner";
 
 // import { Link } from "react-router-dom";
 // import { NavLink } from "react-router-dom";
-import Typography from "@material-ui/core/Typography";
+// import Typography from "@material-ui/core/Typography";
 // import Avatar from "@material-ui/core/Avatar";
 // import FavoriteBorder from "@material-ui/icons/FavoriteBorder";
 import Card from "@material-ui/core/Card";
@@ -264,14 +265,7 @@ class Dashboard extends Component {
     return (
       <React.Fragment>
         <div>
-          <Typography
-            className="city"
-            component="h2"
-            variant="display2"
-            gutterBottom
-          >
-            Dashboard
-          </Typography>
+          <Header title={"Dashboard"} />
         </div>
 
         <div className="dashboardUsername">Welcome {user.username}. </div>

@@ -1,13 +1,12 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import axios from "axios";
+import { connect } from "react-redux";
+import { createItinerary } from "../actions/cmsActions";
+import Header from "../components/layout/Header";
 
-// import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
-import CloudUploadIcon from "@material-ui/icons/CloudUpload";
-import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
 
 class Cmsitin extends Component {
   constructor() {
@@ -34,10 +33,7 @@ class Cmsitin extends Component {
   }
 
   // IMAGE INFO
-
   fileChangedHandler = event => {
-    // console.log("this file", this.state.selectedFile);
-    // console.log("this state", this.state);
     this.setState({
       authorimage: event.target.files[0],
       previewFile: URL.createObjectURL(event.target.files[0])
@@ -63,11 +59,14 @@ class Cmsitin extends Component {
 
     // console.log(formData);
     // console.log(this.state);
-    axios.post("api/cms/itin", formData, {
-      // onUploadProgress: progressEvent => {
-      //  console.log(progressEvent.loaded / progressEvent.total);
-      // }
-    });
+
+    //MIGRATE TO REDUX
+    this.props.createItinerary(formData);
+    // axios.post("api/cms/itin", formData, {
+    //   // onUploadProgress: progressEvent => {
+    //   //  console.log(progressEvent.loaded / progressEvent.total);
+    //   // }
+    // });
     alert("Upload successful");
     this.setState({
       title: "",
@@ -82,31 +81,43 @@ class Cmsitin extends Component {
   };
 
   // FORM INFO
-
   onChange = e => {
-    // let input = {
-    //   name: this.state.name
-    // };
-    // console.log(input);
     this.setState({
       [e.target.name]: e.target.value
+    });
+  };
+
+  //CONVERT TO SNAKE CASE
+  onSnakecase = e => {
+    var val = e.target.value;
+    this.setState({
+      [e.target.name]: e.target.value,
+      activitykey: val
+        .split(" ")
+        .join("_")
+        .toLowerCase(),
+      cityurl: val
+        .split(" ")
+        .join("_")
+        .toLowerCase()
     });
   };
 
   render() {
     const previewFile = this.state.previewFile;
     const cmstitle = (
-      <div>
-        <Typography
-          className="city"
-          component="h2"
-          variant="display2"
-          gutterBottom
-        >
-          Create Your Own Itinerary
-        </Typography>
-        <div>Welcome {this.props.auth.user.username}</div>
-      </div>
+      <React.Fragment>
+        <div>
+          <Header title={"Create Itineraries"} />
+        </div>
+        <div className="cmsTitletext">
+          <p>Fill out the form below to create a new city.</p>
+          <p>Click on the button below to edit an existing city.</p>
+          <div>
+            <Button variant="outlined">Edit Itineraries</Button>
+          </div>
+        </div>
+      </React.Fragment>
     );
     const cmsbody = (
       <div>
@@ -243,7 +254,7 @@ class Cmsitin extends Component {
               />
             </div> */}
           </form>
-          <div className="cmsImage">
+          <div className="cmsUploadimage">
             Upload Author Image Here.
             <input type="file" onChange={this.fileChangedHandler} />
           </div>
@@ -252,50 +263,47 @@ class Cmsitin extends Component {
           </button>
         </Card>
 
-        <div>
+        <div className="cmsTitletext">
           <h3>Preview Your Image Below : </h3>
         </div>
       </div>
     );
     const noPreview = (
       <div>
-        {/* <div className="addPhoto"> */}
-        Author Image
-        <div>
-          Preview Image
-          <CloudUploadIcon />
-        </div>
-        {/* </div> */}
+        <Card />
       </div>
     );
     const preview = (
       <div>
-        <img alt="imageuploader" src={this.state.previewFile} />
+        <Card raised>
+          <div className="cmsImageDiv">
+            <img alt="cmsImage" src={this.state.previewFile} />
+          </div>
+        </Card>
       </div>
     );
     return (
       <React.Fragment>
         {cmstitle}
         {cmsbody}
-
         {previewFile === null ? noPreview : preview}
       </React.Fragment>
     );
   }
 }
 
+Cmsitin.propTypes = {
+  createItinerary: PropTypes.func,
+  auth: PropTypes.object
+};
+
 const mapStateToProps = state => ({
   favid: state.favid,
-  // errors: state.errors,
   profile: state.profile,
   auth: state.auth
 });
 
-Cmsitin.propTypes = {
-  auth: PropTypes.object
-};
-
 export default connect(
   mapStateToProps,
-  {}
+  { createItinerary }
 )(Cmsitin);

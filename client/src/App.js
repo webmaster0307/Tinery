@@ -16,6 +16,7 @@ import "./styles/App.css";
 import CssBaseline from "@material-ui/core/CssBaseline";
 // import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import Navbar from "./components/layout/Navbar";
+import Editcity from "./components/Editcity";
 import City from "./views/City";
 import Home from "./views/Home";
 import Cities from "./views/Cities";
@@ -88,6 +89,11 @@ class App extends Component {
                   component={Cmsactivity}
                 />
                 <PrivateRoute exact path="/Cmscity" component={Cmscity} />
+                <PrivateRoute
+                  exact
+                  path="/Cmscity/Editcity"
+                  component={Editcity}
+                />
                 {/* <Route exact path="/Cms" component={Cms} /> */}
                 {/* <PrivateRoute exact path="/Dashboard" component={Dashboard} /> */}
                 <PrivateRoute exact path="/Dashboard" component={Dashboard} />

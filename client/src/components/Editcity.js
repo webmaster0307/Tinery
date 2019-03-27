@@ -1,25 +1,46 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+// import { Link } from "react-router-dom";
+import axios from "axios";
 import { connect } from "react-redux";
+import { fetchAxiosCities } from "../actions/citiesActions";
+import { debounce } from "lodash";
+import BottomNav from "../components/layout/BottomNav";
 import Header from "../components/layout/Header";
-import { Link } from "react-router-dom";
-import Card from "@material-ui/core/Card";
-import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import { createCity } from "../actions/cmsActions";
+import Card from "@material-ui/core/Card";
 
-class Cmscity extends Component {
-  constructor() {
-    super();
+import TextField from "@material-ui/core/TextField";
+
+class Editcity extends Component {
+  constructor(props) {
+    super(props);
     this.state = {
+      cities: [],
+      city: "",
+      query: "",
+      error: null,
+      text: "",
       cityname: "",
-      flagimg: null,
       country: "",
+      flagimg: null,
+      previewFile: null,
       url: "",
-      selectedFile: null,
-      previewFile: null
+      showlist: true
+      // filteredCities: []
     };
+    this.editValue = this.editValue.bind(this);
   }
+  componentDidMount() {
+    this.props.fetchAxiosCities();
+  }
+
+  // SEARCH WITH DEBOUNCE
+  handleSearch = debounce(text => {
+    this.setState({
+      query: text
+    });
+  }, 500);
 
   // IMAGE INFO
   fileChangedHandler = event => {
@@ -40,8 +61,7 @@ class Cmscity extends Component {
     formData.append("url", this.state.url);
 
     //MIGRATE TO REDUX
-    // axios.post("api/cms/city", formData);
-    this.props.createCity(formData);
+    axios.post("api/cms/city", formData, {});
     alert("Upload successful");
     this.setState({
       cityname: "",
@@ -49,6 +69,33 @@ class Cmscity extends Component {
       flagimg: null,
       previewFile: null,
       url: ""
+    });
+  };
+
+  //SELECT VALUE TO EDIT
+  editValue = e => {
+    console.log(e);
+    let allcities = this.props.cities.cities;
+    let selectedcity = allcities.find(city => city.cityname === e);
+
+    console.log(selectedcity);
+    // console.log(this.props.cities.cities);
+    // console.log(allcities);
+    this.setState({
+      cityname: selectedcity.cityname,
+      country: selectedcity.country,
+      url: selectedcity.url,
+      flagimg: selectedcity.flagimg,
+      previewFile: selectedcity.flagimg,
+
+      showlist: false
+    });
+  };
+
+  // FORM INFO
+  onEdit = () => {
+    this.setState({
+      showlist: true
     });
   };
 
@@ -76,18 +123,11 @@ class Cmscity extends Component {
     const cmstitle = (
       <React.Fragment>
         <div>
-          <Header title={"Create Cities"} />
+          <Header title={"Edit City"} />
         </div>
-
-        <div className="cmsTitletext">
-          <p>Fill out the form below to create a new city.</p>
-          <p>Click on the button below to edit an existing city.</p>
-          <div>
-            <Link to="/cmscity/editcity">
-              <Button variant="outlined">Edit Cities</Button>
-            </Link>
-          </div>
-        </div>
+        {/* <div className="cmsTitletext">
+          <p>Select a city from the list below :</p>
+        </div> */}
       </React.Fragment>
     );
     const cmsbody = (
@@ -156,28 +196,85 @@ class Cmscity extends Component {
         </Card>
       </div>
     );
+
+    let filteredCities = this.props.cities.cities.filter(city => {
+      return (
+        city.cityname.toLowerCase().includes(this.state.query.toLowerCase()) ||
+        city.country.toLowerCase().includes(this.state.query.toLowerCase())
+      );
+    });
+
+    const searchlist = (
+      <React.Fragment>
+        <div className="cmsTitletext">
+          <p>Select a city from the list below :</p>
+        </div>
+        <div className="citysearchflex">
+          <TextField
+            id="filled-with-placeholder"
+            label="Search Destinations"
+            type="text"
+            placeholder="Type to Search Destinations"
+            onChange={e => this.handleSearch(e.target.value)}
+            margin="normal"
+            className="cityfilter"
+            variant="filled"
+          />
+        </div>
+        {/* CITIES */}
+        {/* <div className="bottomNav"> */}
+        {filteredCities.map(city => {
+          return (
+            <div key={city._id} className="editCmsitems">
+              <Button onClick={this.editValue.bind(this, city.cityname)}>
+                {city.cityname}, {city.country}
+              </Button>
+            </div>
+          );
+        })}
+      </React.Fragment>
+    );
+
+    const selectedcity = (
+      <React.Fragment>
+        <div className="cmsTitletext">
+          <p>Editing : {this.state.cityname}</p>
+          <Button onClick={this.onEdit} variant="outlined">
+            Edit Cities
+          </Button>
+        </div>
+      </React.Fragment>
+    );
+
     return (
       <React.Fragment>
         {cmstitle}
+        {/* {searchlist} */}
+        {this.state.showlist === true ? searchlist : selectedcity}
         {cmsbody}
-        {previewFile === null ? noPreview : preview}
+        <div className="bottomNav">
+          {previewFile === null ? noPreview : preview}
+        </div>
+        {/* <BottomNav /> */}
       </React.Fragment>
     );
   }
 }
 
-Cmscity.propTypes = {
-  createCity: PropTypes.func,
-  auth: PropTypes.object
+const mapStateToProps = state => {
+  return {
+    cities: state.cities,
+    favid: state.favid,
+    profile: state.profile
+  };
 };
 
-const mapStateToProps = state => ({
-  favid: state.favid,
-  profile: state.profile,
-  auth: state.auth
-});
+Editcity.propTypes = {
+  cities: PropTypes.object,
+  fetchAxiosCities: PropTypes.func
+};
 
 export default connect(
   mapStateToProps,
-  { createCity }
-)(Cmscity);
+  { fetchAxiosCities }
+)(Editcity);

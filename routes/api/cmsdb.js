@@ -206,4 +206,15 @@ router.post("/cms/city", upload.any(), (req, res, next) => {
     });
 });
 
+// @route api/image/:city
+// @desc Post Images (testing)
+// @access Public
+
+router.post("/cms/city/:city", (req, res) => {
+  Citymodel.findOneAndUpdate(
+    { url: req.params.city },
+    { $push: { favorites: req.body.favData } }
+  ).then(user => res.json(user.favorites));
+});
+
 module.exports = router;
