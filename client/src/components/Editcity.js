@@ -26,6 +26,7 @@ class Editcity extends Component {
       flagimg: null,
       previewFile: null,
       url: "",
+      id: "",
       showlist: true
       // filteredCities: []
     };
@@ -48,6 +49,9 @@ class Editcity extends Component {
       flagimg: event.target.files[0],
       previewFile: URL.createObjectURL(event.target.files[0])
     });
+    console.log(this.state);
+    console.log(typeof this.state.flagimg);
+    console.log(typeof this.state.previewFile);
   };
 
   // SUBMIT
@@ -59,37 +63,38 @@ class Editcity extends Component {
     formData.append("country", this.state.country);
     formData.append("flagimg", this.state.flagimg);
     formData.append("url", this.state.url);
+    formData.append("id", this.state.id);
 
     //MIGRATE TO REDUX
-    axios.post("api/cms/city", formData, {});
+    axios.post(`/api/cms/city/${this.state.id}`, formData, {});
     alert("Upload successful");
     this.setState({
+      id: "",
       cityname: "",
       country: "",
+      url: "",
       flagimg: null,
-      previewFile: null,
-      url: ""
+      previewFile: null
     });
+    //MIGRATE TO REDUX
+    this.props.fetchAxiosCities();
   };
 
   //SELECT VALUE TO EDIT
   editValue = e => {
-    console.log(e);
+    // console.log(e);
     let allcities = this.props.cities.cities;
     let selectedcity = allcities.find(city => city.cityname === e);
-
-    console.log(selectedcity);
-    // console.log(this.props.cities.cities);
-    // console.log(allcities);
     this.setState({
+      id: selectedcity._id,
       cityname: selectedcity.cityname,
       country: selectedcity.country,
       url: selectedcity.url,
       flagimg: selectedcity.flagimg,
       previewFile: selectedcity.flagimg,
-
       showlist: false
     });
+    // console.log(this.state);
   };
 
   // FORM INFO
@@ -125,9 +130,6 @@ class Editcity extends Component {
         <div>
           <Header title={"Edit City"} />
         </div>
-        {/* <div className="cmsTitletext">
-          <p>Select a city from the list below :</p>
-        </div> */}
       </React.Fragment>
     );
     const cmsbody = (
@@ -173,7 +175,7 @@ class Editcity extends Component {
           </div>
           {/* SUBMIT BUTTON */}
           <button className="submitCommentBtn" onClick={this.onSubmit}>
-            Upload City!
+            Update City!
           </button>
         </Card>
 
@@ -207,7 +209,7 @@ class Editcity extends Component {
     const searchlist = (
       <React.Fragment>
         <div className="cmsTitletext">
-          <p>Select a city from the list below :</p>
+          <p>Edit a city from the list below :</p>
         </div>
         <div className="citysearchflex">
           <TextField
@@ -243,6 +245,10 @@ class Editcity extends Component {
             Edit Cities
           </Button>
         </div>
+        {cmsbody}
+        <div className="bottomNav">
+          {previewFile === null ? noPreview : preview}
+        </div>
       </React.Fragment>
     );
 
@@ -251,10 +257,7 @@ class Editcity extends Component {
         {cmstitle}
         {/* {searchlist} */}
         {this.state.showlist === true ? searchlist : selectedcity}
-        {cmsbody}
-        <div className="bottomNav">
-          {previewFile === null ? noPreview : preview}
-        </div>
+
         {/* <BottomNav /> */}
       </React.Fragment>
     );

@@ -1,11 +1,14 @@
 import React, { Component } from "react";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+// import { NavLink, Link } from "react-router-dom";
 // import IconHome from "../components/layout/IconHome";
 import { logoutUser } from "../actions/authActions";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { getCurrentProfile } from "../actions/profileActions";
 import BottomNav from "../components/layout/BottomNav";
+import HomeImg from "../components/layout/HomeImg";
+// import { Spring } from "react-spring";
 
 class Home extends Component {
   componentDidMount() {
@@ -39,7 +42,7 @@ class Home extends Component {
       <div className="flexIcons">
         <div className="flexLink">
           <NavLink to="/login">
-            <span className="homepageLinkText">Log In</span>
+            <span className="homepageLinkText">Login</span>
           </NavLink>
         </div>
         <div className="flexLink">
@@ -52,15 +55,17 @@ class Home extends Component {
 
     return (
       <div>
-        <div>
+        {/* <div>
           <img
             className="homeBrand"
             alt="logo_image"
             src={require("../images/client/MYtineraryLogo.png")}
           />
-        </div>
+        </div> */}
 
-        <div className="homeP">
+        <HomeImg />
+
+        {/* <div className="homeP">
           Find your perfect trip, designed by insider who know and love their
           cities.
         </div>
@@ -79,9 +84,10 @@ class Home extends Component {
           </Link>
         </div>
 
-        <div className="homeP bold">Want to build your own MYtinerary?</div>
+        <div className="homeP bold">Want to build your own MYtinerary?</div> */}
 
         {/* LOGIN STATE LOGIC */}
+
         {isAuthenticated ? loginState : logoutState}
 
         <div>

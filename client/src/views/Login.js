@@ -265,7 +265,7 @@ class Login extends Component {
                         onClick={renderProps.onClick}
                       />
                     )}
-                    buttonText="Log in with Google"
+                    buttonText="Login with Google"
                     onSuccess={responseGoogle}
                     onFailure={responseGoogle}
                     className="googleComponentBtn"
@@ -295,12 +295,12 @@ class Login extends Component {
     const noAccountMessage = (
       <div>
         <p className="createAccountText">
-          Dont have a MYtinerary account yet? You should create one! Its totally
-          free and only takes a minute.
+          Dont have a MYtinerary account?{" "}
+          <Link to="/Signup">
+            <span className="createAccountLink">Create an account!</span>
+          </Link>{" "}
+          Its totally free and only takes a minute.
         </p>
-        <Link to="/Signup">
-          <div className="createAccountLink">Create Account</div>
-        </Link>
       </div>
     );
     // const socialLogin = (

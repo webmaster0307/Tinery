@@ -178,8 +178,8 @@ router.post("/cms/activity", upload.any(), (req, res, next) => {
 // @access Public
 
 router.post("/cms/city", upload.any(), (req, res, next) => {
-  // console.log(req.body);
-  // console.log(req.files[0].filename);
+  console.log(req.body);
+  console.log(req.files[0].filename);
 
   const flagimg = "/uploads/" + req.files[0].filename;
   // const avatar = "/uploads/" + req.body.avatar;
@@ -206,15 +206,34 @@ router.post("/cms/city", upload.any(), (req, res, next) => {
     });
 });
 
-// @route api/image/:city
-// @desc Post Images (testing)
+// @route api/cms/city/:url
+// @desc Update/Edit City Info
 // @access Public
 
-router.post("/cms/city/:city", (req, res) => {
+router.post("/cms/city/:id", upload.any(), (req, res, next) => {
+  // console.log(req.body.flagimg);
+  // console.log(req.files[0].filename);
+
+  // LOGIC TO HANDLE NEW IMAGE FILE OR EXISTING IMAGE FILE
+  let imagenotupdated = req.body.flagimg;
+  const flagimg =
+    req.body.flagimg === "null"
+      ? imagenotupdated
+      : "/uploads/" + req.files[0].filename;
+
+  // console.log("flagimg =", flagimg);
+
+  const cmsfields = {};
+  cmsfields.cityname = req.body.cityname;
+  cmsfields.country = req.body.country;
+  cmsfields.url = req.body.url;
+  cmsfields.flagimg = flagimg;
+
   Citymodel.findOneAndUpdate(
-    { url: req.params.city },
-    { $push: { favorites: req.body.favData } }
-  ).then(user => res.json(user.favorites));
+    { _id: req.params.id },
+    { $set: cmsfields },
+    { new: true }
+  ).then(city => res.json(city));
 });
 
 module.exports = router;

@@ -96,7 +96,7 @@ class MenuAppBar extends React.Component {
         <ListItem button>
           <NavLink to="/login">
             <Icon className="navIcon">portrait</Icon>
-            <span className="navText">Log In</span>
+            <span className="navText">Login</span>
           </NavLink>
         </ListItem>
         <ListItem button>

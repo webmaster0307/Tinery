@@ -233,7 +233,7 @@ class Signup extends Component {
           <p>*Gravatar is Supported.</p>
           <Link to="/login">
             <p className="homepageLinkText">
-              *Google Registration is Supported.
+              *Google & Facebook Registration is Supported.
             </p>
           </Link>
         </div>
