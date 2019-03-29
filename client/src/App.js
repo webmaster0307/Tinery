@@ -49,8 +49,6 @@ if (sessionStorage.jwtToken) {
   // Get favorites from User Account
   // store.dispatch(getCurrentProfile(decoded));
   // store.dispatch(getCurrentProfile());
-  // console.log(decoded);
-  // console.log(decoded.favorites);
 
   // Check for expired token
   const currentTime = Date.now() / 1000;
