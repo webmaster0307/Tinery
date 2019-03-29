@@ -91,7 +91,6 @@ router.get(
 // FAVORITE ADD & DELETE
 
 //-------------------------------------------------------------
-//-------------------------------------------------------------
 
 // @route   POST auth/profile/:id
 // @desc    Add to Favorites in User Profile
@@ -101,39 +100,12 @@ router.post(
   "/profile/:id",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    // console.log(req.body);
-    // console.log(req.body.favorites);
-    // console.log(req.params);
-    // console.log(req.params.id);
-
-    // User.findById(req.params.id).then(user => {
-    //   // Check if new Favorites does not exist in Array of Favorites
-    //   if (!user.favorites.includes(req.body.favorites)) {
-    //     // Add Favorite to array of Favorites
-    //     user.favorites.unshift(req.body.favorites);
-    //     user.save().then(user => res.json(user.favorites));
-    //     // console.log(user);
-    //   }
-    // });
-    // console.log(req.body);
     User.findOneAndUpdate(
       { _id: req.params.id },
       { $push: { favorites: req.body.favData } }
     ).then(user => res.json(user.favorites));
   }
 );
-
-//-------------------------------------------------------------
-
-// router.get("/profile/:userid/:activitykey", (req, res) => {
-//   Activitymodel.find({ activitykey: req.params.activitykey }).then(activity =>
-//     res.json(activity)
-//   );
-// });
-
-// router.get("/profile/:url", (req, res) => {
-//   Itinmodel.find({ cityurl: req.params.url }).then(itin => res.json(itin));
-// });
 
 //-------------------------------------------------------------
 
@@ -144,14 +116,6 @@ router.delete(
   "/profile/removefav/:id/:favid",
   // passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    // console.log("body", req.body);
-    // console.log("user", req.user);
-    // console.log("body", req.body.id);
-    // console.log("fav", req.body.favorite);
-    // console.log("fav", req.body.favorites);
-
-    // console.log("req params user id", req.params.id);
-    // console.log("req params fav id", req.params.favid);
     User.findOneAndUpdate(
       { _id: req.params.id },
       { $pull: { favorites: req.params.favid } }

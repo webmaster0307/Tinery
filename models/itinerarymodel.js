@@ -16,7 +16,7 @@ const ItinSchema = new Schema({
     type: Number
   },
   price: {
-    type: Number
+    type: String
   },
   author: {
     type: String

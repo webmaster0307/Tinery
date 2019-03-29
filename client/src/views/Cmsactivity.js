@@ -2,27 +2,36 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { createActivity } from "../actions/cmsActions";
+import { fetchItineraries } from "../actions/itinerariesActions";
+import { Link } from "react-router-dom";
+
 import Header from "../components/layout/Header";
 
 import Card from "@material-ui/core/Card";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import InputLabel from "@material-ui/core/InputLabel";
+import Select from "@material-ui/core/Select";
+import FilledInput from "@material-ui/core/FilledInput";
+import MenuItem from "@material-ui/core/MenuItem";
+import FormControl from "@material-ui/core/FormControl";
 
 class Cmsactivity extends Component {
   constructor() {
     super();
     this.state = {
+      itineraries: [],
       title: "",
       image: null,
       activitykey: "",
-      hashtag: "",
-      // open: false,
-      // previewAvatar: null,
-      // errors: {},
       selectedFile: null,
       previewFile: null
-      // name: ""
     };
+    // this.onChange = this.onChange.bind(this);
+  }
+
+  componentDidMount() {
+    this.props.fetchItineraries();
   }
 
   // IMAGE INFO
@@ -33,25 +42,24 @@ class Cmsactivity extends Component {
     });
   };
 
+  //SUBMIT
   onSubmit = e => {
     e.preventDefault();
-    // console.log("this file", this.state.selectedFile);
-    // console.log("this state", this.state);
+
     const formData = new FormData();
     formData.append("title", this.state.title);
     formData.append("activitykey", this.state.activitykey);
     formData.append("image", this.state.image);
-    // console.log(formData);
-    // console.log(this.state);
 
-    //MIGRATE TO REDUX
+    //CREATE ACTION
     this.props.createActivity(formData);
-    // axios.post("api/cms/activity", formData, {});
     alert("Upload successful");
     this.setState({
       title: "",
       activitykey: "",
-      image: null
+      image: null,
+      selectedFile: null,
+      previewFile: null
     });
   };
 
@@ -59,18 +67,6 @@ class Cmsactivity extends Component {
   onChange = e => {
     this.setState({
       [e.target.name]: e.target.value
-    });
-  };
-
-  //CONVERT TO SNAKE CASE
-  onSnakecase = e => {
-    var val = e.target.value;
-    this.setState({
-      [e.target.name]: e.target.value,
-      activitykey: val
-        .split(" ")
-        .join("_")
-        .toLowerCase()
     });
   };
 
@@ -82,14 +78,50 @@ class Cmsactivity extends Component {
           <Header title={"Create Activities"} />
         </div>
         <div className="cmsTitletext">
-          <p>Fill out the form below to create a new city.</p>
-          <p>Click on the button below to edit an existing city.</p>
+          <p>Fill out the form below to create a new Activity.</p>
+          <p>Or click below to edit an existing activity.</p>
           <div>
-            <Button variant="outlined">Edit Activities</Button>
+            <Link to="/cmscity/editactivity">
+              <Button variant="outlined">Edit Activities</Button>
+            </Link>
           </div>
         </div>
       </React.Fragment>
     );
+
+    const selectActivity = (
+      <React.Fragment>
+        <FormControl variant="filled">
+          <InputLabel htmlFor="filled-itin-simple">
+            Select Parent Itinerary (Key):
+          </InputLabel>
+          <Select
+            className="selectForms"
+            value={this.state.activitykey}
+            onChange={this.onChange}
+            type="select"
+            name="activitykey"
+            input={<FilledInput name="activitykey" id="filled-itin-simple" />}
+          >
+            <MenuItem value="">
+              <em>None</em>
+            </MenuItem>
+            {this.props.itineraries.itineraries.map(itin => {
+              return (
+                <MenuItem key={itin._id} value={itin.activitykey}>
+                  {itin.title} - {itin.cityurl.charAt(0).toUpperCase()}
+                  {itin.cityurl
+                    .slice(1)
+                    .split("_")
+                    .join(" ")}
+                </MenuItem>
+              );
+            })}
+          </Select>
+        </FormControl>
+      </React.Fragment>
+    );
+
     const cmsbody = (
       <div>
         <Card raised className="commentForm">
@@ -112,25 +144,14 @@ class Cmsactivity extends Component {
                 onChange={this.onChange}
               />
             </div>
-            <div>
-              <TextField
-                className="commentFormInput"
-                id="outlined-with-placeholder"
-                label="Please enter activity key (snake_case):"
-                placeholder=""
-                margin="normal"
-                variant="outlined"
-                type="text"
-                name="activitykey"
-                value={this.state.activitykey}
-                onChange={this.onChange}
-              />
-            </div>
+            {selectActivity}
           </form>
           <div className="cmsUploadimage">
-            Upload Activity Image Here.
+            Upload Activity Image.
             <input type="file" onChange={this.fileChangedHandler} />
           </div>
+
+          {/* SUBMIT BUTTON */}
           <button className="submitCommentBtn" onClick={this.onSubmit}>
             Upload Activity!
           </button>
@@ -155,6 +176,7 @@ class Cmsactivity extends Component {
         </Card>
       </div>
     );
+
     return (
       <React.Fragment>
         {cmstitle}
@@ -167,16 +189,17 @@ class Cmsactivity extends Component {
 
 Cmsactivity.propTypes = {
   createActivity: PropTypes.func,
+  fetchItineraries: PropTypes.func,
   auth: PropTypes.object
 };
 
 const mapStateToProps = state => ({
-  favid: state.favid,
+  itineraries: state.itineraries,
   profile: state.profile,
   auth: state.auth
 });
 
 export default connect(
   mapStateToProps,
-  { createActivity }
+  { createActivity, fetchItineraries }
 )(Cmsactivity);

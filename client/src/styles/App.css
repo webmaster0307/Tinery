@@ -137,7 +137,7 @@
   display: flex;
 }
 
-.activitycard > div {
+.activitycard>div {
   flex: 1;
 }
 
@@ -292,7 +292,7 @@
   text-align: center;
 }
 
-.flexIcons > a {
+.flexIcons>a {
   /* flex: 1; */
   color: black;
 }
@@ -542,10 +542,11 @@
   /* border: 1px solid gray; */
 }
 
-.selectCountry {
-  width: 300px;
+.selectForms {
+  width: 350px;
   max-height: 50px;
   margin-top: 10px;
+  margin-bottom: 5px;
   padding: 5px;
   background-color: gainsboro;
   border: 0.5px solid gray;

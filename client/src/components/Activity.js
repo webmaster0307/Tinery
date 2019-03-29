@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-// import { fetchAxiosActivities } from "../actions/fetchActivities";
+// import { fetchActivityByKey } from "../actions/fetchActivities";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Slider from "react-slick";
@@ -8,7 +8,7 @@ import CardContent from "@material-ui/core/CardContent";
 
 class Activity extends Component {
   componentDidMount() {
-    // this.props.fetchAxiosActivities();
+    // this.props.fetchActivityByKey();
     // this.props.fetchAxiosItineraries();
     // this.props.fetchAxiosItineraries(this.props.match.params.city_name);
   }

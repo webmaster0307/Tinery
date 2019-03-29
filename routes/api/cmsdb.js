@@ -94,7 +94,7 @@ router.post("/cms/itin", upload.any(), (req, res, next) => {
   // console.log(req.body);
   // console.log(req.files[0].filename);
 
-  const avatar = "/uploads/" + req.files[0].filename;
+  // const avatar = "/uploads/" + req.files[0].filename;
   // const avatar = "/uploads/" + req.body.avatar;
 
   const itinerary = new Itinmodel({
@@ -105,36 +105,53 @@ router.post("/cms/itin", upload.any(), (req, res, next) => {
     price: req.body.price,
     author: req.body.author,
     likes: req.body.likes,
-    authorimage: avatar,
+    authorimage: req.body.authorimage,
     cityurl: req.body.cityurl,
     hashtag: req.body.hashtag
   });
   itinerary
     .save()
-    .then(result => {
-      // console.log(result);
+    .then(() => {
       res.status(201).json({
         message: "Created Itin successfully"
-        // createdImage: {
-        //   name: result.name,
-        //   _id: result._id,
-        //   request: {
-        //     type: "GET",
-        //     url: "/uploads/" + result._id
-        //     //     }
-        //     //     request: {
-        //     //       type: "GET",
-        //     //       url: "http://localhost:5000/public/uploads"
-        //   }
-        // }
       });
     })
     .catch(err => {
-      // console.log(err);
       res.status(500).json({
         error: err
       });
     });
+});
+
+// @route api/cms/itin/:id
+// @desc Update/Edit Activity Info
+// @access Public
+
+router.post("/cms/itin/:id", upload.any(), (req, res, next) => {
+  // LOGIC TO HANDLE NEW IMAGE FILE OR EXISTING IMAGE FILE
+  // const imagenotupdated = req.body.image;
+  // const image =
+  //   req.body.image === null || req.body.image === undefined
+  //     ? "/uploads/" + req.files[0].filename
+  //     : imagenotupdated;
+
+  const cmsfields = {};
+  cmsfields.title = req.body.title;
+  cmsfields.activitykey = req.body.activitykey;
+  cmsfields.rating = req.body.rating;
+  cmsfields.duration = req.body.duration;
+  cmsfields.price = req.body.price;
+  cmsfields.author = req.body.author;
+  cmsfields.likes = req.body.likes;
+  cmsfields.authorimage = req.body.authorimage;
+  cmsfields.cityurl = req.body.cityurl;
+  cmsfields.hashtag = req.body.hashtag;
+
+  Itinmodel.findOneAndUpdate(
+    { _id: req.params.id },
+    { $set: cmsfields },
+    { new: true }
+  ).then(itinerary => res.json(itinerary));
 });
 
 //-----------------------------------------------------------------
@@ -144,12 +161,7 @@ router.post("/cms/itin", upload.any(), (req, res, next) => {
 // @access Public
 
 router.post("/cms/activity", upload.any(), (req, res, next) => {
-  // console.log(req.body);
-  // console.log(req.files[0].filename);
-
   const image = "/uploads/" + req.files[0].filename;
-  // const avatar = "/uploads/" + req.body.avatar;
-
   const activity = new Activitymodel({
     title: req.body.title,
     image: image,
@@ -157,18 +169,39 @@ router.post("/cms/activity", upload.any(), (req, res, next) => {
   });
   activity
     .save()
-    .then(result => {
-      // console.log(result);
+    .then(() => {
       res.status(201).json({
         message: "Created Itin successfully"
       });
     })
     .catch(err => {
-      // console.log(err);
       res.status(500).json({
         error: err
       });
     });
+});
+
+// @route api/cms/activity/:id
+// @desc Update/Edit Activity Info
+// @access Public
+
+router.post("/cms/activity/:id", upload.any(), (req, res, next) => {
+  // LOGIC TO HANDLE NEW IMAGE FILE OR EXISTING IMAGE FILE
+  const imagenotupdated = req.body.image;
+  const image =
+    req.body.image === null || req.body.image === undefined
+      ? "/uploads/" + req.files[0].filename
+      : imagenotupdated;
+
+  const cmsfields = {};
+  cmsfields.title = req.body.title;
+  cmsfields.image = image;
+
+  Activitymodel.findOneAndUpdate(
+    { _id: req.params.id },
+    { $set: cmsfields },
+    { new: true }
+  ).then(activity => res.json(activity));
 });
 
 //-----------------------------------------------------------------
@@ -178,12 +211,7 @@ router.post("/cms/activity", upload.any(), (req, res, next) => {
 // @access Public
 
 router.post("/cms/city", upload.any(), (req, res, next) => {
-  console.log(req.body);
-  console.log(req.files[0].filename);
-
   const flagimg = "/uploads/" + req.files[0].filename;
-  // const avatar = "/uploads/" + req.body.avatar;
-
   const city = new Citymodel({
     cityname: req.body.cityname,
     country: req.body.country,
@@ -192,8 +220,7 @@ router.post("/cms/city", upload.any(), (req, res, next) => {
   });
   city
     .save()
-    .then(result => {
-      // console.log(result);
+    .then(() => {
       res.status(201).json({
         message: "Created City successfully"
       });
@@ -206,22 +233,17 @@ router.post("/cms/city", upload.any(), (req, res, next) => {
     });
 });
 
-// @route api/cms/city/:url
+// @route api/cms/city/:id
 // @desc Update/Edit City Info
 // @access Public
 
 router.post("/cms/city/:id", upload.any(), (req, res, next) => {
-  // console.log(req.body.flagimg);
-  // console.log(req.files[0].filename);
-
   // LOGIC TO HANDLE NEW IMAGE FILE OR EXISTING IMAGE FILE
-  let imagenotupdated = req.body.flagimg;
+  const imagenotupdated = req.body.flagimg;
   const flagimg =
-    req.body.flagimg === "null"
-      ? imagenotupdated
-      : "/uploads/" + req.files[0].filename;
-
-  // console.log("flagimg =", flagimg);
+    req.body.flagimg === null || req.body.flagimg === undefined
+      ? "/uploads/" + req.files[0].filename
+      : imagenotupdated;
 
   const cmsfields = {};
   cmsfields.cityname = req.body.cityname;

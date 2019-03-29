@@ -9,3 +9,12 @@ export const fetchAxiosItineraries = url => dispatch => {
     });
   });
 };
+
+export const fetchItineraries = () => dispatch => {
+  axios.get("/api/itin/").then(res => {
+    dispatch({
+      type: FETCH_ITINERARIES,
+      payload: res.data
+    });
+  });
+};

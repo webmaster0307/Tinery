@@ -6,14 +6,14 @@ import { connect } from "react-redux";
 import { debounce } from "lodash";
 // import BottomNav from "../components/layout/BottomNav";
 
-import { fetchAxiosCities } from "../actions/citiesActions";
+import { fetchActivities } from "../actions/activitiesActions";
 
 import Header from "../components/layout/Header";
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import TextField from "@material-ui/core/TextField";
 
-class EditCity extends Component {
+class EditActivity extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -22,18 +22,18 @@ class EditCity extends Component {
       error: null,
       text: "",
       //EDIT
-      cities: [],
-      cityname: "",
-      country: "",
-      flagimg: null,
+      activities: [],
+      title: "",
+      activitykey: "",
+      image: null,
       previewFile: null,
-      url: "",
+      // url: "",
       id: ""
     };
     this.editValue = this.editValue.bind(this);
   }
   componentDidMount() {
-    this.props.fetchAxiosCities();
+    this.props.fetchActivities();
   }
 
   // SEARCH WITH DEBOUNCE
@@ -46,11 +46,11 @@ class EditCity extends Component {
   // IMAGE INFO
   fileChangedHandler = event => {
     this.setState({
-      flagimg: event.target.files[0],
+      image: event.target.files[0],
       previewFile: URL.createObjectURL(event.target.files[0])
     });
     console.log(this.state);
-    console.log(typeof this.state.flagimg);
+    console.log(typeof this.state.image);
     console.log(typeof this.state.previewFile);
   };
 
@@ -59,39 +59,36 @@ class EditCity extends Component {
     e.preventDefault();
 
     const formData = new FormData();
-    formData.append("cityname", this.state.cityname);
-    formData.append("country", this.state.country);
-    formData.append("flagimg", this.state.flagimg);
-    formData.append("url", this.state.url);
+    formData.append("title", this.state.title);
+    formData.append("activitykey", this.state.activitykey);
+    formData.append("image", this.state.image);
     formData.append("id", this.state.id);
 
     //MIGRATE TO REDUX
-    axios.post(`/api/cms/city/${this.state.id}`, formData, {});
+    axios.post(`/api/cms/activity/${this.state.id}`, formData, {});
     alert("Upload successful");
     this.setState({
       id: "",
-      cityname: "",
-      country: "",
-      url: "",
-      flagimg: null,
+      title: "",
+      activitykey: "",
+      image: null,
       previewFile: null
     });
     //MIGRATE TO REDUX
-    this.props.fetchAxiosCities();
+    this.props.fetchActivities();
   };
 
   //SELECT VALUE TO EDIT
   editValue = e => {
     // console.log(e);
-    let allcities = this.props.cities.cities;
-    let selectedValue = allcities.find(city => city.cityname === e);
+    let allactivities = this.props.activities.activities;
+    let selectedValue = allactivities.find(activity => activity.title === e);
     this.setState({
       id: selectedValue._id,
-      cityname: selectedValue.cityname,
-      country: selectedValue.country,
-      url: selectedValue.url,
-      flagimg: selectedValue.flagimg,
-      previewFile: selectedValue.flagimg,
+      activitykey: selectedValue.activitykey,
+      title: selectedValue.title,
+      image: selectedValue.image,
+      previewFile: selectedValue.image,
       showlist: false
     });
     // console.log(this.state);
@@ -111,24 +108,12 @@ class EditCity extends Component {
     });
   };
 
-  //CONVERT TO SNAKE CASE
-  onSnakecase = e => {
-    var val = e.target.value;
-    this.setState({
-      [e.target.name]: e.target.value,
-      url: val
-        .split(" ")
-        .join("_")
-        .toLowerCase()
-    });
-  };
-
   render() {
     const previewFile = this.state.previewFile;
     const cmstitle = (
       <React.Fragment>
         <div>
-          <Header title={"Edit City"} />
+          <Header title={"Edit Activity"} />
         </div>
       </React.Fragment>
     );
@@ -144,27 +129,13 @@ class EditCity extends Component {
               <TextField
                 className="commentFormInput"
                 id="outlined-with-placeholder"
-                label="Please enter City Name:"
+                label="Please enter Activity Title:"
                 placeholder=""
                 margin="normal"
                 variant="outlined"
                 type="text"
-                name="cityname"
-                value={this.state.cityname}
-                onChange={this.onSnakecase}
-              />
-            </div>
-            <div>
-              <TextField
-                className="commentFormInput"
-                id="outlined-with-placeholder"
-                label="Please enter City Country:"
-                placeholder=""
-                margin="normal"
-                variant="outlined"
-                type="text"
-                name="country"
-                value={this.state.country}
+                name="title"
+                value={this.state.title}
                 onChange={this.onChange}
               />
             </div>
@@ -175,7 +146,7 @@ class EditCity extends Component {
           </div>
           {/* SUBMIT BUTTON */}
           <button className="submitCommentBtn" onClick={this.onSubmit}>
-            Update City!
+            Update Activity!
           </button>
         </Card>
 
@@ -199,37 +170,40 @@ class EditCity extends Component {
       </div>
     );
 
-    let filteredList = this.props.cities.cities.filter(city => {
+    let filteredList = this.props.activities.activities.filter(activity => {
       return (
-        city.cityname.toLowerCase().includes(this.state.query.toLowerCase()) ||
-        city.country.toLowerCase().includes(this.state.query.toLowerCase())
+        activity.title.toLowerCase().includes(this.state.query.toLowerCase()) ||
+        activity.activitykey
+          .replace(/_/g, " ")
+          .toLowerCase()
+          .includes(this.state.query.toLowerCase())
       );
     });
 
     const searchlist = (
       <React.Fragment>
         <div className="cmsTitletext">
-          <p>Edit a City from the list below :</p>
+          <p>Edit an Activity from the list below :</p>
         </div>
         <div className="citysearchflex">
           <TextField
             id="filled-with-placeholder"
-            label="Search Destinations"
+            label="Search Activities"
             type="text"
-            placeholder="Type to Search Destinations"
+            placeholder="Type to Search Activities"
             onChange={e => this.handleSearch(e.target.value)}
             margin="normal"
             className="cityfilter"
             variant="filled"
           />
         </div>
-        {/* CITIES */}
+        {/* ACTIVITIES */}
 
-        {filteredList.map(city => {
+        {filteredList.map(activity => {
           return (
-            <div key={city._id} className="editCmsitems">
-              <Button onClick={this.editValue.bind(this, city.cityname)}>
-                {city.cityname}, {city.country}
+            <div key={activity._id} className="editCmsitems">
+              <Button onClick={this.editValue.bind(this, activity.title)}>
+                {activity.title} - {activity.activitykey.replace(/_/g, " ")}
               </Button>
             </div>
           );
@@ -237,12 +211,12 @@ class EditCity extends Component {
       </React.Fragment>
     );
 
-    const selectedcity = (
+    const selectedActivity = (
       <React.Fragment>
         <div className="cmsTitletext">
-          <p>Editing : {this.state.cityname}</p>
+          <p>Editing : {this.state.title}</p>
           <Button onClick={this.onEdit} variant="outlined">
-            Edit Cities
+            Edit Activities
           </Button>
         </div>
         {cmsbody}
@@ -255,7 +229,7 @@ class EditCity extends Component {
     return (
       <React.Fragment>
         {cmstitle}
-        {this.state.showlist === true ? searchlist : selectedcity}
+        {this.state.showlist === true ? searchlist : selectedActivity}
         {/* <div className="bottomNav"/> */}
         {/* <BottomNav /> */}
       </React.Fragment>
@@ -265,17 +239,17 @@ class EditCity extends Component {
 
 const mapStateToProps = state => {
   return {
-    cities: state.cities,
+    activities: state.activities,
     profile: state.profile
   };
 };
 
-EditCity.propTypes = {
-  cities: PropTypes.object,
-  fetchAxiosCities: PropTypes.func
+EditActivity.propTypes = {
+  activities: PropTypes.object,
+  fetchActivities: PropTypes.func
 };
 
 export default connect(
   mapStateToProps,
-  { fetchAxiosCities }
-)(EditCity);
+  { fetchActivities }
+)(EditActivity);

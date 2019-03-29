@@ -39,8 +39,7 @@ class Cmscity extends Component {
     formData.append("flagimg", this.state.flagimg);
     formData.append("url", this.state.url);
 
-    //MIGRATE TO REDUX
-    // axios.post("api/cms/city", formData);
+    //CREATE ACTION
     this.props.createCity(formData);
     alert("Upload successful");
     this.setState({
@@ -81,7 +80,7 @@ class Cmscity extends Component {
 
         <div className="cmsTitletext">
           <p>Fill out the form below to create a new city.</p>
-          <p>Click on the button below to edit an existing city.</p>
+          <p>Or click below to edit an existing city.</p>
           <div>
             <Link to="/cmscity/editcity">
               <Button variant="outlined">Edit Cities</Button>
@@ -128,9 +127,10 @@ class Cmscity extends Component {
             </div>
           </form>
           <div className="cmsUploadimage">
-            Upload Country Flag Here.
+            Upload Country Flag.
             <input type="file" onChange={this.fileChangedHandler} />
           </div>
+
           {/* SUBMIT BUTTON */}
           <button className="submitCommentBtn" onClick={this.onSubmit}>
             Upload City!

@@ -16,7 +16,7 @@ import "./styles/App.css";
 import CssBaseline from "@material-ui/core/CssBaseline";
 // import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import Navbar from "./components/layout/Navbar";
-import Editcity from "./components/Editcity";
+
 import City from "./views/City";
 import Home from "./views/Home";
 import Cities from "./views/Cities";
@@ -26,6 +26,9 @@ import Signup from "./views/Signup";
 import Cmsitin from "./views/Cmsitin";
 import Cmsactivity from "./views/Cmsactivity";
 import Cmscity from "./views/Cmscity";
+import Editcity from "./components/Editcity";
+import EditActivity from "./components/EditActivity";
+import EditItinerary from "./components/EditItinerary";
 import Dashboard from "./views/Dashboard";
 
 import PrivateRoute from "./components/layout/PrivateRoute";
@@ -81,7 +84,7 @@ class App extends Component {
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/signup" component={Signup} />
                 <Route exact path="/cities" component={Cities} />
-                {/* <PrivateRoute exact path="/Favorites" component={Favorites} /> */}
+
                 <PrivateRoute exact path="/Cmsitin" component={Cmsitin} />
                 <PrivateRoute
                   exact
@@ -93,6 +96,16 @@ class App extends Component {
                   exact
                   path="/Cmscity/Editcity"
                   component={Editcity}
+                />
+                <PrivateRoute
+                  exact
+                  path="/Cmscity/EditItinerary"
+                  component={EditItinerary}
+                />
+                <PrivateRoute
+                  exact
+                  path="/Cmscity/EditActivity"
+                  component={EditActivity}
                 />
                 {/* <Route exact path="/Cms" component={Cms} /> */}
                 {/* <PrivateRoute exact path="/Dashboard" component={Dashboard} /> */}

@@ -235,7 +235,7 @@ class Dashboard extends Component {
                   <div>• Time: {itinerary.duration} Hours</div>
                 </Grid>
                 <Grid item xs={8}>
-                  <div>• Cost ${itinerary.price}</div>
+                  <div>• Cost: {itinerary.price}</div>
                 </Grid>
                 <Grid item xs={8}>
                   <div>• Likes: {itinerary.likes}</div>

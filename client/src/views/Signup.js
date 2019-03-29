@@ -119,7 +119,6 @@ class Signup extends Component {
   };
 
   // FORM EVENT HANDLER
-
   onChange = e => {
     // let input = {
     //   name: this.state.name
@@ -402,7 +401,7 @@ class Signup extends Component {
                       Country:
                     </InputLabel>
                     <Select
-                      className="selectCountry"
+                      className="selectForms"
                       value={this.state.country}
                       onChange={this.onChange}
                       errorform={errors.country}

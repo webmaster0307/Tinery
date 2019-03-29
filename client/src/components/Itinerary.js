@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 // import { fetchAxiosItineraries } from "../actions/fetchItineraries";
 import { postFavorites } from "../actions/profileActions";
-import { fetchAxiosActivities } from "../actions/activitiesActions";
+import { fetchActivityByKey } from "../actions/activitiesActions";
 import { fetchAxiosComments } from "../actions/commentActions";
 import { getCurrentProfile } from "./../actions/profileActions";
 
@@ -48,7 +48,7 @@ class Itinerary extends Component {
     this.addToFav = this.addToFav.bind(this);
   }
   componentDidMount() {
-    // this.props.fetchAxiosActivities(event.target.id);
+    // this.props.fetchActivityByKey(event.target.id);
     // this.props.fetchAxiosItineraries();
     // this.props.fetchAxiosItineraries(this.props.match.params.city_name);
   }
@@ -76,7 +76,7 @@ class Itinerary extends Component {
   // FETCH ACTIVITY AND COMMENTS
   handleClick(event) {
     let eventTargetId = event.target.id;
-    this.props.fetchAxiosActivities(eventTargetId);
+    this.props.fetchActivityByKey(eventTargetId);
     this.props.fetchAxiosComments(eventTargetId);
     this.setState(state => ({
       eventId: eventTargetId,
@@ -210,7 +210,7 @@ class Itinerary extends Component {
                     <div>• Time: {itinerary.duration} Hours</div>
                   </Grid>
                   <Grid item xs={8}>
-                    <div>• Cost ${itinerary.price}</div>
+                    <div>• Cost: {itinerary.price}</div>
                   </Grid>
                   <Grid item xs={8}>
                     <div>• Likes: {itinerary.likes}</div>
@@ -298,5 +298,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { fetchAxiosActivities, fetchAxiosComments, postFavorites, getCurrentProfile }
+  { fetchActivityByKey, fetchAxiosComments, postFavorites, getCurrentProfile }
 )(Itinerary);
