@@ -13,7 +13,7 @@ import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import TextField from "@material-ui/core/TextField";
 
-class EditCity extends Component {
+class Editcity extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -270,7 +270,7 @@ const mapStateToProps = state => {
   };
 };
 
-EditCity.propTypes = {
+Editcity.propTypes = {
   cities: PropTypes.object,
   fetchAxiosCities: PropTypes.func
 };
@@ -278,4 +278,4 @@ EditCity.propTypes = {
 export default connect(
   mapStateToProps,
   { fetchAxiosCities }
-)(EditCity);
+)(Editcity);

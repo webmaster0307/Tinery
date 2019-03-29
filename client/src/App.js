@@ -26,9 +26,10 @@ import Signup from "./views/Signup";
 import Cmsitin from "./views/Cmsitin";
 import Cmsactivity from "./views/Cmsactivity";
 import Cmscity from "./views/Cmscity";
-import EditCity from "./components/EditCity";
+
 import EditActivity from "./components/EditActivity";
 import EditItinerary from "./components/EditItinerary";
+import Editcity from "./components/Editcity";
 import Dashboard from "./views/Dashboard";
 
 import PrivateRoute from "./components/layout/PrivateRoute";
@@ -94,8 +95,8 @@ class App extends Component {
                 <PrivateRoute exact path="/Cmscity" component={Cmscity} />
                 <PrivateRoute
                   exact
-                  path="/Cmscity/EditCity"
-                  component={EditCity}
+                  path="/Cmscity/Editcity"
+                  component={Editcity}
                 />
                 <PrivateRoute
                   exact
