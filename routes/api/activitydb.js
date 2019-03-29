@@ -45,6 +45,4 @@ router.post("/activity", (req, res) => {
     });
 });
 
-router.delete("/activity/:id", (req, res) => res.send({ type: "DELETE" }));
-
 module.exports = router;

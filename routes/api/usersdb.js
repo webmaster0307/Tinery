@@ -22,7 +22,7 @@ const fileFilter = (req, file, cb) => {
   if (file.mimetype === "image/jpeg" || file.mimetype === "image/png") {
     cb(null, true);
   } else {
-    cb(new Error("np accepted file"), false);
+    cb(new Error("no accepted file"), false);
   }
 };
 
@@ -45,10 +45,6 @@ const validateLoginInput = require("../../validation/login");
 // @access Public
 
 router.post("/user/register", upload.any(), (req, res, next) => {
-  // if (req.body.googleID !== "" || req.body.facebookID !== "") {
-  //   console.log("hello");
-  // }
-
   const { errors, isValid } = validateRegisterInput(req.body);
   // Check Validation
   if (!isValid) {
@@ -105,13 +101,6 @@ router.post("/user/register", upload.any(), (req, res, next) => {
 // @access Private
 
 router.post("/user/registersocial", (req, res, next) => {
-  // const { errors, isValid } = validateRegisterInput(req.body);
-  // // Check Validation
-  // if (!isValid) {
-  //   return res.status(400).json(errors);
-  // }
-  // const { errors } = validateLoginInput(req.body);
-
   User.findOne({ email: req.body.email }).then(user => {
     // FIND IF USER EXISTS
     if (user) {
@@ -128,9 +117,6 @@ router.post("/user/registersocial", (req, res, next) => {
           token: "Bearer " + token
         });
       });
-
-      // errors.email = "Email already exists";
-      // return res.status(400).json(errors);
     } else {
       // CREATE NEW USER
       const newUser = new User({
@@ -164,12 +150,6 @@ router.post("/user/registersocial", (req, res, next) => {
         avatar: req.body.avatar
         // favorites: user.favorites
       };
-      // const payload = {
-      //   id: user.id,
-      //   username: user.username,
-      //   avatar: user.avatar,
-      //   favorites: user.favorites
-      // };
 
       //SIGN IN USER
       jwt.sign(payload, keys.secretOrKey, { expiresIn: 3600 }, (err, token) => {
@@ -206,7 +186,6 @@ router.post("/user/login", (req, res) => {
     if (!user) {
       errors.email = "User not found";
       return res.status(404).json(errors);
-      // return res.status(404).json({ email: "User email not found!" });
     }
     // Check Password
     bcrypt.compare(password, user.password).then(isMatch => {
@@ -240,23 +219,22 @@ router.post("/user/login", (req, res) => {
   });
 });
 
-//GET CURRENT USER ROUTE
-
+//GET CURRENT USER
 // @route   GET auth/current
 // @desc    Return current user
 // @access  Private
-router.get(
-  "/current",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    res.json({
-      id: req.user.id,
-      name: req.user.name,
-      email: req.user.email,
-      avatar: req.user.avatar
-    });
-  }
-);
+// router.get(
+//   "/current",
+//   passport.authenticate("jwt", { session: false }),
+//   (req, res) => {
+//     res.json({
+//       id: req.user.id,
+//       name: req.user.name,
+//       email: req.user.email,
+//       avatar: req.user.avatar
+//     });
+//   }
+// );
 
 // EXPORT
 module.exports = router;

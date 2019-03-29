@@ -4,7 +4,6 @@ const Schema = mongoose.Schema;
 const CitySchema = new Schema({
   cityname: {
     type: String
-    // required: [true, "Name field is required"]
   },
   country: {
     type: String
@@ -17,7 +16,5 @@ const CitySchema = new Schema({
   }
 });
 
-// // EXPORT CITY
 const City = mongoose.model("cities", CitySchema);
-
 module.exports = City;

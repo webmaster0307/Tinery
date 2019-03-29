@@ -13,7 +13,5 @@ const ActivitySchema = new Schema({
   }
 });
 
-// // EXPORT CITY
 const Activity = mongoose.model("activities", ActivitySchema);
-
 module.exports = Activity;

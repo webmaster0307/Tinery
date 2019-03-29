@@ -4,7 +4,6 @@ const Schema = mongoose.Schema;
 const ItinSchema = new Schema({
   title: {
     type: String
-    // required: [true, "Name field is required"]
   },
   rating: {
     type: Number
@@ -33,28 +32,7 @@ const ItinSchema = new Schema({
   activitykey: {
     type: String
   }
-  // likes: [
-  //   {
-  //     user: {
-  //       type: Schema.Types.ObjectId,
-  //       ref: "users"
-  //     }
-  //   }
-  // ],
-  // ratings: [
-  //   {
-  //     user: {
-  //       type: Schema.Types.ObjectId,
-  //       ref: "users"
-  //     },
-  //     rating: {
-  //       type: Number
-  //     }
-  //   }
-  // ]
 });
 
-// // EXPORT CITY
 const Itinerary = mongoose.model("itineraries", ItinSchema);
-
 module.exports = Itinerary;

@@ -1,14 +1,8 @@
 const express = require("express");
 const router = express.Router();
-// const path = require("path");
-
 const Itinmodel = require("../../models/itinerarymodel");
 const Citymodel = require("../../models/citymodel");
 const Activitymodel = require("../../models/activitymodel");
-
-// const express = require("express");
-// const router = express.Router();
-// const mongoose = require("mongoose");
 const multer = require("multer");
 
 const storage = multer.diskStorage({
@@ -25,62 +19,13 @@ const fileFilter = (req, file, cb) => {
   if (file.mimetype === "image/jpeg" || file.mimetype === "image/png") {
     cb(null, true);
   } else {
-    cb(new Error("np accepted file"), false);
+    cb(new Error("no accepted file"), false);
   }
 };
 
 const upload = multer({
   storage: storage,
   fileFilter: fileFilter
-});
-
-const Imagemodel = require("../../models/imagemodel");
-
-// // @route api/image
-// // @desc
-// // @access
-
-// router.get("/image", (req, res) => {
-//   Imagemodel.find().then(city => res.json(city));
-// });
-
-// @route api/image
-// @desc Post Images (testing)
-// @access Public
-
-router.post("/image", upload.any(), (req, res, next) => {
-  // console.log(req.body);
-  // console.log(req.files[0].filename);
-  const image = new Imagemodel({
-    name: req.body.name,
-    avatar: "/uploads/" + req.files[0].filename
-  });
-  image
-    .save()
-    .then(result => {
-      // console.log(result);
-      res.status(201).json({
-        message: "Created image successfully",
-        createdImage: {
-          name: result.name,
-          _id: result._id,
-          request: {
-            type: "GET",
-            url: "/uploads/" + result._id
-            //     }
-            //     request: {
-            //       type: "GET",
-            //       url: "http://localhost:5000/public/uploads"
-          }
-        }
-      });
-    })
-    .catch(err => {
-      // console.log(err);
-      res.status(500).json({
-        error: err
-      });
-    });
 });
 
 // START OF CMS ROUTES
@@ -91,12 +36,6 @@ router.post("/image", upload.any(), (req, res, next) => {
 // @access Public
 
 router.post("/cms/itin", upload.any(), (req, res, next) => {
-  // console.log(req.body);
-  // console.log(req.files[0].filename);
-
-  // const avatar = "/uploads/" + req.files[0].filename;
-  // const avatar = "/uploads/" + req.body.avatar;
-
   const itinerary = new Itinmodel({
     title: req.body.title,
     activitykey: req.body.activitykey,
@@ -128,13 +67,6 @@ router.post("/cms/itin", upload.any(), (req, res, next) => {
 // @access Public
 
 router.post("/cms/itin/:id", upload.any(), (req, res, next) => {
-  // LOGIC TO HANDLE NEW IMAGE FILE OR EXISTING IMAGE FILE
-  // const imagenotupdated = req.body.image;
-  // const image =
-  //   req.body.image === null || req.body.image === undefined
-  //     ? "/uploads/" + req.files[0].filename
-  //     : imagenotupdated;
-
   const cmsfields = {};
   cmsfields.title = req.body.title;
   cmsfields.activitykey = req.body.activitykey;

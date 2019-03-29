@@ -1,14 +1,14 @@
 import React, { Component } from "react";
-import { NavLink } from "react-router-dom";
-// import { NavLink, Link } from "react-router-dom";
+// import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 // import IconHome from "../components/layout/IconHome";
 import { logoutUser } from "../actions/authActions";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { getCurrentProfile } from "../actions/profileActions";
 import BottomNav from "../components/layout/BottomNav";
-import HomeImg from "../components/layout/HomeImg";
-// import { Spring } from "react-spring";
+// import HomeImg from "../components/layout/HomeImg";
+import { Spring } from "react-spring/renderprops";
 
 class Home extends Component {
   componentDidMount() {
@@ -54,47 +54,66 @@ class Home extends Component {
     );
 
     return (
-      <div>
-        {/* <div>
-          <img
-            className="homeBrand"
-            alt="logo_image"
-            src={require("../images/client/MYtineraryLogo.png")}
-          />
-        </div> */}
+      <React.Fragment>
+        {/* <Spring
+        from={{ opacity: 0, marginTop: -500 }}
+        to={{ opacity: 1, marginTop: 0 }}
+      /> */}
+        <Spring
+          from={{ opacity: 0 }}
+          to={{ opacity: 1 }}
+          config={{ delay: 500, duration: 750 }}
+        >
+          {props => (
+            <div style={props}>
+              {/* <div style={c1Style}> */}
+              <div>
+                <div>
+                  <div>
+                    <img
+                      className="homeBrand"
+                      alt="logo_image"
+                      src={require("../images/client/MYtineraryLogo.png")}
+                    />
+                  </div>
 
-        <HomeImg />
+                  {/* <HomeImg /> */}
 
-        {/* <div className="homeP">
-          Find your perfect trip, designed by insider who know and love their
-          cities.
-        </div>
+                  <div className="homeP">
+                    Find your perfect trip, designed by insider who know and
+                    love their cities.
+                  </div>
 
-        <div className="homeBrowsing">
-          <span>Start Browsing</span>
-        </div>
+                  <div className="homeBrowsing">
+                    <span>Start Browsing</span>
+                  </div>
 
-        <div>
-          <Link to="/cities">
-            <img
-              className="homeCircle"
-              alt="logo_image"
-              src={require("../images/client/circled-right-2.png")}
-            />
-          </Link>
-        </div>
+                  <div>
+                    <Link to="/cities">
+                      <img
+                        className="homeCircle"
+                        alt="logo_image"
+                        src={require("../images/client/circled-right-2.png")}
+                      />
+                    </Link>
+                  </div>
 
-        <div className="homeP bold">Want to build your own MYtinerary?</div> */}
+                  <div className="homeP bold">
+                    Want to build your own MYtinerary?
+                  </div>
 
-        {/* LOGIN STATE LOGIC */}
+                  {/* LOGIN STATE LOGIC */}
 
-        {isAuthenticated ? loginState : logoutState}
+                  {isAuthenticated ? loginState : logoutState}
 
-        <div>
-          {/* <IconHome /> */}
-          <BottomNav />
-        </div>
-      </div>
+                  <div>{/* <IconHome /> */}</div>
+                </div>
+              </div>
+            </div>
+          )}
+        </Spring>
+        <BottomNav />
+      </React.Fragment>
     );
   }
 }

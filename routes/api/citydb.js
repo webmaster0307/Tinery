@@ -17,7 +17,6 @@ router.get("/city", (req, res) => {
 // @access Public
 
 router.post("/city", (req, res) => {
-  // console.log(req.body);
   const city = new Citymodel({
     cityname: req.body.cityname,
     country: req.body.country,
