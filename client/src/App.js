@@ -98,12 +98,12 @@ class App extends Component {
                 />
                 <PrivateRoute
                   exact
-                  path="/Cmscity/EditItinerary"
+                  path="/cmsitin/EditItinerary"
                   component={EditItinerary}
                 />
                 <PrivateRoute
                   exact
-                  path="/Cmscity/EditActivity"
+                  path="/Cmsactivity/EditActivity"
                   component={EditActivity}
                 />
                 {/* <Route exact path="/Cms" component={Cms} /> */}

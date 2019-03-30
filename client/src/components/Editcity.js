@@ -154,6 +154,7 @@ class Editcity extends Component {
                 onChange={this.onSnakecase}
               />
             </div>
+            <p>*Warning : Changing City Name can affect Children</p>
             <div>
               <TextField
                 className="commentFormInput"

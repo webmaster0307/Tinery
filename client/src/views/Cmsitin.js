@@ -46,26 +46,42 @@ class Cmsitin extends Component {
     console.log("author:", authorname);
     // const hashtagCSV = this.state.hashtag.join(",");
     // console.log(hashtagCSV);
-    console.log(this.state);
+    // console.log(this.state);
     // console.log("this file", this.state.selectedFile);
     // console.log("this state", this.state);
-    const formData = new FormData();
-    // formData.append("rating", this.state.selectedFile);
-    formData.append("title", this.state.title);
-    formData.append("rating", this.state.rating);
-    formData.append("duration", this.state.duration);
-    formData.append("price", this.state.price);
-    formData.append("author", this.props.auth.user.username);
-    formData.append("likes", this.state.likes);
-    formData.append("authorimage", this.props.auth.user.avatar);
-    formData.append("cityurl", this.state.cityurl);
-    formData.append("activitykey", this.state.activitykey);
+    // const formData = new FormData();
+    // // formData.append("rating", this.state.selectedFile);
+    // formData.append("title", this.state.title);
+    // formData.append("rating", this.state.rating);
+    // formData.append("duration", this.state.duration);
+    // formData.append("price", this.state.price);
+    // formData.append("author", this.props.auth.user.username);
+    // formData.append("likes", this.state.likes);
+    // formData.append("authorimage", this.props.auth.user.avatar);
+    // formData.append("cityurl", this.state.cityurl);
+    // formData.append("activitykey", this.state.activitykey);
     // formData.append("hashtag", hashtagCSV);
+
+    const itinData = {
+      title: this.state.title,
+      activitykey: this.state.activitykey,
+      rating: this.state.rating,
+      duration: this.state.duration,
+      price: this.state.price,
+      author: this.props.auth.user.username,
+      likes: this.state.likes,
+      authorimage: this.props.auth.user.avatar,
+      cityurl: this.state.cityurl,
+      hashtag: this.state.hashtag,
+      // hashtag: hashtagString,
+      id: this.state.id
+    };
 
     // console.log(formData);
     // console.log(this.state);
 
-    this.props.createItinerary(formData);
+    this.props.createItinerary(itinData);
+    // this.props.createItinerary(formData);
     // axios.post("api/cms/itin", formData, {
     //   // onUploadProgress: progressEvent => {
     //   //  console.log(progressEvent.loaded / progressEvent.total);
@@ -81,7 +97,7 @@ class Cmsitin extends Component {
       cityurl: "",
       cityname: "",
       activitykey: "",
-      hastag: []
+      hashtag: []
     });
   };
 
@@ -115,7 +131,7 @@ class Cmsitin extends Component {
           <p>Fill out the form below to create a new city.</p>
           <p>Or click below to edit an existing Itinerary.</p>
           <div>
-            <Link to="/cmscity/edititinerary">
+            <Link to="/cmsitin/edititinerary">
               <Button variant="outlined">Edit Itineraries</Button>
             </Link>
           </div>
@@ -264,7 +280,7 @@ class Cmsitin extends Component {
                 variant="outlined"
                 type="text"
                 name="hashtag"
-                value={this.state.hastag}
+                value={this.state.hashtag}
                 onChange={this.onChange}
               />
             </div>

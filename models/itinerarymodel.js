@@ -29,6 +29,9 @@ const ItinSchema = new Schema({
   hashtag: {
     type: Array
   },
+  // hashtag: {
+  //   type: [String]
+  // },
   activitykey: {
     type: String
   }

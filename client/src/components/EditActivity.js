@@ -7,11 +7,17 @@ import { debounce } from "lodash";
 // import BottomNav from "../components/layout/BottomNav";
 
 import { fetchActivities } from "../actions/activitiesActions";
+import { fetchItineraries } from "../actions/itinerariesActions";
 
 import Header from "../components/layout/Header";
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import TextField from "@material-ui/core/TextField";
+import InputLabel from "@material-ui/core/InputLabel";
+import Select from "@material-ui/core/Select";
+import FilledInput from "@material-ui/core/FilledInput";
+import MenuItem from "@material-ui/core/MenuItem";
+import FormControl from "@material-ui/core/FormControl";
 
 class EditActivity extends Component {
   constructor(props) {
@@ -22,6 +28,7 @@ class EditActivity extends Component {
       error: null,
       text: "",
       //EDIT
+      itineraries: [],
       activities: [],
       title: "",
       activitykey: "",
@@ -31,6 +38,7 @@ class EditActivity extends Component {
       id: ""
     };
     this.editValue = this.editValue.bind(this);
+    this.onChange = this.onChange.bind(this);
   }
   componentDidMount() {
     this.props.fetchActivities();
@@ -57,7 +65,7 @@ class EditActivity extends Component {
   // SUBMIT
   onSubmit = e => {
     e.preventDefault();
-
+    console.log(this.parentItin);
     const formData = new FormData();
     formData.append("title", this.state.title);
     formData.append("activitykey", this.state.activitykey);
@@ -80,7 +88,8 @@ class EditActivity extends Component {
 
   //SELECT VALUE TO EDIT
   editValue = e => {
-    // console.log(e);
+    this.props.fetchItineraries();
+
     let allactivities = this.props.activities.activities;
     let selectedValue = allactivities.find(activity => activity.title === e);
     this.setState({
@@ -91,7 +100,6 @@ class EditActivity extends Component {
       previewFile: selectedValue.image,
       showlist: false
     });
-    // console.log(this.state);
   };
 
   // TOGGLE BETWEEN LIST AND FORM
@@ -103,8 +111,10 @@ class EditActivity extends Component {
 
   // FORM INFO
   onChange = e => {
+    const parentItin = e.target.value;
     this.setState({
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
+      activitykey: parentItin
     });
   };
 
@@ -115,6 +125,38 @@ class EditActivity extends Component {
         <div>
           <Header title={"Edit Activity"} />
         </div>
+      </React.Fragment>
+    );
+    const selectItinerary = (
+      <React.Fragment>
+        <FormControl variant="filled">
+          <InputLabel htmlFor="filled-itin-simple">
+            Select Parent Itinerary (Key):
+          </InputLabel>
+          <Select
+            className="selectForms"
+            value={this.state.activitykey}
+            onChange={this.onChange}
+            type="select"
+            name="activitykey"
+            input={<FilledInput name="activitykey" id="filled-itin-simple" />}
+          >
+            <MenuItem value="">
+              <em>None</em>
+            </MenuItem>
+            {this.props.itineraries.itineraries.map(itin => {
+              let cityName = itin.cityurl
+                .split("_")
+                .map(s => s.charAt(0).toUpperCase() + s.substring(1))
+                .join(" ");
+              return (
+                <MenuItem key={itin._id} value={itin.activitykey}>
+                  {itin.title} - {cityName}
+                </MenuItem>
+              );
+            })}
+          </Select>
+        </FormControl>
       </React.Fragment>
     );
     const cmsbody = (
@@ -139,6 +181,7 @@ class EditActivity extends Component {
                 onChange={this.onChange}
               />
             </div>
+            {selectItinerary}
           </form>
           <div className="cmsUploadimage">
             Upload Country Flag Here.
@@ -240,6 +283,7 @@ class EditActivity extends Component {
 const mapStateToProps = state => {
   return {
     activities: state.activities,
+    itineraries: state.itineraries,
     profile: state.profile
   };
 };
@@ -251,5 +295,5 @@ EditActivity.propTypes = {
 
 export default connect(
   mapStateToProps,
-  { fetchActivities }
+  { fetchActivities, fetchItineraries }
 )(EditActivity);

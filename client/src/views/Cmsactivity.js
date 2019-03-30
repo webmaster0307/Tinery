@@ -81,7 +81,7 @@ class Cmsactivity extends Component {
           <p>Fill out the form below to create a new Activity.</p>
           <p>Or click below to edit an existing activity.</p>
           <div>
-            <Link to="/cmscity/editactivity">
+            <Link to="/cmsactivity/editactivity">
               <Button variant="outlined">Edit Activities</Button>
             </Link>
           </div>
@@ -107,13 +107,13 @@ class Cmsactivity extends Component {
               <em>None</em>
             </MenuItem>
             {this.props.itineraries.itineraries.map(itin => {
+              let cityName = itin.cityurl
+                .split("_")
+                .map(s => s.charAt(0).toUpperCase() + s.substring(1))
+                .join(" ");
               return (
                 <MenuItem key={itin._id} value={itin.activitykey}>
-                  {itin.title} - {itin.cityurl.charAt(0).toUpperCase()}
-                  {itin.cityurl
-                    .slice(1)
-                    .split("_")
-                    .join(" ")}
+                  {itin.title} - {cityName}
                 </MenuItem>
               );
             })}

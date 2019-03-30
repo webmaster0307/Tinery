@@ -18,6 +18,7 @@ import Select from "@material-ui/core/Select";
 import FilledInput from "@material-ui/core/FilledInput";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
+import { CircularProgress } from "@material-ui/core";
 
 class EditItinerary extends Component {
   constructor(props) {
@@ -38,7 +39,10 @@ class EditItinerary extends Component {
       likes: "",
       authorimage: "",
       cityurl: "",
-      hastag: [],
+      // hashtag: [],
+      hashtag: [],
+      // hashtagArray: "",
+
       // flagimg: null,
       // previewFile: null,
       id: ""
@@ -49,43 +53,88 @@ class EditItinerary extends Component {
     this.props.fetchItineraries();
   }
 
-  // SEARCH WITH DEBOUNCE
-  handleSearch = debounce(text => {
-    this.setState({
-      query: text
-    });
-  }, 500);
+  //SELECT VALUE TO EDIT
+  editValue = e => {
+    // console.log(e);
 
-  // IMAGE INFO
-  // fileChangedHandler = event => {
-  //   this.setState({
-  //     flagimg: event.target.files[0],
-  //     previewFile: URL.createObjectURL(event.target.files[0])
-  //   });
-  //   console.log(this.state);
-  //   console.log(typeof this.state.flagimg);
-  //   console.log(typeof this.state.previewFile);
-  // };
+    this.props.fetchAxiosCities();
+    let allitineraries = this.props.itineraries.itineraries;
+    let selectedValue = allitineraries.find(itin => itin.activitykey === e);
+
+    let hashtagCSV =
+      selectedValue.hashtag === null
+        ? selectedValue.hashtag
+        : selectedValue.hashtag.join(",");
+
+    // let hashtagCSV = selectedValue.hashtag;
+    // console.log("from edit", hashtagCSV);
+    // console.log("from edit", selectedValue.hashtag);
+
+    this.setState({
+      id: selectedValue._id,
+      title: selectedValue.title,
+      activitykey: selectedValue.activitykey,
+      rating: selectedValue.rating,
+      duration: selectedValue.duration,
+      price: selectedValue.price,
+      author: selectedValue.author,
+      likes: selectedValue.likes,
+      authorimage: selectedValue.authorimage,
+      cityurl: selectedValue.cityurl,
+      hashtag: hashtagCSV,
+      // hashtagArray: selectedValue.hashtag,
+      // hashtag: selectedValue.hashtag,
+      // country: selectedValue.country,
+      // url: selectedValue.url,
+      flagimg: selectedValue.flagimg,
+      previewFile: selectedValue.flagimg,
+      showlist: false
+    });
+
+    // console.log(this.state);
+  };
 
   // SUBMIT
   onSubmit = e => {
     e.preventDefault();
 
-    const formData = new FormData();
-    formData.append("title", this.state.title);
-    formData.append("activitykey", this.state.activitykey);
-    formData.append("rating", this.state.rating);
-    formData.append("duration", this.state.duration);
-    formData.append("price", this.state.price);
-    formData.append("author", this.state.author);
-    formData.append("likes", this.state.likes);
-    formData.append("authorimage", this.state.authorimage);
-    formData.append("cityurl", this.state.cityurl);
-    formData.append("hastag", this.state.hastag);
-    formData.append("id", this.state.id);
+    let hashtagString = this.state.hashtag.split(",");
+    console.log(hashtagString);
+    console.log(this.state.hashtag);
+    // console.log(this.state.hashtagArray);
+
+    // const formData = new FormData();
+    // formData.append("title", this.state.title);
+    // formData.append("activitykey", this.state.activitykey);
+    // formData.append("rating", this.state.rating);
+    // formData.append("duration", this.state.duration);
+    // formData.append("price", this.state.price);
+    // formData.append("author", this.state.author);
+    // formData.append("likes", this.state.likes);
+    // formData.append("authorimage", this.state.authorimage);
+    // formData.append("cityurl", this.state.cityurl);
+    // // formData.append("hashtag", this.state.hashtag);
+    // formData.append("hashtag", hashtagString);
+    // formData.append("id", this.state.id);
+
+    const itinData = {
+      title: this.state.title,
+      activitykey: this.state.activitykey,
+      rating: this.state.rating,
+      duration: this.state.duration,
+      price: this.state.price,
+      author: this.state.author,
+      likes: this.state.likes,
+      authorimage: this.state.authorimage,
+      cityurl: this.state.cityurl,
+      // hashtag : this.state.hashtag,
+      hashtag: hashtagString,
+      id: this.state.id
+    };
 
     //MIGRATE TO REDUX
-    axios.post(`/api/cms/itin/${this.state.id}`, formData, {});
+    axios.post(`/api/cms/itin/${this.state.id}`, itinData, {});
+    // axios.post(`/api/cms/itin/${this.state.id}`,  { itinData: itinData.favorites }, {});
     alert("Upload successful");
     this.setState({
       id: "",
@@ -98,40 +147,13 @@ class EditItinerary extends Component {
       likes: "",
       authorimage: "",
       cityurl: "",
-      hastag: []
+      hashtag: []
       // authorimage: null,
       // previewFile: null
     });
 
     //MIGRATE TO REDUX
     this.props.fetchItineraries();
-  };
-
-  //SELECT VALUE TO EDIT
-  editValue = e => {
-    // console.log(e);
-    this.props.fetchAxiosCities();
-    let allitineraries = this.props.itineraries.itineraries;
-    let selectedValue = allitineraries.find(itin => itin.activitykey === e);
-    this.setState({
-      id: selectedValue._id,
-      title: selectedValue.title,
-      activitykey: selectedValue.activitykey,
-      rating: selectedValue.rating,
-      duration: selectedValue.duration,
-      price: selectedValue.price,
-      author: selectedValue.author,
-      likes: selectedValue.likes,
-      authorimage: selectedValue.authorimage,
-      cityurl: selectedValue.cityurl,
-      hastag: selectedValue.hastag,
-      // country: selectedValue.country,
-      // url: selectedValue.url,
-      flagimg: selectedValue.flagimg,
-      previewFile: selectedValue.flagimg,
-      showlist: false
-    });
-    // console.log(this.state);
   };
 
   // FORM INFO
@@ -153,12 +175,19 @@ class EditItinerary extends Component {
     var val = e.target.value;
     this.setState({
       [e.target.name]: e.target.value,
-      cityurl: val
+      activitykey: val
         .split(" ")
         .join("_")
         .toLowerCase()
     });
   };
+
+  // SEARCH WITH DEBOUNCE
+  handleSearch = debounce(text => {
+    this.setState({
+      query: text
+    });
+  }, 500);
 
   render() {
     // const previewFile = this.state.previewFile;
@@ -270,6 +299,7 @@ class EditItinerary extends Component {
                 onChange={this.onSnakecase}
               />
             </div>
+            <p>*Warning : Changing Title can affect Children</p>
             <div> {selectCity}</div>
             <div>
               <TextField
@@ -311,40 +341,19 @@ class EditItinerary extends Component {
                 variant="outlined"
                 type="text"
                 name="hashtag"
-                value={this.state.hastag}
+                value={this.state.hashtag}
                 onChange={this.onChange}
               />
             </div>
           </form>
-          {/* <div className="cmsUploadimage">
-            Upload Country Flag Here.
-            <input type="file" onChange={this.fileChangedHandler} />
-          </div> */}
+
           {/* SUBMIT BUTTON */}
           <button className="submitCommentBtn" onClick={this.onSubmit}>
             Update Itinerary!
           </button>
         </Card>
-
-        {/* <div className="cmsTitletext">
-          <h3>Preview Your Image Below : </h3>
-        </div> */}
       </div>
     );
-    // const noPreview = (
-    //   <div>
-    //     <Card />
-    //   </div>
-    // );
-    // const preview = (
-    //   <div>
-    //     <Card raised>
-    //       <div className="cmsImageDiv">
-    //         <img alt="cmsImage" src={this.state.previewFile} />
-    //       </div>
-    //     </Card>
-    //   </div>
-    // );
 
     let filteredList = this.props.itineraries.itineraries.filter(itin => {
       return (
