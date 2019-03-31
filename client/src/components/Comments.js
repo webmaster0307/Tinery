@@ -14,9 +14,7 @@ import Avatar from "@material-ui/core/Avatar";
 import Grid from "@material-ui/core/Grid";
 
 class Comments extends Component {
-  componentDidMount() {
-    // console.log(this.props);
-  }
+  componentDidMount() {}
   constructor(props) {
     super(props);
     this.state = {
@@ -27,8 +25,6 @@ class Comments extends Component {
       errors: {},
       comments: [],
       input: ""
-
-      // activitykey: this.props.comments.comment.activitykey
     };
     this.onChange = this.onChange.bind(this);
   }
@@ -39,24 +35,13 @@ class Comments extends Component {
     }
   }
 
-  componentWillUnmount() {
-    // console.log("unmount");
-    // this.setState(state => ({
-    //   errors: null
-    // }));
-    // if (this.props.errors) {
-    //   this.setState({ errors: null });
-    // }
-  }
+  componentWillUnmount() {}
 
   onChange = e => {
     this.setState({
       [e.target.name]: e.target.value,
       input: e.target.value
     });
-    // console.log(e.target.name);
-    // console.log(e.target.value);
-    // console.log(this.state.input);
   };
 
   onSubmit = e => {
@@ -69,7 +54,6 @@ class Comments extends Component {
       timestamp: moment(Date.now()).format("LLLL"),
       activitykey: this.props.activityKey
     };
-    // console.log(comments);
     this.props.postAxiosComments(comments);
     this.setState({
       user: "",
@@ -79,7 +63,6 @@ class Comments extends Component {
       activitykey: ""
     });
     // REFRESH COMMENTS (NOT NEEDED)
-    // this.props.fetchAxiosComments(this.props.activityKey);
   };
 
   onSubmitLoggedIn = e => {
@@ -91,7 +74,6 @@ class Comments extends Component {
       timestamp: moment(Date.now()).format("LLLL"),
       activitykey: this.props.activityKey
     };
-    // console.log(comments);
     this.props.postAxiosComments(comments);
     this.setState({
       user: "",
@@ -104,7 +86,6 @@ class Comments extends Component {
 
   render() {
     const { errors } = this.state;
-    // const { isAuthenticated, user } = this.props.auth;
     const { isAuthenticated } = this.props.auth;
     //COMMENT LIST
     const commentList = this.props.comments.comments.map(comment => (
@@ -128,7 +109,6 @@ class Comments extends Component {
               </span>
             </div>
           </Grid>
-
           <Grid item xs={12}>
             <div className="commentContent">• {comment.message}</div>
           </Grid>
@@ -141,7 +121,6 @@ class Comments extends Component {
       <Card raised className="commentForm">
         <form onSubmit={this.onSubmit}>
           <div>
-            {/* <span>Please enter your username:</span> */}
             <TextField
               className="commentFormInput"
               id="outlined-with-placeholder"
@@ -159,8 +138,7 @@ class Comments extends Component {
               <div className="invalid-feedback">{errors.user}</div>
             )}
           </div>
-          {/* minlength="10"
-              maxlength="300" */}
+
           <div>
             <TextField
               className="commentFormInput"
@@ -180,7 +158,7 @@ class Comments extends Component {
             )}
           </div>
           <div>
-            {/* TERN */}
+            {/* SUBMIT */}
             <button className="submitCommentBtn" type="submit" value="Submit">
               Submit
             </button>
@@ -193,7 +171,6 @@ class Comments extends Component {
       <Card raised className="commentForm">
         <form onSubmit={this.onSubmitLoggedIn}>
           <div>
-            {/* <div>{user.username}</div> */}
             <div>{this.props.auth.user.username}</div>
           </div>
 
@@ -245,7 +222,6 @@ class Comments extends Component {
           Comments:
         </Typography>
         <div>{isAuthenticated ? commentFormLoggedIn : commentFormGuest}</div>
-        {/* <div>{commentForm}</div> */}
         <div>{commentList.reverse()}</div>
       </div>
     );
@@ -263,14 +239,6 @@ const mapStateToProps = state => {
     errors: state.errors
   };
 };
-
-// const mapDispatchToProps = dispatch => {
-//   return {
-//     onSubmit: comment => {
-//       dispatch(postAxiosComments(comment));
-//     }
-//   };
-// };
 
 export default connect(
   mapStateToProps,

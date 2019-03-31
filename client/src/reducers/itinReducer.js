@@ -10,15 +10,8 @@ export default function(state = initialState, action) {
     case FETCH_ITINERARIES:
       return {
         ...state,
-        // itineraries: [action.payload, ...state.itineraries]
         itineraries: action.payload
       };
-    // case FETCH_ITINERARIES_ID:
-    //   console.log(action.payload);
-    //   return {
-    //     ...state,
-
-    //   };
     default:
       return state;
   }

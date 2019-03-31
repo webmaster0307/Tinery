@@ -6,8 +6,7 @@ import { logoutUser } from "../actions/authActions";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { getCurrentProfile } from "../actions/profileActions";
-import BottomNav from "../components/layout/BottomNav";
-// import HomeImg from "../components/layout/HomeImg";
+
 import { Spring } from "react-spring/renderprops";
 
 class Home extends Component {
@@ -64,8 +63,6 @@ class Home extends Component {
             />
           </div>
 
-          {/* <HomeImg /> */}
-
           <div className="homeP">
             Find your perfect trip, designed by insider who know and love their
             cities.
@@ -89,8 +86,6 @@ class Home extends Component {
 
           {/* LOGIN STATE LOGIC */}
           {isAuthenticated ? loginState : logoutState}
-
-          <div>{/* <IconHome /> */}</div>
         </div>
       </div>
     );
@@ -105,13 +100,6 @@ class Home extends Component {
               to={{ opacity: 1, marginTop: 0 }}
               config={{ delay: 0, duration: 500 }}
             >
-              {/* {isAuthenticated ? loginState : logoutState} */}
-
-              {/* <Spring
-          from={{ opacity: 0 }}
-          to={{ opacity: 1 }}
-          config={{ delay: 500 }}
-        > */}
               {props => (
                 <div style={props}>
                   {/* <div style={c1Style}> */}
@@ -122,13 +110,6 @@ class Home extends Component {
           </div>
         ) : (
           <div>
-            {" "}
-            {/* <Spring
-              from={{ opacity: 0, marginTop: -500 }}
-              to={{ opacity: 1, marginTop: 0 }}
-              config={{ delay: 0, duration: 1000 }}
-            > */}
-            {/* {isAuthenticated ? loginState : logoutState} */}
             <Spring
               from={{ opacity: 0 }}
               to={{ opacity: 1 }}

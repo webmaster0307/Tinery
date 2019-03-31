@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-// import { fetchAxiosItineraries } from "../actions/fetchItineraries";
 import { postFavorites } from "../actions/profileActions";
 import { fetchActivityByKey } from "../actions/activitiesActions";
 import { fetchAxiosComments } from "../actions/commentActions";
@@ -11,18 +10,10 @@ import { getCurrentProfile } from "./../actions/profileActions";
 import Activity from "./Activity";
 import Comments from "./Comments";
 
-// import CardHeader from "@material-ui/core/CardHeader";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-// import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
-// import CardActionArea from "@material-ui/core/CardActionArea";
-// import CardActions from "@material-ui/core/CardActions";
-// import CardMedia from "@material-ui/core/CardMedia";
-// import Button from "@material-ui/core/Button";
-// import Avatar from "@material-ui/core/Avatar";
 import Grid from "@material-ui/core/Grid";
-// import Paper from "@material-ui/core/Paper";
 import Icon from "@material-ui/core/Icon";
 import Fab from "@material-ui/core/Fab";
 import Button from "@material-ui/core/Button";
@@ -47,11 +38,7 @@ class Itinerary extends Component {
     this.handleClick = this.handleClick.bind(this);
     this.addToFav = this.addToFav.bind(this);
   }
-  componentDidMount() {
-    // this.props.fetchActivityByKey(event.target.id);
-    // this.props.fetchAxiosItineraries();
-    // this.props.fetchAxiosItineraries(this.props.match.params.city_name);
-  }
+  componentDidMount() {}
 
   // ADD FAVORITES
   addToFav = event => {
@@ -60,11 +47,7 @@ class Itinerary extends Component {
       favorites: eventTargetId
     };
     let userID = this.props.auth.user.id;
-    // console.log("user id", userID);
-    // console.log("itin id", favData);
     this.props.postFavorites(userID, favData);
-    // this.props.getCurrentProfile();
-
     this.setState({ open: true });
   };
 
@@ -82,10 +65,8 @@ class Itinerary extends Component {
       eventId: eventTargetId,
       isBtn: !state.isBtn
     }));
-    // console.log(this.props.errors);
   }
   render() {
-    // const { isAuthenticated, user } = this.props.auth;
     const { isAuthenticated } = this.props.auth;
 
     const favDialog = (
@@ -163,8 +144,6 @@ class Itinerary extends Component {
                     <div />
                   )}
                   {/* 2nd TERNARY */}
-                  {/* {console.log("props", this.props)}
-                  {console.log("state", this.state)} */}
                   {isAuthenticated &&
                   this.props.profile.favid.includes(itinerary._id) ? (
                     <div className="favIconDiv">
@@ -182,8 +161,6 @@ class Itinerary extends Component {
                     <div />
                   )}
                 </div>
-
-                {/* <div> {itinerary._id}</div> */}
               </Grid>
             </Grid>
 
@@ -197,15 +174,6 @@ class Itinerary extends Component {
                   />
                 </Grid>
                 <Grid item xs={7}>
-                  {/* <Grid
-                item
-                xs={4}
-                container
-                spacing={24}
-                direction="column"
-                alignItems="center"
-                justify="center"
-              > */}
                   <Grid item xs={8}>
                     <div>• Time: {itinerary.duration} Hours</div>
                   </Grid>
@@ -221,9 +189,6 @@ class Itinerary extends Component {
                   <Grid item xs={8}>
                     <div>• Hashtags: {itinerary.hashtag}</div>
                   </Grid>
-                  {/* <Grid item xs={8}>
-                  <div>By: {itinerary.author}</div>
-                </Grid> */}
                   <Grid item xs={8}>
                     <br />
                   </Grid>
@@ -282,13 +247,10 @@ Itinerary.propTypes = {
 };
 
 const mapStateToProps = state => {
-  // // let id = ownProps.match.params.city_name;
-  // console.log(state.itineraries);
   return {
     itineraries: state.itineraries,
     profile: state.profile,
     favid: state.favid,
-    // eventId: state.event.target.id,
     activities: state.activities,
     comments: state.comments,
     auth: state.auth,

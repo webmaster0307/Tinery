@@ -1,6 +1,4 @@
 import axios from "axios";
-// import setAuthToken from "../actions/utils/setAuthToken";
-// import jwt_decode from "jwt-decode";
 import { GET_ERRORS } from "./Types";
 
 export const createCity = formData => dispatch => {

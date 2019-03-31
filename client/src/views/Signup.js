@@ -79,7 +79,6 @@ class Signup extends Component {
 
   tccheckbox = () => {
     this.setState(state => ({
-      // checkbox: !state.checkbox,
       checkbox: true,
       open: false
     }));
@@ -120,10 +119,6 @@ class Signup extends Component {
 
   // FORM EVENT HANDLER
   onChange = e => {
-    // let input = {
-    //   name: this.state.name
-    // };
-    // console.log(input);
     this.setState({
       [e.target.name]: e.target.value
     });
@@ -242,13 +237,11 @@ class Signup extends Component {
     const preview = (
       <Card className="commentForm">
         <div className="previewPhoto">
-          {/* <div className="previewPhotoContainer"> */}
           <img
             className="previewImage"
             alt="imageuploader"
             src={this.state.previewAvatar}
           />
-          {/* </div> */}
         </div>
         <div className="removePhotoDiv">
           <Button

@@ -1,11 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-// import TextFieldGroup from "../components/TextFieldGroup";
 import BottomNav from "../components/layout/BottomNav";
-
-// import LoginFacebook from "../components/LoginFacebook";
-// import LoginGoogle from "../components/LoginGoogle";
-// import { FacebookLogout } from "react-facebook-logout";
 
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
@@ -15,27 +10,13 @@ import {
   socialRegisterUser
 } from "../actions/authActions";
 
-// import Checkbox from "@material-ui/core/Checkbox";
-// import Button from "@material-ui/core/Button";
+import { GoogleLogin } from "react-google-login";
+import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
+import { googleClientID } from "./../keys.js";
+
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import Card from "@material-ui/core/Card";
-
-// import TwitterLogin from "react-twitter-auth";
-// import FacebookLogin from "react-facebook-login";
-import { GoogleLogin } from "react-google-login";
-import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
-
-// import { GoogleLogout } from "react-google-login";
-
-import { googleClientID } from "./../keys.js";
-// import { facebookAppID } from "./../keys.js";
-
-// import { PostData } from "../actions/utils/PostData";
-// import { CircularProgress } from "@material-ui/core";
-
-// REDIRECT
-// import { Redirect } from "react-router-dom";
 
 class Login extends Component {
   constructor() {
@@ -60,14 +41,12 @@ class Login extends Component {
   componentDidMount() {
     if (this.props.auth.isAuthenticated) {
       this.props.history.push("/");
-      // console.log(this.props.history);
     }
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.auth.isAuthenticated) {
       this.props.history.push("/");
-      // console.log(this.props.history);
     }
     if (nextProps.errors) {
       this.setState({ errors: nextProps.errors });
@@ -89,21 +68,6 @@ class Login extends Component {
     });
   };
 
-  // logoutGoogle = response => {
-  // console.log(response);
-
-  //   this.setState({
-  //     isLoggedIn: false,
-  //     isAuthenticated: false,
-  //     token: "",
-  //     user: "",
-  //     userID: "",
-  //     name: "",
-  //     email: "",
-  //     picture: ""
-  //   });
-  // };
-
   onFailure = error => {
     alert(error);
   };
@@ -120,14 +84,7 @@ class Login extends Component {
       username: this.state.username
     };
 
-    // this.props.loginUser(userData);
-    // console.log(userData);
-
     this.props.loginUser(userData, this.props.history);
-    // this.props.registerUser(userData);
-    // console.log(userData);
-    // console.log(this.state);
-    // console.log(this.props.history);
   };
 
   onChange = e => {
@@ -135,12 +92,7 @@ class Login extends Component {
   };
 
   render() {
-    //FACEBOOK LOGIN
-    // console.log(this.props);
-    // console.log(this.state);
     const responseFacebook = response => {
-      // console.log(this.props.history);
-      // console.log(this.props);
       console.log(response);
       let facebookData;
       facebookData = {
@@ -154,14 +106,6 @@ class Login extends Component {
         accesstoken: response.accessToken
       };
       this.props.socialRegisterUser(facebookData);
-      // console.log("facebook console");
-      // console.log(response);
-      // console.log("username", response.name);
-      // console.log("email", response.email);
-      // console.log("avatar", response.picture.data.url);
-      // console.log("id", response.id);
-      // console.log("accesstoken", response.accessToken);
-      // console.log(facebookData);
     };
 
     const responseGoogle = response => {
@@ -177,7 +121,6 @@ class Login extends Component {
         accesstoken: response.accessToken
       };
       this.props.socialRegisterUser(googleData);
-      // console.log(this.state);
     };
     const { errors } = this.state;
 
@@ -233,19 +176,11 @@ class Login extends Component {
                   {errors.password && (
                     <div>
                       <div className="invalid-feedback">{errors.password}</div>
-                      <div className="removePhotoDiv">
-                        {/* <Button className="removePhoto" variant="contained">
-                          Reset Password
-                        </Button> */}
-                      </div>
+                      <div className="removePhotoDiv" />
                     </div>
                   )}
                 </div>
-                {/* REMEMBER ME CHECKBOX */}
-                {/* <div>
-                  <Checkbox value="t&c" color="primary" name="t&c_checkbox" />
-                  <span>Remember Me</span>
-                </div> */}
+
                 {/* SUBMIT BUTTON */}
                 <div>
                   <button className="loginButton" type="submit" value="Submit">
@@ -303,31 +238,6 @@ class Login extends Component {
         </p>
       </div>
     );
-    // const socialLogin = (
-    //   <div>
-    //     <Card>
-    //       {/* <div className="loginSocialFlex"> */}
-    //       <div>
-    //         <div>
-    //           {/* <GoogleLogout
-    //               buttonText="Logout"
-    //               onLogoutSuccess={this.logoutGoogle}
-    //             /> */}
-    //           {/* <FacebookLogin
-    //       appId="284220635589707"
-    //       autoLoad={false}
-    //       fields="name,email,picture"
-    //       callback={responseFacebook}
-    //     /> */}
-    //         </div>
-    //         {/* <div> */}
-    //         {/* <button className="loginGBtn">Login with Google</button>
-    //           <button className="loginFBtn">Login with Facebook</button> */}
-    //         {/* </div> */}
-    //       </div>
-    //     </Card>
-    //   </div>
-    // );
     return (
       <div>
         {loginComponent}

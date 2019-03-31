@@ -8,20 +8,10 @@ import BottomNav from "../components/layout/BottomNav";
 import IconCity from "../components/layout/IconCity";
 import Header from "../components/layout/Header";
 
-// import Favorites from "../components/Favorites";
-// import Spinner from "../components/layout/Spinner";
-
-// import { Link } from "react-router-dom";
-// import { NavLink } from "react-router-dom";
-// import Typography from "@material-ui/core/Typography";
-// import Avatar from "@material-ui/core/Avatar";
-// import FavoriteBorder from "@material-ui/icons/FavoriteBorder";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Grid from "@material-ui/core/Grid";
 import Icon from "@material-ui/core/Icon";
-// import Paper from "@material-ui/core/Paper";
-
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -31,7 +21,6 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import Fab from "@material-ui/core/Fab";
 import Snackbar from "@material-ui/core/Snackbar";
 import Fade from "@material-ui/core/Fade";
-// import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 
 class Dashboard extends Component {
   constructor() {
@@ -84,25 +73,14 @@ class Dashboard extends Component {
     this.setState({
       favdataid: favData.favorites
     });
-    // console.log("eventTargetId", this.eventTargetId);
-    // console.log("itin id", favData.favorites);
-    // console.log("itin id", favData);
-    // console.log("favdataid", this.state.favdataid);
-    // let userID = this.props.auth.user.id;
   };
 
   confirmButton = () => {
-    // let eventTargetId = event;
-    // let favData = {
-    //   favorites: eventTargetId
-    // };
     let userID = this.props.auth.user.id;
     let favData = {
       favorites: this.state.favdataid
     };
-    // console.log("user id", userID);
-    // console.log("confirm button id", favData.favorites);
-    // console.log("confirm button id", this.state.favdataid);
+
     this.setState({
       open: false,
       confirm: true,
@@ -114,8 +92,6 @@ class Dashboard extends Component {
   };
 
   render() {
-    // getCurrentProfile(this.props.auth.user.id);
-    // const { isAuthenticated, user } = this.props.auth;
     const { user } = this.props.auth;
 
     const noFavouritesMessage = (
@@ -178,23 +154,11 @@ class Dashboard extends Component {
           <Grid container spacing={24}>
             {/* CARD HEADER */}
             <Grid item xs={9}>
-              {/* <Card> */}
-              {/* <Typography
-                className="activtytitle"
-                variant="h5"
-                align="center"
-                inline
-              >
-                {itinerary.title}
-              </Typography> */}
               <div className="activtytitle">
                 <h3>{itinerary.title}</h3>
               </div>
-
-              {/* </Card> */}
             </Grid>
             <Grid item xs={3}>
-              {/* <Card raised> */}
               <div className="favIconDiv">
                 <Fab>
                   <Icon
@@ -207,7 +171,7 @@ class Dashboard extends Component {
                   </Icon>
                 </Fab>
               </div>
-              {/* </Card> */}
+
               {favDialog}
             </Grid>
           </Grid>
@@ -222,15 +186,6 @@ class Dashboard extends Component {
                 />
               </Grid>
               <Grid item xs={7}>
-                {/* <Grid
-                item
-                xs={4}
-                container
-                spacing={24}
-                direction="column"
-                alignItems="center"
-                justify="center"
-              > */}
                 <Grid item xs={8}>
                   <div>• Time: {itinerary.duration} Hours</div>
                 </Grid>
@@ -246,9 +201,7 @@ class Dashboard extends Component {
                 <Grid item xs={8}>
                   <div>• Hashtags: {itinerary.hashtag}</div>
                 </Grid>
-                {/* <Grid item xs={8}>
-                  <div>By: {itinerary.author}</div>
-                </Grid> */}
+
                 <Grid item xs={8}>
                   <br />
                 </Grid>
@@ -298,7 +251,6 @@ class Dashboard extends Component {
 Dashboard.propTypes = {
   getCurrentProfile: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
-  // profile: PropTypes.object.isRequired
   itineraries: PropTypes.object
 };
 
@@ -309,8 +261,6 @@ const mapStateToProps = state => ({
   profile: state.profile,
   auth: state.auth
 });
-
-// export default Dashboard;
 
 export default connect(
   mapStateToProps,

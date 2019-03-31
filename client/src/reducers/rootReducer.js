@@ -8,7 +8,6 @@ import errorReducer from "./errorReducer";
 import profileReducer from "./profileReducer.js";
 
 export default combineReducers({
-  //cityReducer
   cities: cityReducer,
   itineraries: itinReducer,
   activities: activityReducer,

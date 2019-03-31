@@ -1,11 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-// import { Link } from "react-router-dom";
 import axios from "axios";
 import { connect } from "react-redux";
 import { debounce } from "lodash";
-// import BottomNav from "../components/layout/BottomNav";
-
 import { fetchAxiosCities } from "../actions/citiesActions";
 
 import Header from "../components/layout/Header";
@@ -49,9 +46,6 @@ class Editcity extends Component {
       flagimg: event.target.files[0],
       previewFile: URL.createObjectURL(event.target.files[0])
     });
-    console.log(this.state);
-    console.log(typeof this.state.flagimg);
-    console.log(typeof this.state.previewFile);
   };
 
   // SUBMIT
@@ -94,7 +88,6 @@ class Editcity extends Component {
       previewFile: selectedValue.flagimg,
       showlist: false
     });
-    // console.log(this.state);
   };
 
   // TOGGLE BETWEEN LIST AND FORM
@@ -257,7 +250,6 @@ class Editcity extends Component {
       <React.Fragment>
         {cmstitle}
         {this.state.showlist === true ? searchlist : selectedcity}
-        {/* <div className="bottomNav"/> */}
       </React.Fragment>
     );
   }

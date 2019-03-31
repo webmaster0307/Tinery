@@ -9,14 +9,11 @@ import { NavLink } from "react-router-dom";
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
 import Divider from "@material-ui/core/Divider";
 import ListItem from "@material-ui/core/ListItem";
-// import ListItemIcon from "@material-ui/core/ListItemIcon";
 import MenuIcon from "@material-ui/icons/Menu";
 import IconButton from "@material-ui/core/IconButton";
 import Icon from "@material-ui/core/Icon";
-// import { withStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-// import Typography from "@material-ui/core/Typography";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import Avatar from "@material-ui/core/Avatar";
 
@@ -26,7 +23,6 @@ class MenuAppBar extends React.Component {
   };
 
   toggleDrawer = open => () => {
-    // console.log(this.state);
     this.setState({
       left: open
     });
@@ -34,7 +30,6 @@ class MenuAppBar extends React.Component {
 
   onLogoutClick(e) {
     e.preventDefault();
-    // this.props.clearCurrentProfile();
     this.props.logoutUser();
   }
 

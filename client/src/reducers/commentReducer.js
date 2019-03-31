@@ -18,11 +18,7 @@ export default function(state = initialState, action) {
       return {
         ...state,
         comments: [...state.comments, action.payload]
-        // comments: state.comments
       };
-
-    // case DELETE_COMMENTS:
-    //   return state.filter(comment => comment._id !== action.payload.id);
 
     default:
       return state;

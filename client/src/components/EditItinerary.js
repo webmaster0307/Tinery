@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import axios from "axios";
 import { connect } from "react-redux";
 import { debounce } from "lodash";
-// import BottomNav from "../components/layout/BottomNav";
 
 import { fetchItineraries } from "../actions/itinerariesActions";
 import { fetchAxiosCities } from "../actions/citiesActions";
@@ -18,7 +17,6 @@ import Select from "@material-ui/core/Select";
 import FilledInput from "@material-ui/core/FilledInput";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
-// import { CircularProgress } from "@material-ui/core";
 
 class EditItinerary extends Component {
   constructor(props) {

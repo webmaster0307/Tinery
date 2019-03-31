@@ -2,19 +2,12 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import Icon from "@material-ui/core/Icon";
 
-import PropTypes from "prop-types";
+// import PropTypes from "prop-types";
 
 class BackButton extends Component {
   render() {
     return (
       <React.Fragment>
-        {/* <Icon
-          fontSize="large"
-          className="homeIcon"
-          onClick={this.props.history.goBack}
-        >
-          keyboard_backspace
-        </Icon> */}
         <Icon
           fontSize="large"
           className="homeIcon"
@@ -27,12 +20,12 @@ class BackButton extends Component {
   }
 }
 
-BackButton.defaultProps = {
-  standAlone: true
-};
+// BackButton.defaultProps = {
+//   standAlone: true
+// };
 
-BackButton.propTypes = {
-  standAlone: PropTypes.bool.isRequired
-};
+// BackButton.propTypes = {
+//   standAlone: PropTypes.bool.isRequired
+// };
 
 export default withRouter(BackButton);

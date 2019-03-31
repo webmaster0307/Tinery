@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-// import { fetchActivityByKey } from "../actions/fetchActivities";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Slider from "react-slick";
@@ -7,11 +6,7 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 
 class Activity extends Component {
-  componentDidMount() {
-    // this.props.fetchActivityByKey();
-    // this.props.fetchAxiosItineraries();
-    // this.props.fetchAxiosItineraries(this.props.match.params.city_name);
-  }
+  componentDidMount() {}
   constructor() {
     super();
     this.state = { isBtn: false };
@@ -27,7 +22,7 @@ class Activity extends Component {
       // slidesToShow: 1,
       // slidesToScroll: 1
       // FADE SLIDER
-      // dots: true,
+      dots: true,
       // fade: true,
       // infinite: true,
       // speed: 500,
@@ -39,9 +34,8 @@ class Activity extends Component {
       infinite: true,
       centerPadding: "60px",
       slidesToShow: 1,
-      speed: 500
+      speed: 400
     };
-    // console.log("from activity", this.props);
     const activityList = this.props.activities.activities.map(activity => (
       <Card raised className="sliderCard" key={activity.title}>
         <Card>
@@ -68,9 +62,7 @@ class Activity extends Component {
 }
 
 const mapStateToProps = state => {
-  // // let id = ownProps.match.params.city_name;
   return {
-    // itineraries: state.itineraries,
     activities: state.activities
   };
 };

@@ -3,7 +3,6 @@ import Typography from "@material-ui/core/Typography";
 
 class Header extends Component {
   render() {
-    //     console.log(this.props);
     return (
       <div>
         <React.Fragment>

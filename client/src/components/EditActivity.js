@@ -1,11 +1,9 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-// import { Link } from "react-router-dom";
+
 import axios from "axios";
 import { connect } from "react-redux";
 import { debounce } from "lodash";
-// import BottomNav from "../components/layout/BottomNav";
-
 import { fetchActivities } from "../actions/activitiesActions";
 import { fetchItineraries } from "../actions/itinerariesActions";
 
@@ -57,15 +55,11 @@ class EditActivity extends Component {
       image: event.target.files[0],
       previewFile: URL.createObjectURL(event.target.files[0])
     });
-    console.log(this.state);
-    console.log(typeof this.state.image);
-    console.log(typeof this.state.previewFile);
   };
 
   // SUBMIT
   onSubmit = e => {
     e.preventDefault();
-    console.log(this.parentItin);
     const formData = new FormData();
     formData.append("title", this.state.title);
     formData.append("activitykey", this.state.activitykey);

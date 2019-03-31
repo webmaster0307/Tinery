@@ -1,6 +1,4 @@
 import axios from "axios";
-// import setAuthToken from "../actions/utils/setAuthToken";
-
 import {
   POST_FAVORITES,
   DELETE_FAVORITES,
@@ -17,25 +15,12 @@ import {
 export const getCurrentProfile = () => dispatch => {
   dispatch(setProfileLoading());
   axios.get("/auth/profileget").then(res => {
-    // console.log(res.data);
     dispatch({
       type: GET_PROFILE,
       payload: res.data
     });
   });
-  // .catch(err =>
-  //   dispatch({
-  //     type: GET_PROFILE,
-  //     payload: null
-  //   })
-  // );
 };
-
-// export const getProfileFavorites = () => {
-//   return {
-//     type: GET_FAVID
-//   };
-// };
 
 // SET PROFILE LOADING
 export const setProfileLoading = () => {
@@ -55,13 +40,9 @@ export const clearCurrentProfile = () => {
 
 // FETCH FAVORITES
 export const fetchAxiosItinerariesID = favid => dispatch => {
-  // console.log("test");
-  // console.log("from fetchaxios", favid);
   axios
     .post("/api/itinid", { favid: favid })
     .then(res => {
-      // console.log("fetched from actions res.data", res.data);
-      // console.log("fetched from actions favid", favid);
       dispatch({
         type: FETCH_ITINERARIES_ID,
         payload: res.data
@@ -72,35 +53,20 @@ export const fetchAxiosItinerariesID = favid => dispatch => {
 
 // POST FAVORITES
 export const postFavorites = (id, favData) => dispatch => {
-  // let id = userData.userID;
-  //   console.log("from actions", id);
-  // console.log("from actions", favData);
   axios
     .post(`/auth/profile/${id}`, { favData: favData.favorites })
     .then(res => {
-      // console.log(res.data);
-
       dispatch({
         type: POST_FAVORITES,
         payload: favData.favorites
       });
-      // console.log("then posted actions:", res.data);
     })
-    // .catch(err =>
-    //   dispatch({
-    //     type: GET_ERRORS,
-    //     payload: err.response.data
-    //   })
-    // );
     .catch(err => console.log(err));
 };
 
 //-------------------------------------------------------------
 // REMOVE FAVORITES
 export const removeFavorites = (id, favData) => dispatch => {
-  // let id = userData.userID;
-  //   console.log("from actions", id);
-  // console.log("from actions", favData);
   axios
     .delete(`/auth/profile/removefav/${id}/${favData}`)
     .then(res =>
@@ -111,7 +77,6 @@ export const removeFavorites = (id, favData) => dispatch => {
     )
     // CHECK ERROR payload: err.response.data
     .catch(err => {
-      // console.log(err);
       dispatch({
         type: GET_ERRORS,
         payload: err.response.data
