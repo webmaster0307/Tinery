@@ -1,24 +1,38 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import Icon from "@material-ui/core/Icon";
 
-class IconBackbutton extends Component {
+import PropTypes from "prop-types";
+
+class BackButton extends Component {
   render() {
     return (
-      <div className="flexIcons">
-        <div className="flexLink">
-          <Link to="/">
-            <Icon fontSize="large" className="homeIcon">
-              arrow_back
-            </Icon>
-            {/* <Icon fontSize="large" className="homeIcon">
-              backspace
-            </Icon> */}
-          </Link>
-        </div>
-      </div>
+      <React.Fragment>
+        {/* <Icon
+          fontSize="large"
+          className="homeIcon"
+          onClick={this.props.history.goBack}
+        >
+          keyboard_backspace
+        </Icon> */}
+        <Icon
+          fontSize="large"
+          className="homeIcon"
+          onClick={this.props.history.goBack}
+        >
+          arrow_back
+        </Icon>
+      </React.Fragment>
     );
   }
 }
 
-export default IconBackbutton;
+BackButton.defaultProps = {
+  standAlone: true
+};
+
+BackButton.propTypes = {
+  standAlone: PropTypes.bool.isRequired
+};
+
+export default withRouter(BackButton);

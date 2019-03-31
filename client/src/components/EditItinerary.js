@@ -18,7 +18,7 @@ import Select from "@material-ui/core/Select";
 import FilledInput from "@material-ui/core/FilledInput";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
-import { CircularProgress } from "@material-ui/core";
+// import { CircularProgress } from "@material-ui/core";
 
 class EditItinerary extends Component {
   constructor(props) {
@@ -39,12 +39,7 @@ class EditItinerary extends Component {
       likes: "",
       authorimage: "",
       cityurl: "",
-      // hashtag: [],
       hashtag: [],
-      // hashtagArray: "",
-
-      // flagimg: null,
-      // previewFile: null,
       id: ""
     };
     this.editValue = this.editValue.bind(this);
@@ -55,8 +50,6 @@ class EditItinerary extends Component {
 
   //SELECT VALUE TO EDIT
   editValue = e => {
-    // console.log(e);
-
     this.props.fetchAxiosCities();
     let allitineraries = this.props.itineraries.itineraries;
     let selectedValue = allitineraries.find(itin => itin.activitykey === e);
@@ -65,10 +58,6 @@ class EditItinerary extends Component {
       selectedValue.hashtag === null
         ? selectedValue.hashtag
         : selectedValue.hashtag.join(",");
-
-    // let hashtagCSV = selectedValue.hashtag;
-    // console.log("from edit", hashtagCSV);
-    // console.log("from edit", selectedValue.hashtag);
 
     this.setState({
       id: selectedValue._id,
@@ -82,16 +71,10 @@ class EditItinerary extends Component {
       authorimage: selectedValue.authorimage,
       cityurl: selectedValue.cityurl,
       hashtag: hashtagCSV,
-      // hashtagArray: selectedValue.hashtag,
-      // hashtag: selectedValue.hashtag,
-      // country: selectedValue.country,
-      // url: selectedValue.url,
       flagimg: selectedValue.flagimg,
       previewFile: selectedValue.flagimg,
       showlist: false
     });
-
-    // console.log(this.state);
   };
 
   // SUBMIT
@@ -101,21 +84,6 @@ class EditItinerary extends Component {
     let hashtagString = this.state.hashtag.split(",");
     console.log(hashtagString);
     console.log(this.state.hashtag);
-    // console.log(this.state.hashtagArray);
-
-    // const formData = new FormData();
-    // formData.append("title", this.state.title);
-    // formData.append("activitykey", this.state.activitykey);
-    // formData.append("rating", this.state.rating);
-    // formData.append("duration", this.state.duration);
-    // formData.append("price", this.state.price);
-    // formData.append("author", this.state.author);
-    // formData.append("likes", this.state.likes);
-    // formData.append("authorimage", this.state.authorimage);
-    // formData.append("cityurl", this.state.cityurl);
-    // // formData.append("hashtag", this.state.hashtag);
-    // formData.append("hashtag", hashtagString);
-    // formData.append("id", this.state.id);
 
     const itinData = {
       title: this.state.title,
@@ -127,14 +95,12 @@ class EditItinerary extends Component {
       likes: this.state.likes,
       authorimage: this.state.authorimage,
       cityurl: this.state.cityurl,
-      // hashtag : this.state.hashtag,
       hashtag: hashtagString,
       id: this.state.id
     };
 
     //MIGRATE TO REDUX
     axios.post(`/api/cms/itin/${this.state.id}`, itinData, {});
-    // axios.post(`/api/cms/itin/${this.state.id}`,  { itinData: itinData.favorites }, {});
     alert("Upload successful");
     this.setState({
       id: "",
@@ -148,8 +114,6 @@ class EditItinerary extends Component {
       authorimage: "",
       cityurl: "",
       hashtag: []
-      // authorimage: null,
-      // previewFile: null
     });
 
     //MIGRATE TO REDUX
@@ -190,7 +154,6 @@ class EditItinerary extends Component {
   }, 500);
 
   render() {
-    // const previewFile = this.state.previewFile;
     const cmstitle = (
       <React.Fragment>
         <div>
@@ -299,7 +262,9 @@ class EditItinerary extends Component {
                 onChange={this.onSnakecase}
               />
             </div>
-            <p>*Warning : Changing Title can affect Children</p>
+            <p className="cmswarning">
+              *Warning : Changing Title can affect linked Activity
+            </p>
             <div> {selectCity}</div>
             <div>
               <TextField
@@ -405,9 +370,7 @@ class EditItinerary extends Component {
           </Button>
         </div>
         {cmsbody}
-        <div className="bottomNav">
-          {/* {previewFile === null ? noPreview : preview} */}
-        </div>
+        <div className="bottomNav" />
       </React.Fragment>
     );
 

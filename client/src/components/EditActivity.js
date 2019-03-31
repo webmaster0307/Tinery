@@ -263,9 +263,7 @@ class EditActivity extends Component {
           </Button>
         </div>
         {cmsbody}
-        <div className="bottomNav">
-          {previewFile === null ? noPreview : preview}
-        </div>
+        <div>{previewFile === null ? noPreview : preview}</div>
       </React.Fragment>
     );
 
@@ -273,8 +271,6 @@ class EditActivity extends Component {
       <React.Fragment>
         {cmstitle}
         {this.state.showlist === true ? searchlist : selectedActivity}
-        {/* <div className="bottomNav"/> */}
-        {/* <BottomNav /> */}
       </React.Fragment>
     );
   }

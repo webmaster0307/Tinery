@@ -4,7 +4,7 @@ import { getCurrentProfile } from "./../actions/profileActions";
 import { connect } from "react-redux";
 import { fetchAxiosCities } from "../actions/citiesActions";
 import { fetchAxiosItineraries } from "../actions/itinerariesActions";
-import IconCity from "../components/layout/IconCity";
+
 import Itinerary from "../components/Itinerary";
 import Header from "../components/layout/Header";
 
@@ -39,7 +39,6 @@ class City extends Component {
         </div>
         <div>
           <Itinerary />
-          <IconCity />
         </div>
       </div>
     );

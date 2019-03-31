@@ -489,7 +489,7 @@ class Signup extends Component {
     return (
       <div>
         {registerForm}
-        <div className="bottomNav">
+        <div>
           <BottomNav />
         </div>
       </div>

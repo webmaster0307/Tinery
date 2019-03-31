@@ -154,7 +154,9 @@ class Editcity extends Component {
                 onChange={this.onSnakecase}
               />
             </div>
-            <p>*Warning : Changing City Name can affect Children</p>
+            <p className="cmswarning">
+              *Warning : Changing City Name can affect linked Itinerary
+            </p>
             <div>
               <TextField
                 className="commentFormInput"
@@ -247,9 +249,7 @@ class Editcity extends Component {
           </Button>
         </div>
         {cmsbody}
-        <div className="bottomNav">
-          {previewFile === null ? noPreview : preview}
-        </div>
+        <div>{previewFile === null ? noPreview : preview}</div>
       </React.Fragment>
     );
 
@@ -258,7 +258,6 @@ class Editcity extends Component {
         {cmstitle}
         {this.state.showlist === true ? searchlist : selectedcity}
         {/* <div className="bottomNav"/> */}
-        {/* <BottomNav /> */}
       </React.Fragment>
     );
   }

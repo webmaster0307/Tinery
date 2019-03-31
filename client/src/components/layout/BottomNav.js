@@ -6,6 +6,9 @@ import AppBar from "@material-ui/core/AppBar";
 // import Toolbar from "@material-ui/core/Toolbar";
 // import IconButton from "@material-ui/core/IconButton";
 import IconHome from "./IconHome";
+import IconBackbutton from "./IconBackbutton";
+import IconCity from "./IconCity";
+import Toolbar from "@material-ui/core/Toolbar";
 
 const styles = theme => ({
   text: {
@@ -45,21 +48,17 @@ function BottomAppBar(props) {
   return (
     <React.Fragment>
       <AppBar position="fixed" color="default" className={classes.appBar}>
-        {/* <Toolbar className={classes.toolbar}> */}
-        {/* <IconButton color="inherit" aria-label="Open drawer"> */}
-
-        {/* </IconButton> */}
-        {/* <Fab color="secondary" aria-label="Add" className={classes.fabButton}>
-            <AddIcon />
-          </Fab> */}
-        {/* <div> */}
-        <IconHome />
-
-        {/* <IconButton color="inherit">
-              <MoreIcon />
-            </IconButton> */}
-        {/* </div> */}
-        {/* </Toolbar> */}
+        <Toolbar className="toolBarFlex">
+          <div>
+            <IconBackbutton />
+          </div>
+          <div>
+            <IconHome />
+          </div>
+          <div>
+            <IconCity />
+          </div>
+        </Toolbar>
       </AppBar>
     </React.Fragment>
   );

@@ -42,26 +42,6 @@ class Cmsitin extends Component {
   //SUBMIT
   onSubmit = e => {
     e.preventDefault();
-    let authorname = this.props.auth.user.username;
-    console.log("author:", authorname);
-    // const hashtagCSV = this.state.hashtag.join(",");
-    // console.log(hashtagCSV);
-    // console.log(this.state);
-    // console.log("this file", this.state.selectedFile);
-    // console.log("this state", this.state);
-    // const formData = new FormData();
-    // // formData.append("rating", this.state.selectedFile);
-    // formData.append("title", this.state.title);
-    // formData.append("rating", this.state.rating);
-    // formData.append("duration", this.state.duration);
-    // formData.append("price", this.state.price);
-    // formData.append("author", this.props.auth.user.username);
-    // formData.append("likes", this.state.likes);
-    // formData.append("authorimage", this.props.auth.user.avatar);
-    // formData.append("cityurl", this.state.cityurl);
-    // formData.append("activitykey", this.state.activitykey);
-    // formData.append("hashtag", hashtagCSV);
-
     const itinData = {
       title: this.state.title,
       activitykey: this.state.activitykey,
@@ -73,20 +53,10 @@ class Cmsitin extends Component {
       authorimage: this.props.auth.user.avatar,
       cityurl: this.state.cityurl,
       hashtag: this.state.hashtag,
-      // hashtag: hashtagString,
       id: this.state.id
     };
 
-    // console.log(formData);
-    // console.log(this.state);
-
     this.props.createItinerary(itinData);
-    // this.props.createItinerary(formData);
-    // axios.post("api/cms/itin", formData, {
-    //   // onUploadProgress: progressEvent => {
-    //   //  console.log(progressEvent.loaded / progressEvent.total);
-    //   // }
-    // });
     alert("Upload successful");
     this.setState({
       title: "",

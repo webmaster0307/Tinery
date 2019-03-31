@@ -16,6 +16,7 @@ import "./styles/App.css";
 import CssBaseline from "@material-ui/core/CssBaseline";
 // import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import Navbar from "./components/layout/Navbar";
+import BottomNav from "./components/layout/BottomNav";
 
 import City from "./views/City";
 import Home from "./views/Home";
@@ -119,6 +120,9 @@ class App extends Component {
                   render={props => <City {...props} isAuthed={true} />}
                 />
               </Switch>
+            </div>
+            <div className="bottomNav">
+              <BottomNav />
             </div>
           </div>
         </BrowserRouter>

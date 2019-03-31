@@ -53,66 +53,96 @@ class Home extends Component {
       </div>
     );
 
+    const homepageBody = (
+      <div>
+        <div>
+          <div>
+            <img
+              className="homeBrand"
+              alt="logo_image"
+              src={require("../images/client/MYtineraryLogo.png")}
+            />
+          </div>
+
+          {/* <HomeImg /> */}
+
+          <div className="homeP">
+            Find your perfect trip, designed by insider who know and love their
+            cities.
+          </div>
+
+          <div className="homeBrowsing">
+            <span>Start Browsing</span>
+          </div>
+
+          <div>
+            <Link to="/cities">
+              <img
+                className="homeCircle"
+                alt="logo_image"
+                src={require("../images/client/circled-right-2.png")}
+              />
+            </Link>
+          </div>
+
+          <div className="homeP bold">Want to build your own MYtinerary?</div>
+
+          {/* LOGIN STATE LOGIC */}
+          {isAuthenticated ? loginState : logoutState}
+
+          <div>{/* <IconHome /> */}</div>
+        </div>
+      </div>
+    );
+
     return (
       <React.Fragment>
-        {/* <Spring
-        from={{ opacity: 0, marginTop: -500 }}
-        to={{ opacity: 1, marginTop: 0 }}
-      /> */}
-        <Spring
+        {isAuthenticated ? (
+          <div>
+            {" "}
+            <Spring
+              from={{ opacity: 0, marginTop: -500 }}
+              to={{ opacity: 1, marginTop: 0 }}
+              config={{ delay: 0, duration: 500 }}
+            >
+              {/* {isAuthenticated ? loginState : logoutState} */}
+
+              {/* <Spring
           from={{ opacity: 0 }}
           to={{ opacity: 1 }}
-          config={{ delay: 500, duration: 750 }}
-        >
-          {props => (
-            <div style={props}>
-              {/* <div style={c1Style}> */}
-              <div>
-                <div>
-                  <div>
-                    <img
-                      className="homeBrand"
-                      alt="logo_image"
-                      src={require("../images/client/MYtineraryLogo.png")}
-                    />
-                  </div>
-
-                  {/* <HomeImg /> */}
-
-                  <div className="homeP">
-                    Find your perfect trip, designed by insider who know and
-                    love their cities.
-                  </div>
-
-                  <div className="homeBrowsing">
-                    <span>Start Browsing</span>
-                  </div>
-
-                  <div>
-                    <Link to="/cities">
-                      <img
-                        className="homeCircle"
-                        alt="logo_image"
-                        src={require("../images/client/circled-right-2.png")}
-                      />
-                    </Link>
-                  </div>
-
-                  <div className="homeP bold">
-                    Want to build your own MYtinerary?
-                  </div>
-
-                  {/* LOGIN STATE LOGIC */}
-
-                  {isAuthenticated ? loginState : logoutState}
-
-                  <div>{/* <IconHome /> */}</div>
+          config={{ delay: 500 }}
+        > */}
+              {props => (
+                <div style={props}>
+                  {/* <div style={c1Style}> */}
+                  {homepageBody}
                 </div>
-              </div>
-            </div>
-          )}
-        </Spring>
-        <BottomNav />
+              )}
+            </Spring>
+          </div>
+        ) : (
+          <div>
+            {" "}
+            {/* <Spring
+              from={{ opacity: 0, marginTop: -500 }}
+              to={{ opacity: 1, marginTop: 0 }}
+              config={{ delay: 0, duration: 1000 }}
+            > */}
+            {/* {isAuthenticated ? loginState : logoutState} */}
+            <Spring
+              from={{ opacity: 0 }}
+              to={{ opacity: 1 }}
+              config={{ delay: 500 }}
+            >
+              {props => (
+                <div style={props}>
+                  {/* <div style={c1Style}> */}
+                  {homepageBody}
+                </div>
+              )}
+            </Spring>
+          </div>
+        )}
       </React.Fragment>
     );
   }

@@ -69,8 +69,6 @@ router.post("/cms/itin", upload.any(), (req, res, next) => {
 router.post("/cms/itin/:id", upload.any(), (req, res, next) => {
   const cmsfields = {};
 
-  // console.log(req.body.hashtag);
-
   cmsfields.title = req.body.title;
   cmsfields.activitykey = req.body.activitykey;
   cmsfields.rating = req.body.rating;
@@ -82,18 +80,9 @@ router.post("/cms/itin/:id", upload.any(), (req, res, next) => {
   cmsfields.cityurl = req.body.cityurl;
   cmsfields.hashtag = req.body.hashtag;
 
-  // const hashtagArray = req.body.hashtag;
-
-  // if (typeof req.body.hashtag !== "undefined") {
-  //   cmsfields.hashtag = req.body.hashtag.split(",");
-  // }
-
   Itinmodel.findOneAndUpdate(
     { _id: req.params.id },
-    // { $split: [hash, ","] },
     { $set: cmsfields },
-    // { $push: { hashtag: hashtagArray } },
-
     { new: true }
   ).then(itinerary => res.json(itinerary));
 });

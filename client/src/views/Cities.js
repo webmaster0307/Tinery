@@ -62,7 +62,7 @@ class Cities extends Component {
         </div>
 
         {/* CITIES */}
-        <div className="bottomNav">
+        <div>
           {filteredCities.map(city => {
             return (
               <div key={city._id}>

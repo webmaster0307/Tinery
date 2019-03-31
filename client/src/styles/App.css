@@ -556,16 +556,16 @@
 /* ICONS */
 
 .homeIcon {
-  margin-top: 5px;
-  margin-bottom: 5px;
+  /* margin-top: 5px;
+  margin-bottom: 5px; */
   color: black;
   /* font-size: 40px; */
   /* border: 1px solid black; */
 }
 
 .cityIcon {
-  margin-top: 5px;
-  margin-bottom: 5px;
+  /* margin-top: 5px;
+  margin-bottom: 5px; */
   color: black;
   /* font-size: 100px; */
 }
@@ -745,4 +745,10 @@
   text-decoration: underline;
   color: #008cba;
   margin-bottom: 5px;
+}
+
+.cmswarning {
+  margin-top: -5px;
+  color: red;
+  font-size: 10px;
 }

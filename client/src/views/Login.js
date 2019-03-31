@@ -333,7 +333,7 @@ class Login extends Component {
         {loginComponent}
         {/* {socialLogin} */}
         {noAccountMessage}
-        <div className="bottomNav">
+        <div>
           <BottomNav />
         </div>
       </div>

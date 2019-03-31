@@ -269,7 +269,7 @@ class Dashboard extends Component {
         </div>
 
         <div className="dashboardUsername">Welcome {user.username}. </div>
-        <div className="bottomNav">
+        <div>
           {this.props.profile.favitin.length > 0 ? (
             <div>{listFavoriteIDs}</div>
           ) : (
