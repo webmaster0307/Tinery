@@ -10,6 +10,9 @@ const ActivitySchema = new Schema({
   },
   activitykey: {
     type: String
+  },
+  authorid: {
+    type: String
   }
 });
 

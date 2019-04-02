@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { getCurrentProfile } from "./../actions/profileActions";
 import { connect } from "react-redux";
-import { fetchAxiosCities } from "../actions/citiesActions";
+import { fetchCities } from "../actions/citiesActions";
 import { fetchAxiosItineraries } from "../actions/itinerariesActions";
 
 import Itinerary from "../components/Itinerary";
@@ -20,7 +20,7 @@ class City extends Component {
   }
   componentDidMount() {
     this.props.fetchAxiosItineraries(this.props.match.params.city_name);
-    this.props.fetchAxiosCities();
+    this.props.fetchCities();
     if (this.props.auth.isAuthenticated === true) {
       this.props.getCurrentProfile();
     }
@@ -63,7 +63,7 @@ export default connect(
   mapStateToProps,
   {
     fetchAxiosItineraries,
-    fetchAxiosCities,
+    fetchCities,
     getCurrentProfile
   }
 )(City);

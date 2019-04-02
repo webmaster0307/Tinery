@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import { getCurrentProfile } from "./../actions/profileActions";
 import { removeFavorites } from "../actions/profileActions";
 import { fetchAxiosItinerariesID } from "../actions/profileActions";
-import BottomNav from "../components/layout/BottomNav";
 import IconCity from "../components/layout/IconCity";
 import Header from "../components/layout/Header";
 
@@ -241,8 +240,6 @@ class Dashboard extends Component {
           }}
           message={<div className="snackbartext">Favorite Removed!</div>}
         />
-
-        <BottomNav className="bottomNav" />
       </React.Fragment>
     );
   }

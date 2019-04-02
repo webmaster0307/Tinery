@@ -4,7 +4,7 @@ const gravatar = require("gravatar");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const keys = require("../../config/keys");
-const passport = require("passport");
+// const passport = require("passport");
 const multer = require("multer");
 
 // MULTER CONFIGURATION

@@ -1,4 +1,3 @@
-// import { FETCH_ITINERARIES, FETCH_ITINERARIES_ID } from "../actions/Types";
 import { FETCH_ITINERARIES } from "../actions/Types";
 
 const initialState = {

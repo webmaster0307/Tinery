@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
-import axios from "axios";
 import { connect } from "react-redux";
 import { debounce } from "lodash";
 import { fetchActivities } from "../actions/activitiesActions";
 import { fetchItineraries } from "../actions/itinerariesActions";
+import { editActivity } from "../actions/cmsActions";
 
 import Header from "../components/layout/Header";
 import Button from "@material-ui/core/Button";
@@ -32,6 +32,7 @@ class EditActivity extends Component {
       activitykey: "",
       image: null,
       previewFile: null,
+      authorid: "",
       // url: "",
       id: ""
     };
@@ -66,8 +67,7 @@ class EditActivity extends Component {
     formData.append("image", this.state.image);
     formData.append("id", this.state.id);
 
-    //MIGRATE TO REDUX
-    axios.post(`/api/cms/activity/${this.state.id}`, formData, {});
+    this.props.editActivity(this.state.id, formData);
     alert("Upload successful");
     this.setState({
       id: "",
@@ -76,13 +76,14 @@ class EditActivity extends Component {
       image: null,
       previewFile: null
     });
-    //MIGRATE TO REDUX
+
     this.props.fetchActivities();
   };
 
   //SELECT VALUE TO EDIT
   editValue = e => {
     this.props.fetchItineraries();
+    this.props.fetchActivities();
 
     let allactivities = this.props.activities.activities;
     let selectedValue = allactivities.find(activity => activity.title === e);
@@ -92,6 +93,7 @@ class EditActivity extends Component {
       title: selectedValue.title,
       image: selectedValue.image,
       previewFile: selectedValue.image,
+      authorid: selectedValue.authorid,
       showlist: false
     });
   };
@@ -103,17 +105,34 @@ class EditActivity extends Component {
     });
   };
 
+  // DELETE BUTTON
+  onDelete = () => {
+    console.log("hello");
+    // this.setState({
+    //   showlist: true
+    // });
+  };
+
   // FORM INFO
   onChange = e => {
-    const parentItin = e.target.value;
+    // const parentItin = e.target.value;
     this.setState({
-      [e.target.name]: e.target.value,
-      activitykey: parentItin
+      [e.target.name]: e.target.value
     });
   };
 
   render() {
     const previewFile = this.state.previewFile;
+
+    const deleteButton = (
+      <React.Fragment>
+        <div className="deleteButton">
+          <Button onClick={this.onDelete} variant="outlined" color="secondary">
+            Delete
+          </Button>
+        </div>
+      </React.Fragment>
+    );
     const cmstitle = (
       <React.Fragment>
         <div>
@@ -182,9 +201,16 @@ class EditActivity extends Component {
             <input type="file" onChange={this.fileChangedHandler} />
           </div>
           {/* SUBMIT BUTTON */}
-          <button className="submitCommentBtn" onClick={this.onSubmit}>
-            Update Activity!
-          </button>
+          <div className="cmsAction">
+            <Button variant="outlined" color="primary" onClick={this.onSubmit}>
+              Update Activity!
+            </Button>
+          </div>
+          {this.state.authorid === this.props.auth.user.id ? (
+            <div>{deleteButton}</div>
+          ) : (
+            <span />
+          )}
         </Card>
 
         <div className="cmsTitletext">
@@ -274,7 +300,8 @@ const mapStateToProps = state => {
   return {
     activities: state.activities,
     itineraries: state.itineraries,
-    profile: state.profile
+    profile: state.profile,
+    auth: state.auth
   };
 };
 
@@ -285,5 +312,5 @@ EditActivity.propTypes = {
 
 export default connect(
   mapStateToProps,
-  { fetchActivities, fetchItineraries }
+  { fetchActivities, fetchItineraries, editActivity }
 )(EditActivity);

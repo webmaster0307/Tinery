@@ -1,24 +1,37 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import Header from "../components/layout/Header";
 import { Link } from "react-router-dom";
+import { createCity } from "../actions/cmsActions";
+
+import Header from "../components/layout/Header";
+
 import Card from "@material-ui/core/Card";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import { createCity } from "../actions/cmsActions";
 
 class Cmscity extends Component {
   constructor() {
     super();
     this.state = {
+      errors: {},
       cityname: "",
       flagimg: null,
       country: "",
       url: "",
+      authorid: "",
       selectedFile: null,
       previewFile: null
     };
+  }
+
+  // ERROR MAPPING
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.errors) {
+      this.setState({
+        errors: nextProps.errors
+      });
+    }
   }
 
   // IMAGE INFO
@@ -38,10 +51,11 @@ class Cmscity extends Component {
     formData.append("country", this.state.country);
     formData.append("flagimg", this.state.flagimg);
     formData.append("url", this.state.url);
+    formData.append("authorid", this.props.auth.user.id);
 
     //CREATE ACTION
     this.props.createCity(formData);
-    alert("Upload successful");
+    // alert("Upload successful");
     this.setState({
       cityname: "",
       country: "",
@@ -71,6 +85,8 @@ class Cmscity extends Component {
   };
 
   render() {
+    const { errors } = this.state;
+
     const previewFile = this.state.previewFile;
     const cmstitle = (
       <React.Fragment>
@@ -92,11 +108,7 @@ class Cmscity extends Component {
     const cmsbody = (
       <div>
         <Card raised className="commentForm">
-          <form
-            encType="multipart/form-data"
-            noValidate
-            onSubmit={this.onSubmit}
-          >
+          <form encType="multipart/form-data" onSubmit={this.onSubmit}>
             <div>
               <TextField
                 className="commentFormInput"
@@ -109,8 +121,12 @@ class Cmscity extends Component {
                 name="cityname"
                 value={this.state.cityname}
                 onChange={this.onSnakecase}
+                errorform={errors.cityname}
               />
             </div>
+            {errors.cityname && (
+              <div className="invalid-feedback">{errors.cityname}</div>
+            )}
             <div>
               <TextField
                 className="commentFormInput"
@@ -123,18 +139,44 @@ class Cmscity extends Component {
                 name="country"
                 value={this.state.country}
                 onChange={this.onChange}
+                errorform={errors.country}
               />
             </div>
+            {errors.country && (
+              <div className="invalid-feedback">{errors.country}</div>
+            )}
           </form>
           <div className="cmsUploadimage">
             Upload Country Flag.
             <input type="file" onChange={this.fileChangedHandler} />
           </div>
 
-          {/* SUBMIT BUTTON */}
-          <button className="submitCommentBtn" onClick={this.onSubmit}>
-            Upload City!
-          </button>
+          {/* SUBMIT BUTTON VALIDATION */}
+          {this.state.flagimg === null ||
+          !this.state.cityname ||
+          !this.state.country ? (
+            <React.Fragment>
+              <p className="cmsimagerequired">*Image File is Required.</p>
+              <div className="cmsAction">
+                <Button variant="outlined" color="primary" disabled>
+                  Create City!
+                </Button>
+              </div>
+            </React.Fragment>
+          ) : (
+            <React.Fragment>
+              <div className="cmsAction">
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  onClick={this.onSubmit}
+                  value="Submit"
+                >
+                  Create City!
+                </Button>
+              </div>
+            </React.Fragment>
+          )}
         </Card>
 
         <div className="cmsTitletext">
@@ -168,13 +210,15 @@ class Cmscity extends Component {
 
 Cmscity.propTypes = {
   createCity: PropTypes.func,
-  auth: PropTypes.object
+  auth: PropTypes.object,
+  errors: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  favid: state.favid,
+  cities: state.cities,
   profile: state.profile,
-  auth: state.auth
+  auth: state.auth,
+  errors: state.errors
 });
 
 export default connect(

@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import axios from "axios";
 import { connect } from "react-redux";
 import { debounce } from "lodash";
-import { fetchAxiosCities } from "../actions/citiesActions";
+import { fetchCities } from "../actions/citiesActions";
+import { editCity } from "../actions/cmsActions";
 
 import Header from "../components/layout/Header";
 import Button from "@material-ui/core/Button";
@@ -25,12 +25,16 @@ class Editcity extends Component {
       flagimg: null,
       previewFile: null,
       url: "",
+      authorid: "",
       id: ""
     };
     this.editValue = this.editValue.bind(this);
   }
   componentDidMount() {
-    this.props.fetchAxiosCities();
+    this.props.fetchCities();
+    this.setState({
+      cities: this.props.cities.cities
+    });
   }
 
   // SEARCH WITH DEBOUNCE
@@ -59,8 +63,7 @@ class Editcity extends Component {
     formData.append("url", this.state.url);
     formData.append("id", this.state.id);
 
-    //MIGRATE TO REDUX
-    axios.post(`/api/cms/city/${this.state.id}`, formData, {});
+    this.props.editCity(this.state.id, formData);
     alert("Upload successful");
     this.setState({
       id: "",
@@ -70,13 +73,13 @@ class Editcity extends Component {
       flagimg: null,
       previewFile: null
     });
-    //MIGRATE TO REDUX
-    this.props.fetchAxiosCities();
+
+    this.props.fetchCities();
   };
 
   //SELECT VALUE TO EDIT
   editValue = e => {
-    // console.log(e);
+    this.props.fetchCities();
     let allcities = this.props.cities.cities;
     let selectedValue = allcities.find(city => city.cityname === e);
     this.setState({
@@ -86,6 +89,7 @@ class Editcity extends Component {
       url: selectedValue.url,
       flagimg: selectedValue.flagimg,
       previewFile: selectedValue.flagimg,
+      authorid: selectedValue.authorid,
       showlist: false
     });
   };
@@ -95,6 +99,14 @@ class Editcity extends Component {
     this.setState({
       showlist: true
     });
+  };
+
+  // DELETE BUTTON
+  onDelete = () => {
+    console.log("hello");
+    // this.setState({
+    //   showlist: true
+    // });
   };
 
   // FORM INFO
@@ -118,6 +130,17 @@ class Editcity extends Component {
 
   render() {
     const previewFile = this.state.previewFile;
+    const deleteButton = (
+      <React.Fragment>
+        <div className="deleteButton">
+          <Button onClick={this.onDelete} variant="outlined" color="secondary">
+            Delete City
+          </Button>
+          <br />
+        </div>
+      </React.Fragment>
+    );
+
     const cmstitle = (
       <React.Fragment>
         <div>
@@ -170,9 +193,16 @@ class Editcity extends Component {
             <input type="file" onChange={this.fileChangedHandler} />
           </div>
           {/* SUBMIT BUTTON */}
-          <button className="submitCommentBtn" onClick={this.onSubmit}>
-            Update City!
-          </button>
+          <div className="cmsAction">
+            <Button variant="outlined" color="primary" onClick={this.onSubmit}>
+              Update City!
+            </Button>
+          </div>
+          {this.state.authorid === this.props.auth.user.id ? (
+            <div>{deleteButton}</div>
+          ) : (
+            <span />
+          )}
         </Card>
 
         <div className="cmsTitletext">
@@ -180,6 +210,7 @@ class Editcity extends Component {
         </div>
       </div>
     );
+
     const noPreview = (
       <div>
         <Card />
@@ -220,7 +251,6 @@ class Editcity extends Component {
           />
         </div>
         {/* CITIES */}
-
         {filteredList.map(city => {
           return (
             <div key={city._id} className="editCmsitems">
@@ -258,16 +288,17 @@ class Editcity extends Component {
 const mapStateToProps = state => {
   return {
     cities: state.cities,
-    profile: state.profile
+    profile: state.profile,
+    auth: state.auth
   };
 };
 
 Editcity.propTypes = {
   cities: PropTypes.object,
-  fetchAxiosCities: PropTypes.func
+  fetchCities: PropTypes.func
 };
 
 export default connect(
   mapStateToProps,
-  { fetchAxiosCities }
+  { fetchCities, editCity }
 )(Editcity);

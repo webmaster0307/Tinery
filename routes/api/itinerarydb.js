@@ -46,7 +46,6 @@ router.post("/itinid/", (req, res) => {
 // @access Public
 
 router.post("/itin", (req, res) => {
-  // console.log(req.body);
   const itinerary = new Itinmodel({
     title: req.body.title,
     rating: req.body.rating,

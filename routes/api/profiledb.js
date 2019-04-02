@@ -42,6 +42,7 @@ router.post(
     User.findOneAndUpdate(
       { _id: req.params.id },
       { $push: { favorites: req.body.favData } }
+      // { new: true }
     )
       .then(user => res.json(user.favorites))
       .catch(err => res.status(404).json({ success: false }));
@@ -61,6 +62,7 @@ router.delete(
     User.findOneAndUpdate(
       { _id: req.params.id },
       { $pull: { favorites: req.params.favid } }
+      // { new: true }
     )
       .then(user => {
         res.json(user);

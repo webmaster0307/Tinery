@@ -68,19 +68,19 @@ class MenuAppBar extends React.Component {
         <ListItem button>
           <NavLink to="/cmscity">
             <Icon className="navIcon">edit_location</Icon>
-            <span className="navText">Create City</span>
+            <span className="navText">Create/Edit City</span>
           </NavLink>
         </ListItem>
         <ListItem button>
           <NavLink to="/cmsitin">
             <Icon className="navIcon">add_to_photos</Icon>
-            <span className="navText">Create Itinerary</span>
+            <span className="navText">Create/Edit Itinerary</span>
           </NavLink>
         </ListItem>
         <ListItem button>
           <NavLink to="/cmsactivity">
             <Icon className="navIcon">add_a_photo</Icon>
-            <span className="navText">Create Activity</span>
+            <span className="navText">Create/Edit Activity</span>
           </NavLink>
         </ListItem>
       </div>

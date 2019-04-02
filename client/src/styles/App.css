@@ -354,16 +354,37 @@
 
 /* FORM  */
 
+.registerFormPhototext {
+  font-weight: bold;
+  margin-top: 10px;
+}
+
 .addPhoto {
   /* width: 300px; */
   margin-top: 20px;
-  padding: 18px;
+  /* padding: 5px; */
+  /* padding-left: 2px;
+  padding-top: 5px; */
+  padding: 5px 0px 5px 3px;
   background-color: gainsboro;
-  border: 4px dotted white;
-  height: 145px;
-  width: 145px;
-  border-radius: 50%;
+  /* border: 1px solid black; */
+  /* box-shadow: 5px 10px; */
+  /* border: 4px dotted white; */
+  border: 1px solid;
+  /* padding: 10px; */
+  box-shadow: 5px 10px 18px #888888;
+
+  /* height: 145px; */
+  /* width: 145px; */
+  /* border-radius: 50%; */
+
   display: inline-block;
+
+}
+
+.centerInput {
+  display: block;
+  text-align: center;
 }
 
 .previewImage {
@@ -720,11 +741,26 @@
   margin-bottom: 15px;
 }
 
+
 .cmsButton {
   display: flex;
   flex: 1;
   justify-content: space-around;
 }
+
+.cmsAction {
+  margin-bottom: 15px;
+  margin-top: 5px;
+
+}
+
+.deleteButton {
+  text-align: center;
+  margin-bottom: 15px;
+  margin-top: 15px;
+  /* padding-top: 10px; */
+}
+
 
 .cmsImage {
   /* display: flex;
@@ -750,5 +786,11 @@
 .cmswarning {
   margin-top: -5px;
   color: red;
-  font-size: 10px;
+  font-size: 12px;
+}
+
+.cmsimagerequired {
+  margin-top: -5px;
+  color: black;
+  font-size: 12px;
 }

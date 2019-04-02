@@ -1,4 +1,3 @@
-// import { GET_ERRORS, CLEAR_ERRORS } from "../actions/Types";
 import { GET_ERRORS } from "../actions/Types";
 
 const initialState = {};

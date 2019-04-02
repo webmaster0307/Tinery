@@ -62,7 +62,6 @@ class Comments extends Component {
       timestamp: "",
       activitykey: ""
     });
-    // REFRESH COMMENTS (NOT NEEDED)
   };
 
   onSubmitLoggedIn = e => {

@@ -20,6 +20,9 @@ const ItinSchema = new Schema({
   author: {
     type: String
   },
+  authorid: {
+    type: String
+  },
   authorimage: {
     type: String
   },

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { createItinerary } from "../actions/cmsActions";
-import { fetchAxiosCities } from "../actions/citiesActions";
+import { fetchCities } from "../actions/citiesActions";
 import { Link } from "react-router-dom";
 
 import Header from "../components/layout/Header";
@@ -20,6 +20,7 @@ class Cmsitin extends Component {
   constructor() {
     super();
     this.state = {
+      errors: {},
       cities: [],
       author: "",
       authorimage: "",
@@ -35,8 +36,17 @@ class Cmsitin extends Component {
     };
   }
 
+  // ERROR MAPPING
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.errors) {
+      this.setState({
+        errors: nextProps.errors
+      });
+    }
+  }
+
   componentDidMount() {
-    this.props.fetchAxiosCities();
+    this.props.fetchCities();
   }
 
   //SUBMIT
@@ -49,6 +59,7 @@ class Cmsitin extends Component {
       duration: this.state.duration,
       price: this.state.price,
       author: this.props.auth.user.username,
+      authorid: this.props.auth.user.id,
       likes: this.state.likes,
       authorimage: this.props.auth.user.avatar,
       cityurl: this.state.cityurl,
@@ -57,7 +68,7 @@ class Cmsitin extends Component {
     };
 
     this.props.createItinerary(itinData);
-    alert("Upload successful");
+    // alert("Upload successful");
     this.setState({
       title: "",
       rating: "",
@@ -67,13 +78,13 @@ class Cmsitin extends Component {
       cityurl: "",
       cityname: "",
       activitykey: "",
+      author: "",
       hashtag: []
     });
   };
 
   // FORM INFO
   onChange = e => {
-    console.log(this.state.cityurl);
     this.setState({
       [e.target.name]: e.target.value
     });
@@ -92,6 +103,8 @@ class Cmsitin extends Component {
   };
 
   render() {
+    const { errors } = this.state;
+
     const cmstitle = (
       <React.Fragment>
         <div>
@@ -120,6 +133,7 @@ class Cmsitin extends Component {
             onChange={this.onChange}
             type="select"
             name="cityurl"
+            errorform={errors.cityurl}
             input={<FilledInput name="cityurl" id="filled-city-simple" />}
           >
             <MenuItem value="">
@@ -133,6 +147,9 @@ class Cmsitin extends Component {
               );
             })}
           </Select>
+          {errors.cityurl && (
+            <div className="invalid-feedback">{errors.cityurl}</div>
+          )}
         </FormControl>
       </React.Fragment>
     );
@@ -148,6 +165,7 @@ class Cmsitin extends Component {
             onChange={this.onChange}
             type="select"
             name="price"
+            errorform={errors.price}
             input={<FilledInput name="price" id="filled-price-simple" />}
           >
             <MenuItem value="">
@@ -172,6 +190,7 @@ class Cmsitin extends Component {
             onChange={this.onChange}
             type="select"
             name="rating"
+            errorform={errors.rating}
             input={<FilledInput name="rating" id="filled-rating-simple" />}
           >
             <MenuItem value="">
@@ -190,11 +209,7 @@ class Cmsitin extends Component {
     const cmsbody = (
       <div>
         <Card raised className="commentForm">
-          <form
-            encType="multipart/form-data"
-            noValidate
-            onSubmit={this.onSubmit}
-          >
+          <form encType="multipart/form-data" onSubmit={this.onSubmit}>
             <div>
               <TextField
                 className="commentFormInput"
@@ -207,8 +222,12 @@ class Cmsitin extends Component {
                 name="title"
                 value={this.state.title}
                 onChange={this.onSnakecase}
+                errorform={errors.title}
               />
             </div>
+            {errors.title && (
+              <div className="invalid-feedback">{errors.title}</div>
+            )}
             <div> {selectCity}</div>
             <div>
               <TextField
@@ -222,10 +241,9 @@ class Cmsitin extends Component {
                 name="likes"
                 value={this.state.likes}
                 onChange={this.onChange}
+                errorform={errors.likes}
               />
             </div>
-            <div>{selectRating}</div>
-            <div>{selectPrice}</div>
             <div>
               <TextField
                 className="commentFormInput"
@@ -238,8 +256,11 @@ class Cmsitin extends Component {
                 name="duration"
                 value={this.state.duration}
                 onChange={this.onChange}
+                errorform={errors.duration}
               />
             </div>
+            <div>{selectRating}</div>
+            <div>{selectPrice}</div>
             <div>
               <TextField
                 className="commentFormInput"
@@ -255,10 +276,36 @@ class Cmsitin extends Component {
               />
             </div>
           </form>
-          {/* SUBMIT BUTTON */}
-          <button className="submitCommentBtn" onClick={this.onSubmit}>
-            Upload Itinerary!
-          </button>
+
+          {/* SUBMIT BUTTON VALIDATION */}
+          {!this.state.title ||
+          !this.state.rating ||
+          !this.state.cityurl ||
+          !this.state.duration ||
+          !this.state.price ||
+          !this.state.likes ||
+          this.state.hashtag.length === 0 ? (
+            <React.Fragment>
+              <div className="cmsAction">
+                <Button variant="outlined" color="primary" disabled>
+                  Create Itinerary!
+                </Button>
+              </div>
+            </React.Fragment>
+          ) : (
+            <React.Fragment>
+              <div className="cmsAction">
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  onClick={this.onSubmit}
+                  value="Submit"
+                >
+                  Create Itinerary!
+                </Button>
+              </div>
+            </React.Fragment>
+          )}
         </Card>
       </div>
     );
@@ -274,7 +321,7 @@ class Cmsitin extends Component {
 
 Cmsitin.propTypes = {
   createItinerary: PropTypes.func,
-  fetchAxiosCities: PropTypes.func,
+  fetchCities: PropTypes.func,
   auth: PropTypes.object
 };
 
@@ -282,10 +329,11 @@ const mapStateToProps = state => ({
   cities: state.cities,
   favid: state.favid,
   profile: state.profile,
-  auth: state.auth
+  auth: state.auth,
+  errors: state.errors
 });
 
 export default connect(
   mapStateToProps,
-  { createItinerary, fetchAxiosCities }
+  { createItinerary, fetchCities }
 )(Cmsitin);

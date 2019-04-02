@@ -23,7 +23,6 @@ router.post("/city", (req, res) => {
     url: req.body.url,
     id: req.body.id
   });
-
   city
     .save()
     .then(doc => {

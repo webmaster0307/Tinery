@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import BottomNav from "../components/layout/BottomNav";
 
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
@@ -31,9 +30,9 @@ class Login extends Component {
       errors: {},
       isAuthenticated: false,
       user: null,
-      token: "",
-      loginError: false,
-      redirect: false
+      token: ""
+      // loginError: false,
+      // redirect: false
     };
   }
 
@@ -92,8 +91,9 @@ class Login extends Component {
   };
 
   render() {
+    const { errors } = this.state;
     const responseFacebook = response => {
-      console.log(response);
+      // console.log(response);
       let facebookData;
       facebookData = {
         facebookID: response.id,
@@ -122,7 +122,6 @@ class Login extends Component {
       };
       this.props.socialRegisterUser(googleData);
     };
-    const { errors } = this.state;
 
     const loginComponent = (
       <div>
@@ -243,9 +242,7 @@ class Login extends Component {
         {loginComponent}
         {/* {socialLogin} */}
         {noAccountMessage}
-        <div>
-          <BottomNav />
-        </div>
+        <div />
       </div>
     );
   }

@@ -5,6 +5,12 @@ const Citymodel = require("../../models/citymodel");
 const Activitymodel = require("../../models/activitymodel");
 const multer = require("multer");
 
+//VALIDATION
+const validateCmsCity = require("../../validation/cmscity");
+const validateCmsItin = require("../../validation/cmsitin");
+const validateCmsActivity = require("../../validation/cmsactivity");
+
+//MULTER SETUP
 const storage = multer.diskStorage({
   destination: function(req, file, cb) {
     cb(null, "./uploads/");
@@ -32,21 +38,27 @@ const upload = multer({
 //-----------------------------------------------------------------
 
 // @route api/cms/itin
-// @desc Post Itinerary
+// @desc Post/Create new Itinerary
 // @access Public
 
 router.post("/cms/itin", upload.any(), (req, res, next) => {
+  const { errors, isValid } = validateCmsItin(req.body);
+  // Check Validation
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
   const itinerary = new Itinmodel({
     title: req.body.title,
     activitykey: req.body.activitykey,
     rating: req.body.rating,
     duration: req.body.duration,
     price: req.body.price,
-    author: req.body.author,
     likes: req.body.likes,
-    authorimage: req.body.authorimage,
     cityurl: req.body.cityurl,
-    hashtag: req.body.hashtag
+    hashtag: req.body.hashtag,
+    author: req.body.author,
+    authorimage: req.body.authorimage,
+    authorid: req.body.authorid
   });
   itinerary
     .save()
@@ -62,13 +74,12 @@ router.post("/cms/itin", upload.any(), (req, res, next) => {
     });
 });
 
-// @route api/cms/itin/:id
-// @desc Update/Edit Activity Info
+// @route api/cms/itinedit/:id
+// @desc Update/Edit Itinerary Info
 // @access Public
 
-router.post("/cms/itin/:id", upload.any(), (req, res, next) => {
+router.post("/cms/itinedit/:id", upload.any(), (req, res, next) => {
   const cmsfields = {};
-
   cmsfields.title = req.body.title;
   cmsfields.activitykey = req.body.activitykey;
   cmsfields.rating = req.body.rating;
@@ -90,15 +101,21 @@ router.post("/cms/itin/:id", upload.any(), (req, res, next) => {
 //-----------------------------------------------------------------
 
 // @route api/cms/activity
-// @desc Post Activity
+// @desc Post/Create new Activity
 // @access Public
 
 router.post("/cms/activity", upload.any(), (req, res, next) => {
+  const { errors, isValid } = validateCmsActivity(req.body);
+  // Check Validation
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
   const image = "/uploads/" + req.files[0].filename;
   const activity = new Activitymodel({
     title: req.body.title,
     image: image,
-    activitykey: req.body.activitykey
+    activitykey: req.body.activitykey,
+    authorid: req.body.authorid
   });
   activity
     .save()
@@ -114,11 +131,11 @@ router.post("/cms/activity", upload.any(), (req, res, next) => {
     });
 });
 
-// @route api/cms/activity/:id
+// @route api/cms/activityedit/:id
 // @desc Update/Edit Activity Info
 // @access Public
 
-router.post("/cms/activity/:id", upload.any(), (req, res, next) => {
+router.post("/cms/activityedit/:id", upload.any(), (req, res, next) => {
   // LOGIC TO HANDLE NEW IMAGE FILE OR EXISTING IMAGE FILE
   const imagenotupdated = req.body.image;
   const image =
@@ -141,16 +158,23 @@ router.post("/cms/activity/:id", upload.any(), (req, res, next) => {
 //-----------------------------------------------------------------
 
 // @route api/cms/city
-// @desc Post City
+// @desc Post/Create new City
 // @access Public
 
 router.post("/cms/city", upload.any(), (req, res, next) => {
+  const { errors, isValid } = validateCmsCity(req.body);
+  // Check Validation
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
+
   const flagimg = "/uploads/" + req.files[0].filename;
   const city = new Citymodel({
     cityname: req.body.cityname,
     country: req.body.country,
     url: req.body.url,
-    flagimg: flagimg
+    flagimg: flagimg,
+    authorid: req.body.authorid
   });
   city
     .save()
@@ -160,7 +184,6 @@ router.post("/cms/city", upload.any(), (req, res, next) => {
       });
     })
     .catch(err => {
-      // console.log(err);
       res.status(500).json({
         error: err
       });
@@ -171,7 +194,7 @@ router.post("/cms/city", upload.any(), (req, res, next) => {
 // @desc Update/Edit City Info
 // @access Public
 
-router.post("/cms/city/:id", upload.any(), (req, res, next) => {
+router.post("/cms/cityedit/:id", upload.any(), (req, res, next) => {
   // LOGIC TO HANDLE NEW IMAGE FILE OR EXISTING IMAGE FILE
   const imagenotupdated = req.body.flagimg;
   const flagimg =

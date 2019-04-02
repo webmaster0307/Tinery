@@ -13,6 +13,9 @@ const CitySchema = new Schema({
   },
   flagimg: {
     type: String
+  },
+  authorid: {
+    type: String
   }
 });
 

@@ -229,7 +229,7 @@ class Itinerary extends Component {
             onClick={this.handleClick}
             key={itinerary.title + itinerary._id}
           >
-            View All
+            Expand
           </button>
         )}
       </div>

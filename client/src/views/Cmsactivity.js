@@ -20,14 +20,25 @@ class Cmsactivity extends Component {
   constructor() {
     super();
     this.state = {
+      errors: {},
       itineraries: [],
       title: "",
       image: null,
       activitykey: "",
+      authorid: "",
       selectedFile: null,
       previewFile: null
     };
     // this.onChange = this.onChange.bind(this);
+  }
+
+  // ERROR MAPPING
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.errors) {
+      this.setState({
+        errors: nextProps.errors
+      });
+    }
   }
 
   componentDidMount() {
@@ -50,10 +61,11 @@ class Cmsactivity extends Component {
     formData.append("title", this.state.title);
     formData.append("activitykey", this.state.activitykey);
     formData.append("image", this.state.image);
+    formData.append("authorid", this.props.auth.user.id);
 
     //CREATE ACTION
     this.props.createActivity(formData);
-    alert("Upload successful");
+    // alert("Upload successful");
     this.setState({
       title: "",
       activitykey: "",
@@ -71,6 +83,8 @@ class Cmsactivity extends Component {
   };
 
   render() {
+    const { errors } = this.state;
+
     const previewFile = this.state.previewFile;
     const cmstitle = (
       <React.Fragment>
@@ -142,8 +156,12 @@ class Cmsactivity extends Component {
                 name="title"
                 value={this.state.title}
                 onChange={this.onChange}
+                errorform={errors.title}
               />
             </div>
+            {errors.title && (
+              <div className="invalid-feedback">{errors.title}</div>
+            )}
             {selectActivity}
           </form>
           <div className="cmsUploadimage">
@@ -151,10 +169,32 @@ class Cmsactivity extends Component {
             <input type="file" onChange={this.fileChangedHandler} />
           </div>
 
-          {/* SUBMIT BUTTON */}
-          <button className="submitCommentBtn" onClick={this.onSubmit}>
-            Upload Activity!
-          </button>
+          {/* SUBMIT BUTTON VALIDATION */}
+          {this.state.image === null ||
+          !this.state.title ||
+          !this.state.activitykey ? (
+            <React.Fragment>
+              <p className="cmsimagerequired">*Image File is Required.</p>
+              <div className="cmsAction">
+                <Button variant="outlined" color="primary" disabled>
+                  Create Activity!
+                </Button>
+              </div>
+            </React.Fragment>
+          ) : (
+            <React.Fragment>
+              <div className="cmsAction">
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  onClick={this.onSubmit}
+                  value="Submit"
+                >
+                  Create Activity!
+                </Button>
+              </div>
+            </React.Fragment>
+          )}
         </Card>
 
         <div className="cmsTitletext">
@@ -190,13 +230,15 @@ class Cmsactivity extends Component {
 Cmsactivity.propTypes = {
   createActivity: PropTypes.func,
   fetchItineraries: PropTypes.func,
-  auth: PropTypes.object
+  auth: PropTypes.object,
+  errors: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
   itineraries: state.itineraries,
   profile: state.profile,
-  auth: state.auth
+  auth: state.auth,
+  errors: state.errors
 });
 
 export default connect(

@@ -1,12 +1,11 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-// import { Link } from "react-router-dom";
-import axios from "axios";
 import { connect } from "react-redux";
 import { debounce } from "lodash";
 
 import { fetchItineraries } from "../actions/itinerariesActions";
-import { fetchAxiosCities } from "../actions/citiesActions";
+import { fetchCities } from "../actions/citiesActions";
+import { editItinerary } from "../actions/cmsActions";
 
 import Header from "../components/layout/Header";
 import Button from "@material-ui/core/Button";
@@ -34,6 +33,7 @@ class EditItinerary extends Component {
       duration: "",
       price: "",
       author: "",
+      authorid: "",
       likes: "",
       authorimage: "",
       cityurl: "",
@@ -46,9 +46,47 @@ class EditItinerary extends Component {
     this.props.fetchItineraries();
   }
 
+  // SUBMIT
+  onSubmit = e => {
+    e.preventDefault();
+
+    let hashtagString = this.state.hashtag.split(",");
+
+    const itinData = {
+      title: this.state.title,
+      activitykey: this.state.activitykey,
+      rating: this.state.rating,
+      duration: this.state.duration,
+      price: this.state.price,
+      author: this.state.author,
+      likes: this.state.likes,
+      authorimage: this.state.authorimage,
+      cityurl: this.state.cityurl,
+      hashtag: hashtagString,
+      id: this.state.id
+    };
+
+    this.props.editItinerary(this.state.id, itinData);
+    alert("Upload successful");
+    this.setState({
+      id: "",
+      title: "",
+      activitykey: "",
+      rating: "",
+      duration: "",
+      price: "",
+      author: "",
+      likes: "",
+      authorimage: "",
+      cityurl: "",
+      hashtag: []
+    });
+    this.props.fetchItineraries();
+  };
+
   //SELECT VALUE TO EDIT
   editValue = e => {
-    this.props.fetchAxiosCities();
+    this.props.fetchCities();
     let allitineraries = this.props.itineraries.itineraries;
     let selectedValue = allitineraries.find(itin => itin.activitykey === e);
 
@@ -67,6 +105,7 @@ class EditItinerary extends Component {
       author: selectedValue.author,
       likes: selectedValue.likes,
       authorimage: selectedValue.authorimage,
+      authorid: selectedValue.authorid,
       cityurl: selectedValue.cityurl,
       hashtag: hashtagCSV,
       flagimg: selectedValue.flagimg,
@@ -75,54 +114,19 @@ class EditItinerary extends Component {
     });
   };
 
-  // SUBMIT
-  onSubmit = e => {
-    e.preventDefault();
-
-    let hashtagString = this.state.hashtag.split(",");
-    console.log(hashtagString);
-    console.log(this.state.hashtag);
-
-    const itinData = {
-      title: this.state.title,
-      activitykey: this.state.activitykey,
-      rating: this.state.rating,
-      duration: this.state.duration,
-      price: this.state.price,
-      author: this.state.author,
-      likes: this.state.likes,
-      authorimage: this.state.authorimage,
-      cityurl: this.state.cityurl,
-      hashtag: hashtagString,
-      id: this.state.id
-    };
-
-    //MIGRATE TO REDUX
-    axios.post(`/api/cms/itin/${this.state.id}`, itinData, {});
-    alert("Upload successful");
-    this.setState({
-      id: "",
-      title: "",
-      activitykey: "",
-      rating: "",
-      duration: "",
-      price: "",
-      author: "",
-      likes: "",
-      authorimage: "",
-      cityurl: "",
-      hashtag: []
-    });
-
-    //MIGRATE TO REDUX
-    this.props.fetchItineraries();
-  };
-
   // FORM INFO
   onEdit = () => {
     this.setState({
       showlist: true
     });
+  };
+
+  // DELETE BUTTON
+  onDelete = () => {
+    console.log("hello");
+    // this.setState({
+    //   showlist: true
+    // });
   };
 
   // FORM INFO
@@ -152,6 +156,15 @@ class EditItinerary extends Component {
   }, 500);
 
   render() {
+    const deleteButton = (
+      <React.Fragment>
+        <div className="deleteButton">
+          <Button onClick={this.onDelete} variant="outlined" color="secondary">
+            Delete
+          </Button>
+        </div>
+      </React.Fragment>
+    );
     const cmstitle = (
       <React.Fragment>
         <div>
@@ -278,8 +291,7 @@ class EditItinerary extends Component {
                 onChange={this.onChange}
               />
             </div>
-            <div>{selectRating}</div>
-            <div>{selectPrice}</div>
+
             <div>
               <TextField
                 className="commentFormInput"
@@ -294,6 +306,8 @@ class EditItinerary extends Component {
                 onChange={this.onChange}
               />
             </div>
+            <div>{selectRating}</div>
+            <div>{selectPrice}</div>
             <div>
               <TextField
                 className="commentFormInput"
@@ -311,9 +325,16 @@ class EditItinerary extends Component {
           </form>
 
           {/* SUBMIT BUTTON */}
-          <button className="submitCommentBtn" onClick={this.onSubmit}>
-            Update Itinerary!
-          </button>
+          <div className="cmsAction">
+            <Button variant="outlined" color="primary" onClick={this.onSubmit}>
+              Update Itinerary!
+            </Button>
+          </div>
+          {this.state.authorid === this.props.auth.user.id ? (
+            <div>{deleteButton}</div>
+          ) : (
+            <span />
+          )}
         </Card>
       </div>
     );
@@ -368,7 +389,7 @@ class EditItinerary extends Component {
           </Button>
         </div>
         {cmsbody}
-        <div className="bottomNav" />
+        <div />
       </React.Fragment>
     );
 
@@ -385,17 +406,18 @@ const mapStateToProps = state => {
   return {
     itineraries: state.itineraries,
     cities: state.cities,
-    profile: state.profile
+    profile: state.profile,
+    auth: state.auth
   };
 };
 
 EditItinerary.propTypes = {
   itineraries: PropTypes.object,
   fetchItineraries: PropTypes.func,
-  fetchAxiosCities: PropTypes.func
+  fetchCities: PropTypes.func
 };
 
 export default connect(
   mapStateToProps,
-  { fetchItineraries, fetchAxiosCities }
+  { fetchItineraries, fetchCities, editItinerary }
 )(EditItinerary);

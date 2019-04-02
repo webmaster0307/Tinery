@@ -55,18 +55,12 @@ module.exports = function validateRegisterInput(data) {
     }
   }
 
-  //- NEW ENTRIES
-  // if (Validator.isEmpty(data.avatar)) {
-  //   errors.avatar = "Photo or Gravatar";
-  // }
-
   if (Validator.isEmpty(data.country)) {
     errors.country = "Country field is required";
   }
 
   return {
     errors,
-    //     isValid: errors
     isValid: isEmpty(errors)
   };
 };

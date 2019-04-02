@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { fetchAxiosCities } from "../actions/citiesActions";
+import { fetchCities } from "../actions/citiesActions";
 import { getCurrentProfile } from "./../actions/profileActions";
 import { debounce } from "lodash";
 import BottomNav from "../components/layout/BottomNav";
@@ -27,7 +27,7 @@ class Cities extends Component {
   }
 
   componentDidMount() {
-    this.props.fetchAxiosCities();
+    this.props.fetchCities();
   }
 
   // SEARCH WITH DEBOUNCE
@@ -109,11 +109,11 @@ const mapStateToProps = state => {
 
 Cities.propTypes = {
   cities: PropTypes.object,
-  fetchAxiosCities: PropTypes.func,
+  fetchCities: PropTypes.func,
   getCurrentProfile: PropTypes.func
 };
 
 export default connect(
   mapStateToProps,
-  { fetchAxiosCities, getCurrentProfile }
+  { fetchCities, getCurrentProfile }
 )(Cities);

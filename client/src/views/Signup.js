@@ -5,8 +5,6 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { registerUser } from "../actions/authActions";
 
-import BottomNav from "../components/layout/BottomNav";
-
 import Checkbox from "@material-ui/core/Checkbox";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
@@ -15,26 +13,16 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Slide from "@material-ui/core/Slide";
-
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
-// import TextFieldGroup from "../components/TextFieldGroup";
 import Card from "@material-ui/core/Card";
 import Select from "@material-ui/core/Select";
-
-import Input from "@material-ui/core/Input";
-import CloudUploadIcon from "@material-ui/icons/CloudUpload";
-// import OutlinedInput from "@material-ui/core/OutlinedInput";
 import FilledInput from "@material-ui/core/FilledInput";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
-// import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControl from "@material-ui/core/FormControl";
-// import Icon from "@material-ui/core/Icon";
 import DeleteIcon from "@material-ui/icons/Delete";
 import Fab from "@material-ui/core/Fab";
-
-// import axios from "axios";
 
 function Transition(props) {
   return <Slide direction="up" {...props} />;
@@ -60,6 +48,23 @@ class Signup extends Component {
     this.tccheckbox = this.tccheckbox.bind(this);
   }
 
+  // ROUTE LOGIC
+
+  componentDidMount() {
+    if (this.props.auth.isAuthenticated) {
+      this.props.history.push("/");
+    }
+  }
+
+  // ERROR MAPPING
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.errors) {
+      this.setState({
+        errors: nextProps.errors
+      });
+    }
+  }
+
   // T&C LOGIC
 
   handleClickOpen = () => {
@@ -83,22 +88,6 @@ class Signup extends Component {
       open: false
     }));
   };
-
-  // ROUTE LOGIC
-
-  componentDidMount() {
-    if (this.props.auth.isAuthenticated) {
-      this.props.history.push("/");
-    }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.errors) {
-      this.setState({
-        errors: nextProps.errors
-      });
-    }
-  }
 
   // REMOVE IMAGE
 
@@ -204,34 +193,22 @@ class Signup extends Component {
     //IMAGE LOGIC
 
     const noPreview = (
-      <Card className="commentForm">
-        <div className="addPhoto">
-          {/* <div> */}
-          <div>
-            <CloudUploadIcon />
-            <Input
-              id="contained-button-file"
-              type="file"
-              label="Add Photo"
-              accept="image/*"
-              name="avatar"
-              onChange={this.fileChangedHandler}
-              errorform={errors.avatar}
-            />
-            {/* {errors.avatar && (
-              <div className="invalid-feedback">{errors.avatar}</div>
-            )} */}
+      <React.Fragment>
+        <div className="registerFormPhototext">Upload Profile Image Below:</div>
+        <Card className="commentForm">
+          <div className="cmsUploadimage">
+            <input type="file" onChange={this.fileChangedHandler} />
           </div>
-        </div>
-        <div>
-          <p>*Gravatar is Supported.</p>
-          <Link to="/login">
-            <p className="homepageLinkText">
-              *Google & Facebook Registration is Supported.
-            </p>
-          </Link>
-        </div>
-      </Card>
+          <div>
+            <p>*Gravatar is Supported.</p>
+            <Link to="/login">
+              <p className="homepageLinkText">
+                *Google & Facebook Registration is Supported.
+              </p>
+            </Link>
+          </div>
+        </Card>
+      </React.Fragment>
     );
 
     const preview = (
@@ -479,14 +456,7 @@ class Signup extends Component {
       </div>
     );
 
-    return (
-      <div>
-        {registerForm}
-        <div>
-          <BottomNav />
-        </div>
-      </div>
-    );
+    return <div>{registerForm}</div>;
   }
 }
 
