@@ -156,11 +156,15 @@ class Cmscity extends Component {
           !this.state.cityname ||
           !this.state.country ? (
             <React.Fragment>
-              <p className="cmsimagerequired">*Image File is Required.</p>
               <div className="cmsAction">
                 <Button variant="outlined" color="primary" disabled>
                   Create City!
                 </Button>
+              </div>
+              <div>
+                <p className="cmsimagerequired">
+                  *Fill out Form to enable Create City.
+                </p>
               </div>
             </React.Fragment>
           ) : (

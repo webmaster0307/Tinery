@@ -98,6 +98,18 @@ router.post("/cms/itinedit/:id", upload.any(), (req, res, next) => {
   ).then(itinerary => res.json(itinerary));
 });
 
+// @route   DELETE api/cms/deleteitin/:id
+// @desc    Delete Itinerary by ID
+// @access  Private
+
+router.delete("/cms/deleteitin/:id", (req, res) => {
+  Itinmodel.findOneAndRemove({ _id: req.params.id })
+    .then(user => {
+      res.json(user);
+    })
+    .catch(() => res.status(404).json({ success: false }));
+});
+
 //-----------------------------------------------------------------
 
 // @route api/cms/activity
@@ -154,6 +166,22 @@ router.post("/cms/activityedit/:id", upload.any(), (req, res, next) => {
     { new: true }
   ).then(activity => res.json(activity));
 });
+
+// @route   DELETE api/cms/deleteactivity/:id
+// @desc    Delete Activity by ID
+// @access  Private
+
+router.delete(
+  "/cms/deleteactivity/:id",
+
+  (req, res) => {
+    Activitymodel.findOneAndRemove({ _id: req.params.id })
+      .then(user => {
+        res.json(user);
+      })
+      .catch(() => res.status(404).json({ success: false }));
+  }
+);
 
 //-----------------------------------------------------------------
 
@@ -214,5 +242,21 @@ router.post("/cms/cityedit/:id", upload.any(), (req, res, next) => {
     { new: true }
   ).then(city => res.json(city));
 });
+
+// @route   DELETE api/cms/deletecity/:id
+// @desc    Delete City by ID
+// @access  Private
+
+router.delete(
+  "/cms/deletecity/:id",
+
+  (req, res) => {
+    Citymodel.findOneAndRemove({ _id: req.params.id })
+      .then(user => {
+        res.json(user);
+      })
+      .catch(() => res.status(404).json({ success: false }));
+  }
+);
 
 module.exports = router;

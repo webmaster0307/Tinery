@@ -5,11 +5,12 @@ import { debounce } from "lodash";
 
 import { fetchItineraries } from "../actions/itinerariesActions";
 import { fetchCities } from "../actions/citiesActions";
-import { editItinerary } from "../actions/cmsActions";
+import { editItinerary, deleteItinerary } from "../actions/cmsActions";
 
 import Header from "../components/layout/Header";
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
+import Icon from "@material-ui/core/Icon";
 import TextField from "@material-ui/core/TextField";
 import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
@@ -67,7 +68,7 @@ class EditItinerary extends Component {
     };
 
     this.props.editItinerary(this.state.id, itinData);
-    alert("Upload successful");
+
     this.setState({
       id: "",
       title: "",
@@ -79,9 +80,11 @@ class EditItinerary extends Component {
       likes: "",
       authorimage: "",
       cityurl: "",
-      hashtag: []
+      hashtag: [],
+      showlist: true
     });
     this.props.fetchItineraries();
+    // this.props.history.push("/cmsitinerary/edititinerary");
   };
 
   //SELECT VALUE TO EDIT
@@ -123,10 +126,12 @@ class EditItinerary extends Component {
 
   // DELETE BUTTON
   onDelete = () => {
-    console.log("hello");
-    // this.setState({
-    //   showlist: true
-    // });
+    let data = {
+      id: this.state.id
+    };
+
+    this.props.deleteItinerary(data.id);
+    this.props.history.push("/cmsitinerary");
   };
 
   // FORM INFO
@@ -160,7 +165,7 @@ class EditItinerary extends Component {
       <React.Fragment>
         <div className="deleteButton">
           <Button onClick={this.onDelete} variant="outlined" color="secondary">
-            Delete
+            Delete Itinerary <Icon>delete</Icon>
           </Button>
         </div>
       </React.Fragment>
@@ -325,15 +330,37 @@ class EditItinerary extends Component {
           </form>
 
           {/* SUBMIT BUTTON */}
-          <div className="cmsAction">
-            <Button variant="outlined" color="primary" onClick={this.onSubmit}>
-              Update Itinerary!
-            </Button>
-          </div>
           {this.state.authorid === this.props.auth.user.id ? (
-            <div>{deleteButton}</div>
+            <React.Fragment>
+              <div className="cmsAction">
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  onClick={this.onSubmit}
+                >
+                  Update Itinerary!
+                </Button>
+              </div>
+              <div>{deleteButton}</div>
+            </React.Fragment>
           ) : (
-            <span />
+            <React.Fragment>
+              <div className="cmsAction">
+                <Button
+                  disabled
+                  variant="outlined"
+                  color="primary"
+                  onClick={this.onSubmit}
+                >
+                  Update Itinerary!
+                </Button>
+                <div>
+                  <p className="cmsimagerequired">
+                    *Create Your Own to enable Edit.
+                  </p>
+                </div>
+              </div>
+            </React.Fragment>
           )}
         </Card>
       </div>
@@ -419,5 +446,5 @@ EditItinerary.propTypes = {
 
 export default connect(
   mapStateToProps,
-  { fetchItineraries, fetchCities, editItinerary }
+  { fetchItineraries, fetchCities, editItinerary, deleteItinerary }
 )(EditItinerary);

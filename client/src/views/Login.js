@@ -240,7 +240,6 @@ class Login extends Component {
     return (
       <div>
         {loginComponent}
-        {/* {socialLogin} */}
         {noAccountMessage}
         <div />
       </div>

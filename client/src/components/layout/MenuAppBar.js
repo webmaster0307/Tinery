@@ -72,7 +72,7 @@ class MenuAppBar extends React.Component {
           </NavLink>
         </ListItem>
         <ListItem button>
-          <NavLink to="/cmsitin">
+          <NavLink to="/cmsitinerary">
             <Icon className="navIcon">add_to_photos</Icon>
             <span className="navText">Create/Edit Itinerary</span>
           </NavLink>

@@ -44,7 +44,6 @@ class Dashboard extends Component {
 
   componentDidMount() {
     let favoritesArray = this.props.profile.favid;
-    // let favoritesArray = this.props.auth.user.favorites;
 
     if (this.state.favid.length === 0) {
       this.props.fetchAxiosItinerariesID(favoritesArray);

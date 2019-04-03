@@ -65,26 +65,26 @@ class App extends Component {
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/signup" component={Signup} />
                 <Route exact path="/cities" component={Cities} />
-                <PrivateRoute exact path="/Cmsitin" component={Cmsitin} />
+                <PrivateRoute exact path="/cmsitinerary" component={Cmsitin} />
                 <PrivateRoute
                   exact
-                  path="/Cmsactivity"
+                  path="/cmsactivity"
                   component={Cmsactivity}
                 />
-                <PrivateRoute exact path="/Cmscity" component={Cmscity} />
+                <PrivateRoute exact path="/cmscity" component={Cmscity} />
                 <PrivateRoute
                   exact
-                  path="/Cmscity/Editcity"
+                  path="/cmscity/editcity"
                   component={Editcity}
                 />
                 <PrivateRoute
                   exact
-                  path="/cmsitin/EditItinerary"
+                  path="/cmsitinerary/edititinerary"
                   component={EditItinerary}
                 />
                 <PrivateRoute
                   exact
-                  path="/Cmsactivity/EditActivity"
+                  path="/cmsactivity/editactivity"
                   component={EditActivity}
                 />
                 <PrivateRoute exact path="/Dashboard" component={Dashboard} />

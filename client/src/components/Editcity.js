@@ -3,12 +3,13 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { debounce } from "lodash";
 import { fetchCities } from "../actions/citiesActions";
-import { editCity } from "../actions/cmsActions";
+import { editCity, deleteCity } from "../actions/cmsActions";
 
 import Header from "../components/layout/Header";
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import TextField from "@material-ui/core/TextField";
+import Icon from "@material-ui/core/Icon";
 
 class Editcity extends Component {
   constructor(props) {
@@ -64,14 +65,15 @@ class Editcity extends Component {
     formData.append("id", this.state.id);
 
     this.props.editCity(this.state.id, formData);
-    alert("Upload successful");
+
     this.setState({
       id: "",
       cityname: "",
       country: "",
       url: "",
       flagimg: null,
-      previewFile: null
+      previewFile: null,
+      showlist: true
     });
 
     this.props.fetchCities();
@@ -103,10 +105,12 @@ class Editcity extends Component {
 
   // DELETE BUTTON
   onDelete = () => {
-    console.log("hello");
-    // this.setState({
-    //   showlist: true
-    // });
+    let data = {
+      id: this.state.id
+    };
+
+    this.props.deleteCity(data.id);
+    this.props.history.push("/cmscity");
   };
 
   // FORM INFO
@@ -134,7 +138,7 @@ class Editcity extends Component {
       <React.Fragment>
         <div className="deleteButton">
           <Button onClick={this.onDelete} variant="outlined" color="secondary">
-            Delete City
+            Delete City <Icon>delete</Icon>
           </Button>
           <br />
         </div>
@@ -193,15 +197,38 @@ class Editcity extends Component {
             <input type="file" onChange={this.fileChangedHandler} />
           </div>
           {/* SUBMIT BUTTON */}
-          <div className="cmsAction">
-            <Button variant="outlined" color="primary" onClick={this.onSubmit}>
-              Update City!
-            </Button>
-          </div>
+
           {this.state.authorid === this.props.auth.user.id ? (
-            <div>{deleteButton}</div>
+            <React.Fragment>
+              <div className="cmsAction">
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  onClick={this.onSubmit}
+                >
+                  Update City!
+                </Button>
+              </div>
+              <div>{deleteButton}</div>
+            </React.Fragment>
           ) : (
-            <span />
+            <React.Fragment>
+              <div className="cmsAction">
+                <Button
+                  disabled
+                  variant="outlined"
+                  color="primary"
+                  onClick={this.onSubmit}
+                >
+                  Update City!
+                </Button>
+                <div>
+                  <p className="cmsimagerequired">
+                    *Create Your Own to enable Edit.
+                  </p>
+                </div>
+              </div>
+            </React.Fragment>
           )}
         </Card>
 
@@ -300,5 +327,5 @@ Editcity.propTypes = {
 
 export default connect(
   mapStateToProps,
-  { fetchCities, editCity }
+  { fetchCities, editCity, deleteCity }
 )(Editcity);

@@ -174,11 +174,15 @@ class Cmsactivity extends Component {
           !this.state.title ||
           !this.state.activitykey ? (
             <React.Fragment>
-              <p className="cmsimagerequired">*Image File is Required.</p>
               <div className="cmsAction">
                 <Button variant="outlined" color="primary" disabled>
                   Create Activity!
                 </Button>
+              </div>
+              <div>
+                <p className="cmsimagerequired">
+                  *Fill out Form to enable Create Activity.
+                </p>
               </div>
             </React.Fragment>
           ) : (

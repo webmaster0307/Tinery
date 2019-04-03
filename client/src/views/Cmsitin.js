@@ -114,7 +114,7 @@ class Cmsitin extends Component {
           <p>Fill out the form below to create a new city.</p>
           <p>Or click below to edit an existing Itinerary.</p>
           <div>
-            <Link to="/cmsitin/edititinerary">
+            <Link to="/cmsitinerary/edititinerary">
               <Button variant="outlined">Edit Itineraries</Button>
             </Link>
           </div>
@@ -290,6 +290,11 @@ class Cmsitin extends Component {
                 <Button variant="outlined" color="primary" disabled>
                   Create Itinerary!
                 </Button>
+              </div>
+              <div>
+                <p className="cmsimagerequired">
+                  *Fill out Form to enable Create Itinerary.
+                </p>
               </div>
             </React.Fragment>
           ) : (
