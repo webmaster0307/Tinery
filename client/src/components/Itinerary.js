@@ -8,7 +8,7 @@ import { fetchAxiosComments } from "../actions/commentActions";
 import { getCurrentProfile } from "./../actions/profileActions";
 
 import ItinCard from "./layout/ItinCard";
-import Activity from "./layout/ImageStepper";
+import Activity from "./Activity";
 // import Activity from "./Activity";
 import Comments from "./Comments";
 

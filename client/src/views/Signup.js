@@ -25,6 +25,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import DeleteIcon from "@material-ui/icons/Delete";
 import Fab from "@material-ui/core/Fab";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
 
 function Transition(props) {
   return <Slide direction="up" {...props} />;
@@ -51,7 +52,6 @@ class Signup extends Component {
   }
 
   // ROUTE LOGIC
-
   componentDidMount() {
     if (this.props.auth.isAuthenticated) {
       this.props.history.push("/");
@@ -67,8 +67,7 @@ class Signup extends Component {
     }
   }
 
-  // T&C LOGIC
-
+  // T&C CHECKBOX LOGIC
   handleClickOpen = () => {
     this.setState({ open: true });
   };
@@ -78,21 +77,20 @@ class Signup extends Component {
   };
 
   handleCloseAgree = () => {
-    this.setState(state => ({
+    this.setState(() => ({
       checkbox: true,
       open: false
     }));
   };
 
   tccheckbox = () => {
-    this.setState(state => ({
+    this.setState(() => ({
       checkbox: true,
       open: false
     }));
   };
 
   // REMOVE IMAGE
-
   removeImage = event => {
     this.setState({
       avatar: null,
@@ -116,7 +114,6 @@ class Signup extends Component {
   };
 
   // FORM SUBMIT
-
   onSubmit = e => {
     e.preventDefault();
     const formData = new FormData();
@@ -135,7 +132,6 @@ class Signup extends Component {
   render() {
     const previewAvatar = this.state.previewAvatar;
     const { errors } = this.state;
-    // const { user } = this.props.auth;
 
     const checkboxFalseBtn = (
       <CustomButton
@@ -164,13 +160,22 @@ class Signup extends Component {
 
     const checkboxFalse = (
       <div>
+        {/* <FormControlLabel
+          control={
+            <Checkbox
+              onChange={this.tccheckbox}
+              value="checkedB"
+              color="primary"
+            />
+          }
+          label=""
+        /> */}
         <Checkbox
           value="t&c"
           color="primary"
           name="t&c_checkbox"
           onClick={this.tccheckbox}
         />
-
         <span>
           I agree to MYtinerarys{" "}
           <span className="tandc" onClick={this.handleClickOpen}>
@@ -182,8 +187,8 @@ class Signup extends Component {
 
     const checkboxTrue = (
       <div>
-        <Checkbox disabled />
-
+        {/* <FormControlLabel disabled control={<Checkbox checked />} label="" /> */}
+        <Checkbox disabled color="primary" />
         <span>
           I agree to MYtinerarys{" "}
           <span className="tandc">Terms & Conditions</span>
@@ -192,21 +197,22 @@ class Signup extends Component {
     );
 
     //IMAGE LOGIC
-
     const noPreview = (
       <React.Fragment>
-        <div className="registerFormPhototext">Upload Profile Image Below:</div>
-        <Card className="commentForm">
+        <Link to="/login">
+          <p className="homepageLinkText">
+            *Google & Facebook Registration is Supported.
+          </p>
+        </Link>
+        <Card raised className="registerFormCard">
+          <div className="registerFormPhototext">
+            Upload Profile Image Below:
+          </div>
           <div className="cmsUploadimage">
             <input type="file" onChange={this.fileChangedHandler} />
           </div>
           <div>
             <p>*Gravatar is Supported.</p>
-            <Link to="/login">
-              <p className="homepageLinkText">
-                *Google & Facebook Registration is Supported.
-              </p>
-            </Link>
           </div>
         </Card>
       </React.Fragment>
@@ -435,9 +441,7 @@ class Signup extends Component {
                       color="primary"
                       onClick={this.handleCloseAgree}
                     >
-                      {/* <Button color="primary"> */}
                       Agree
-                      {/* </Button> */}
                     </Fab>
                     <Button onClick={this.handleClose} color="primary">
                       Disagree

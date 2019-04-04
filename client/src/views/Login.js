@@ -12,6 +12,11 @@ import { GoogleLogin } from "react-google-login";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import { googleClientID } from "./../keys.js";
 
+import {
+  FacebookLoginButton,
+  GoogleLoginButton
+} from "react-social-login-buttons";
+
 import CustomButton from "../components/layout/CustomButton";
 
 import Typography from "@material-ui/core/Typography";
@@ -184,52 +189,57 @@ class Login extends Component {
                 {/* SUBMIT BUTTON */}
                 <div>
                   <CustomButton
-                    disabled={false}
                     color={"primary"}
+                    disabled={false}
                     title={"Submit"}
                     type={"submit"}
                     size={"medium"}
                     variant={"extended"}
                     value={"submit"}
                   />
-                  {/* <button className="loginButton" type="submit" value="Submit">
-                    Submit
-                  </button> */}
                 </div>
-                <div>Sign Up or Register using third party services.</div>
+                <div>*Sign Up or Register using third party services.</div>
 
                 <div className="socialDiv">
-                  <GoogleLogin
-                    clientId={googleClientID}
-                    render={renderProps => (
-                      <img
-                        className="googleBtn"
-                        src={require("../images/googlebtn3.png")}
-                        alt="googleLogo"
-                        onClick={renderProps.onClick}
-                      />
-                    )}
-                    buttonText="Login with Google"
-                    onSuccess={responseGoogle}
-                    onFailure={responseGoogle}
-                    className="googleComponentBtn"
-                    theme="dark"
-                  />
-                  <br />
-
-                  <FacebookLogin
-                    appId="284220635589707"
-                    callback={responseFacebook}
-                    fields="name,email,picture"
-                    render={renderProps => (
-                      <img
-                        className="facebookBtn"
-                        src={require("../images/facebook.png")}
-                        alt="facebookLogo"
-                        onClick={renderProps.onClick}
-                      />
-                    )}
-                  />
+                  <div>
+                    <GoogleLogin
+                      clientId={googleClientID}
+                      render={renderProps => (
+                        <GoogleLoginButton
+                          className="googleBtn"
+                          src={require("../images/googlebtn3.png")}
+                          alt="googleLogo"
+                          onClick={renderProps.onClick}
+                          align={"center"}
+                        >
+                          <span>Google</span>
+                        </GoogleLoginButton>
+                      )}
+                      buttonText="Login with Google"
+                      onSuccess={responseGoogle}
+                      onFailure={responseGoogle}
+                      className="googleComponentBtn"
+                      theme="dark"
+                    />
+                  </div>
+                  <div>
+                    <FacebookLogin
+                      appId="284220635589707"
+                      callback={responseFacebook}
+                      fields="name,email,picture"
+                      render={renderProps => (
+                        <FacebookLoginButton
+                          className="facebookBtn"
+                          src={require("../images/facebook.png")}
+                          alt="facebookLogo"
+                          onClick={renderProps.onClick}
+                          align={"center"}
+                        >
+                          <span>Facebook</span>
+                        </FacebookLoginButton>
+                      )}
+                    />
+                  </div>
                 </div>
               </form>
             </Card>
