@@ -214,7 +214,7 @@ class EditActivity extends Component {
                   color="primary"
                   onClick={this.onSubmit}
                 >
-                  Update Activity!
+                  Update Activity!<Icon>save</Icon>
                 </Button>
               </div>
               <div>{deleteButton}</div>
@@ -228,7 +228,7 @@ class EditActivity extends Component {
                   color="primary"
                   onClick={this.onSubmit}
                 >
-                  Update Activity!
+                  Update Activity!<Icon>save</Icon>
                 </Button>
                 <div>
                   <p className="cmsimagerequired">

@@ -22,17 +22,17 @@ class Activity extends Component {
       // slidesToShow: 1,
       // slidesToScroll: 1
       // FADE SLIDER
-      dots: true,
+      // dots: true,
       // fade: true,
       // infinite: true,
       // speed: 500,
       // slidesToShow: 3,
       // slidesToScroll: 1
       //CENTER MODE SLIDER
-      className: "center",
+      // className: "center",
       centerMode: true,
       infinite: true,
-      centerPadding: "60px",
+      // centerPadding: "60px",
       slidesToShow: 1,
       speed: 400
     };

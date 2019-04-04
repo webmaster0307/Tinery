@@ -6,11 +6,11 @@ import {
   fetchAxiosComments,
   postAxiosComments
 } from "../actions/commentActions";
+
 import Card from "@material-ui/core/Card";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import Avatar from "@material-ui/core/Avatar";
-
 import Grid from "@material-ui/core/Grid";
 
 class Comments extends Component {
@@ -89,13 +89,13 @@ class Comments extends Component {
     //COMMENT LIST
     const commentList = this.props.comments.comments.map(comment => (
       <div className="comments" key={comment._id + comment.user}>
-        <Grid container spacing={24} direction="row">
+        <Grid container spacing={0} direction="row">
           <Grid item xs={2}>
             <div className="commentAvatar">
               <Avatar
                 alt={comment.name}
                 src={comment.avatar}
-                title="You must have a Gravatar connected to your email to display an image"
+                title="Gravatar and Image Files supported."
               />
             </div>
           </Grid>
@@ -107,8 +107,6 @@ class Comments extends Component {
                 on : {comment.timestamp}
               </span>
             </div>
-          </Grid>
-          <Grid item xs={12}>
             <div className="commentContent">• {comment.message}</div>
           </Grid>
         </Grid>
@@ -156,12 +154,9 @@ class Comments extends Component {
               <div className="invalid-feedback">{errors.message}</div>
             )}
           </div>
-          <div>
-            {/* SUBMIT */}
-            <button className="submitCommentBtn" type="submit" value="Submit">
-              Submit
-            </button>
-          </div>
+          <button className="submitCommentBtn" type="submit" value="Submit">
+            Submit
+          </button>
         </form>
       </Card>
     );

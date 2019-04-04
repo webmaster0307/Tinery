@@ -15,6 +15,7 @@ import Select from "@material-ui/core/Select";
 import FilledInput from "@material-ui/core/FilledInput";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
+import Icon from "@material-ui/core/Icon";
 
 class Cmsactivity extends Component {
   constructor() {
@@ -176,7 +177,7 @@ class Cmsactivity extends Component {
             <React.Fragment>
               <div className="cmsAction">
                 <Button variant="outlined" color="primary" disabled>
-                  Create Activity!
+                  Create Activity!<Icon>save</Icon>
                 </Button>
               </div>
               <div>
@@ -194,7 +195,7 @@ class Cmsactivity extends Component {
                   onClick={this.onSubmit}
                   value="Submit"
                 >
-                  Create Activity!
+                  Create Activity!<Icon>save</Icon>
                 </Button>
               </div>
             </React.Fragment>

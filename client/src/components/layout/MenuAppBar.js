@@ -125,7 +125,7 @@ class MenuAppBar extends React.Component {
             <Avatar
               alt={user.name}
               src={user.avatar}
-              title="You must have a Gravatar connected to your email to display an image"
+              title="Gravatar and Image Files supported."
             />
           </NavLink>
         </div>

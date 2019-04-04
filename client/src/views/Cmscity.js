@@ -9,6 +9,7 @@ import Header from "../components/layout/Header";
 import Card from "@material-ui/core/Card";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import Icon from "@material-ui/core/Icon";
 
 class Cmscity extends Component {
   constructor() {
@@ -158,7 +159,7 @@ class Cmscity extends Component {
             <React.Fragment>
               <div className="cmsAction">
                 <Button variant="outlined" color="primary" disabled>
-                  Create City!
+                  Create City!<Icon>save</Icon>
                 </Button>
               </div>
               <div>
@@ -176,7 +177,7 @@ class Cmscity extends Component {
                   onClick={this.onSubmit}
                   value="Submit"
                 >
-                  Create City!
+                  Create City!<Icon>save</Icon>
                 </Button>
               </div>
             </React.Fragment>

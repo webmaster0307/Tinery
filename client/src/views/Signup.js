@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { registerUser } from "../actions/authActions";
 
+import CustomButton from "../components/layout/CustomButton";
+
 import Checkbox from "@material-ui/core/Checkbox";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
@@ -136,29 +138,28 @@ class Signup extends Component {
     // const { user } = this.props.auth;
 
     const checkboxFalseBtn = (
-      <div>
-        <button
-          disabled
-          className="loginButtonDisabled"
-          type="submit"
-          value="Submit"
-        >
-          Agree to Terms & Conditions
-        </button>
-      </div>
+      <CustomButton
+        disabled={true}
+        color={"primary"}
+        title={"Agree to Terms & Conditions"}
+        type={"submit"}
+        size={"medium"}
+        variant={"extended"}
+        value={"Submit"}
+      />
     );
 
     const checkboxTrueBtn = (
-      <div>
-        <button
-          className="loginButton"
-          onClick={this.onSubmit}
-          type="submit"
-          value="Submit"
-        >
-          Submit
-        </button>
-      </div>
+      <CustomButton
+        disabled={false}
+        color={"primary"}
+        title={"Submit"}
+        type={"submit"}
+        size={"medium"}
+        variant={"extended"}
+        value={"Submit"}
+        onClick={this.onSubmit}
+      />
     );
 
     const checkboxFalse = (

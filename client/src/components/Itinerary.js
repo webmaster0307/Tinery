@@ -7,11 +7,13 @@ import { fetchActivityByKey } from "../actions/activitiesActions";
 import { fetchAxiosComments } from "../actions/commentActions";
 import { getCurrentProfile } from "./../actions/profileActions";
 
-import Activity from "./Activity";
+import ItinCard from "./layout/ItinCard";
+import Activity from "./layout/ImageStepper";
+// import Activity from "./Activity";
 import Comments from "./Comments";
 
 import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
+// import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Icon from "@material-ui/core/Icon";
@@ -163,41 +165,17 @@ class Itinerary extends Component {
                 </div>
               </Grid>
             </Grid>
+            {/* <ImageStepper /> */}
 
-            <CardContent>
-              <Grid container spacing={32} direction="row">
-                <Grid item xs={5}>
-                  <img
-                    alt="profile"
-                    src={itinerary.authorimage}
-                    className="dashboardImg"
-                  />
-                </Grid>
-                <Grid item xs={7}>
-                  <Grid item xs={8}>
-                    <div>• Time: {itinerary.duration} Hours</div>
-                  </Grid>
-                  <Grid item xs={8}>
-                    <div>• Cost: {itinerary.price}</div>
-                  </Grid>
-                  <Grid item xs={8}>
-                    <div>• Likes: {itinerary.likes}</div>
-                  </Grid>
-                  <Grid item xs={8}>
-                    <div>• Rating: {itinerary.rating}/5</div>
-                  </Grid>
-                  <Grid item xs={8}>
-                    <div>• Hashtags: {itinerary.hashtag}</div>
-                  </Grid>
-                  <Grid item xs={8}>
-                    <br />
-                  </Grid>
-                </Grid>
-              </Grid>
-              <Grid item xs={8}>
-                <div>By: {itinerary.author}</div>
-              </Grid>
-            </CardContent>
+            <ItinCard
+              authorimage={itinerary.authorimage}
+              duration={itinerary.duration}
+              price={itinerary.price}
+              likes={itinerary.likes}
+              rating={itinerary.rating}
+              hashtag={itinerary.hashtag}
+              author={itinerary.author}
+            />
           </Card>
         </div>
         {/* TERNARY OPERATOR */}

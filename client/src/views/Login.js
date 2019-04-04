@@ -8,10 +8,11 @@ import {
   registerUser,
   socialRegisterUser
 } from "../actions/authActions";
-
 import { GoogleLogin } from "react-google-login";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import { googleClientID } from "./../keys.js";
+
+import CustomButton from "../components/layout/CustomButton";
 
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
@@ -93,7 +94,7 @@ class Login extends Component {
   render() {
     const { errors } = this.state;
     const responseFacebook = response => {
-      // console.log(response);
+      console.log(response);
       let facebookData;
       facebookData = {
         facebookID: response.id,
@@ -182,9 +183,18 @@ class Login extends Component {
 
                 {/* SUBMIT BUTTON */}
                 <div>
-                  <button className="loginButton" type="submit" value="Submit">
+                  <CustomButton
+                    disabled={false}
+                    color={"primary"}
+                    title={"Submit"}
+                    type={"submit"}
+                    size={"medium"}
+                    variant={"extended"}
+                    value={"submit"}
+                  />
+                  {/* <button className="loginButton" type="submit" value="Submit">
                     Submit
-                  </button>
+                  </button> */}
                 </div>
                 <div>Sign Up or Register using third party services.</div>
 
@@ -206,6 +216,7 @@ class Login extends Component {
                     theme="dark"
                   />
                   <br />
+
                   <FacebookLogin
                     appId="284220635589707"
                     callback={responseFacebook}

@@ -338,7 +338,7 @@ class EditItinerary extends Component {
                   color="primary"
                   onClick={this.onSubmit}
                 >
-                  Update Itinerary!
+                  Update Itinerary!<Icon>save</Icon>
                 </Button>
               </div>
               <div>{deleteButton}</div>
@@ -352,7 +352,7 @@ class EditItinerary extends Component {
                   color="primary"
                   onClick={this.onSubmit}
                 >
-                  Update Itinerary!
+                  Update Itinerary!<Icon>save</Icon>
                 </Button>
                 <div>
                   <p className="cmsimagerequired">

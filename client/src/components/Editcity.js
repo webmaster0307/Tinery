@@ -206,7 +206,7 @@ class Editcity extends Component {
                   color="primary"
                   onClick={this.onSubmit}
                 >
-                  Update City!
+                  Update City!<Icon>save</Icon>
                 </Button>
               </div>
               <div>{deleteButton}</div>
@@ -220,7 +220,7 @@ class Editcity extends Component {
                   color="primary"
                   onClick={this.onSubmit}
                 >
-                  Update City!
+                  Update City!<Icon>save</Icon>
                 </Button>
                 <div>
                   <p className="cmsimagerequired">

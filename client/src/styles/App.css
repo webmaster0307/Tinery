@@ -73,9 +73,10 @@
 }
 
 .commentContent {
-  text-align: center;
-  margin-bottom: 10px;
-  margin-top: -20px;
+  /* text-align: center; */
+  /* margin-bottom: 10px;
+  margin-top: -20px; */
+
 }
 
 .commentUser {
@@ -89,17 +90,13 @@
 .commentAvatar {
   padding-left: 5px;
   padding-top: 10px;
-
-  /* padding-right: 10px;
-  margin-right: 10px; */
 }
 
 .commentUsername {
   padding-top: 15px;
-
   text-align: left;
-  justify-content: center;
-  margin-left: -5px;
+  /* justify-content: center; */
+  /* margin-left: -5px; */
 }
 
 .commentTimestamp {
@@ -213,6 +210,18 @@
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
+
+.fabButtonDiv {
+  padding-bottom: 10px;
+  /* padding-top: 10px; */
+  text-align: center;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  /* margin-bottom: 30px; */
+
+}
+
 .itineraryCard {
   margin-bottom: 10px;
   padding: 10px;
@@ -221,56 +230,21 @@
 /* SLIDER */
 
 .sliderCard {
-  /* padding-left: 10px;
-  padding-right: 10px; */
-  /* margin-left: 10px;
-  margin-right: 10px; */
-  /* max-height: 500px; */
-  /* max-width: 500px; */
-  border: 1px solid white;
-  margin-bottom: 20px;
-}
-
-.sliderInnerCard {
-  margin-left: 5px;
-  margin-right: 5px;
-  /* max-height: 420px; */
+  padding-left: 15px;
 }
 
 .sliderImg {
-  max-height: 270px;
-  object-fit: fill;
-
-  /* .fill {object-fit: fill;}
-.contain {object-fit: contain;}
-.cover {object-fit: cover;} */
-  /* max-width: 800px; */
-  /* padding-bottom: 20px; */
-  /* max-height: auto; */
-
-  /* max-width: 340px;
-
-  /* margin: 20px; */
-  /* max-width: 20px; */
-  /* border: 2px dotted silver; */
-  /* display: block;
-  margin-left: auto;
-  margin-right: auto; */
+  width: 100%;
+  display: block;
+  max-width: 400px;
+  overflow: hidden;
+  height: 300px;
 }
 
 .sliderImgTitle {
   text-align: center;
   font-style: italic;
-  /* margin: 20px; */
-  /* background-color: lightgrey; */
-  /* font-size: 20px;
-  font-weight: bolder; */
-  /* background: rgba(76, 175, 80, 0.3); */
-  /* background-color: black;
-  opacity: 0.5; */
-
-  /* background-color: white; */
-  /* border: 1px solid black; */
+  height: 50px;
 }
 
 /* HOME PAGE */
