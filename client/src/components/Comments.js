@@ -206,7 +206,7 @@ class Comments extends Component {
     );
 
     return (
-      <div className="Comments">
+      <div className="comments">
         <Typography
           component="h2"
           variant="display1"

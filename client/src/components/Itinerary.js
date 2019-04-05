@@ -61,7 +61,6 @@ class Itinerary extends Component {
   // FETCH ACTIVITY AND COMMENTS
   handleClick(event) {
     let eventTargetId = event.target.id;
-    console.log(eventTargetId);
     this.props.fetchActivityByKey(eventTargetId);
     this.props.fetchAxiosComments(eventTargetId);
 

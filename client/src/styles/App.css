@@ -62,14 +62,7 @@
 /* COMMENTS */
 
 .comments {
-  /* background-color: lightskyblue; */
-  /* padding-left: 10px; */
-  border-bottom: 1px dotted black;
-  /* margin-bottom: 10px; */
-  padding-left: 15px;
-  /* justify-content: center */
-  /* padding: 10px; */
-  /* text-align: center; */
+  padding: 10px;
 }
 
 .commentContent {
