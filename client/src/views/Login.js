@@ -207,7 +207,6 @@ class Login extends Component {
                       render={renderProps => (
                         <GoogleLoginButton
                           className="googleBtn"
-                          src={require("../images/googlebtn3.png")}
                           alt="googleLogo"
                           onClick={renderProps.onClick}
                           align={"center"}
@@ -230,7 +229,6 @@ class Login extends Component {
                       render={renderProps => (
                         <FacebookLoginButton
                           className="facebookBtn"
-                          src={require("../images/facebook.png")}
                           alt="facebookLogo"
                           onClick={renderProps.onClick}
                           align={"center"}
