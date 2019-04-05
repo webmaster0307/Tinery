@@ -9,7 +9,6 @@ import { getCurrentProfile } from "./../actions/profileActions";
 
 import ItinCard from "./layout/ItinCard";
 import Activity from "./Activity";
-// import Activity from "./Activity";
 import Comments from "./Comments";
 
 import Card from "@material-ui/core/Card";
@@ -39,6 +38,7 @@ class Itinerary extends Component {
     };
     this.handleClick = this.handleClick.bind(this);
     this.addToFav = this.addToFav.bind(this);
+    this.handleClose = this.handleClose.bind(this);
   }
   componentDidMount() {}
 
@@ -54,20 +54,31 @@ class Itinerary extends Component {
   };
 
   // OPEN DIALOG
-  handleClose = () => {
+  dialogClose = () => {
     this.setState({ open: false });
   };
 
   // FETCH ACTIVITY AND COMMENTS
   handleClick(event) {
     let eventTargetId = event.target.id;
+    console.log(eventTargetId);
     this.props.fetchActivityByKey(eventTargetId);
     this.props.fetchAxiosComments(eventTargetId);
-    this.setState(state => ({
+
+    this.setState(() => ({
       eventId: eventTargetId,
-      isBtn: !state.isBtn
+      isBtn: eventTargetId
     }));
   }
+
+  //CLOSE ACTIVITY AND COMMENTS
+  handleClose() {
+    this.setState(() => ({
+      eventId: null,
+      isBtn: null
+    }));
+  }
+
   render() {
     const { isAuthenticated } = this.props.auth;
 
@@ -100,7 +111,7 @@ class Itinerary extends Component {
                 Go To Favorites
               </Fab>
             </Link>
-            <Button onClick={this.handleClose} color="inherit" autoFocus>
+            <Button onClick={this.dialogClose} color="inherit" autoFocus>
               Close
             </Button>
           </DialogActions>
@@ -179,7 +190,7 @@ class Itinerary extends Component {
           </Card>
         </div>
         {/* TERNARY OPERATOR */}
-        {this.state.isBtn && this.state.eventId === itinerary.activitykey ? (
+        {this.state.eventId === itinerary.activitykey ? (
           [
             <Activity
               itineraryKey={itinerary.activitykey}
@@ -194,7 +205,7 @@ class Itinerary extends Component {
             <button
               className="closeActivityBtn"
               id={itinerary.activitykey}
-              onClick={this.handleClick}
+              onClick={this.handleClose}
               key={itinerary.title + itinerary._id}
             >
               Close
