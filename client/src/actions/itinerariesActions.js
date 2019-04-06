@@ -1,5 +1,5 @@
 import axios from "axios";
-import { FETCH_ITINERARIES } from "./Types";
+import { FETCH_ITINERARIES, FETCH_ITINERARIES_HASHTAG } from "./Types";
 
 export const fetchAxiosItineraries = url => dispatch => {
   axios.get(`/api/itin/${url}`).then(res => {
@@ -17,4 +17,16 @@ export const fetchItineraries = () => dispatch => {
       payload: res.data
     });
   });
+};
+
+export const fetchItinerariesHashtag = hashtag => dispatch => {
+  axios
+    .post("/api/itinhashtag", { hashtag: hashtag })
+    .then(res => {
+      dispatch({
+        type: FETCH_ITINERARIES_HASHTAG,
+        payload: res.data
+      });
+    })
+    .catch(err => console.log(err));
 };

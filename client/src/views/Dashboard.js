@@ -4,9 +4,11 @@ import { connect } from "react-redux";
 import { getCurrentProfile } from "./../actions/profileActions";
 import { removeFavorites } from "../actions/profileActions";
 import { fetchAxiosItinerariesID } from "../actions/profileActions";
+
 import IconCity from "../components/layout/IconCity";
 import Header from "../components/layout/Header";
 import ItinCard from "../components/layout/ItinCard";
+import ItinCardTitle from "../components/layout/ItinCardTitle";
 
 import Card from "@material-ui/core/Card";
 import Grid from "@material-ui/core/Grid";
@@ -125,7 +127,6 @@ class Dashboard extends Component {
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            {/* <Link to="/dashboard"> */}
             <Fab
               className="confirmFabButton"
               variant="extended"
@@ -135,8 +136,6 @@ class Dashboard extends Component {
             >
               Confirm
             </Fab>
-
-            {/* </Link> */}
             <Button onClick={this.handleClose} color="inherit" autoFocus>
               Close
             </Button>
@@ -147,44 +146,43 @@ class Dashboard extends Component {
 
     let favitin = this.props.profile.favitin;
     const listFavoriteIDs = favitin.map((itinerary, i) => (
-      <div key={i} className="dashboardCard">
-        <Card raised>
-          <Grid container spacing={24}>
-            {/* CARD HEADER */}
-            <Grid item xs={9}>
-              <div className="activtytitle">
-                <h3>{itinerary.title}</h3>
-              </div>
+      <React.Fragment key={i}>
+        <div className="itineraryCard">
+          <Card raised>
+            <Grid container spacing={24}>
+              {/* CARD HEADER */}
+              <ItinCardTitle title={itinerary.title} />
+              {/* BUTTONS */}
+              <Grid item xs={3}>
+                <div className="favIconDiv">
+                  <Fab>
+                    <Icon
+                      value={itinerary.title}
+                      variant="outlined"
+                      fontSize="large"
+                      onClick={this.handleOpen.bind(this, itinerary._id)}
+                    >
+                      favorite
+                    </Icon>
+                    {favDialog}
+                  </Fab>
+                </div>
+              </Grid>
+              {/* END OF BUTTONS */}
             </Grid>
-            <Grid item xs={3}>
-              <div className="favIconDiv">
-                <Fab>
-                  <Icon
-                    value={itinerary.title}
-                    variant="outlined"
-                    fontSize="large"
-                    onClick={this.handleOpen.bind(this, itinerary._id)}
-                  >
-                    favorite
-                  </Icon>
-                </Fab>
-              </div>
 
-              {favDialog}
-            </Grid>
-          </Grid>
-
-          <ItinCard
-            authorimage={itinerary.authorimage}
-            duration={itinerary.duration}
-            price={itinerary.price}
-            likes={itinerary.likes}
-            rating={itinerary.rating}
-            hashtag={itinerary.hashtag}
-            author={itinerary.author}
-          />
-        </Card>
-      </div>
+            <ItinCard
+              authorimage={itinerary.authorimage}
+              duration={itinerary.duration}
+              price={itinerary.price}
+              likes={itinerary.likes}
+              rating={itinerary.rating}
+              hashtag={itinerary.hashtag}
+              author={itinerary.author}
+            />
+          </Card>
+        </div>
+      </React.Fragment>
     ));
 
     return (

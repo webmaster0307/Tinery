@@ -100,12 +100,7 @@ class Home extends Component {
               to={{ opacity: 1, marginTop: 0 }}
               config={{ delay: 0, duration: 500 }}
             >
-              {props => (
-                <div style={props}>
-                  {/* <div style={c1Style}> */}
-                  {homepageBody}
-                </div>
-              )}
+              {props => <div style={props}>{homepageBody}</div>}
             </Spring>
           </div>
         ) : (
@@ -115,12 +110,7 @@ class Home extends Component {
               to={{ opacity: 1 }}
               config={{ delay: 500 }}
             >
-              {props => (
-                <div style={props}>
-                  {/* <div style={c1Style}> */}
-                  {homepageBody}
-                </div>
-              )}
+              {props => <div style={props}>{homepageBody}</div>}
             </Spring>
           </div>
         )}

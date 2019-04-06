@@ -1,17 +1,8 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
-// import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-// import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
-// import Icon from "@material-ui/core/Icon";
-// import Fab from "@material-ui/core/Fab";
-// import Button from "@material-ui/core/Button";
-// import Dialog from "@material-ui/core/Dialog";
-// import DialogActions from "@material-ui/core/DialogActions";
-// import DialogContent from "@material-ui/core/DialogContent";
-// import DialogContentText from "@material-ui/core/DialogContentText";
-// import DialogTitle from "@material-ui/core/DialogTitle";
 
 class ItinCard extends Component {
   render() {
@@ -39,12 +30,30 @@ class ItinCard extends Component {
               <Grid item xs={8}>
                 <div>• Rating: {this.props.rating}/5</div>
               </Grid>
-              <Grid item xs={8}>
-                <div>• Hashtags: {this.props.hashtag}</div>
-              </Grid>
 
-              <Grid item xs={8}>
-                <br />
+              {/* HASHTAG WITH LINK PROPS */}
+              <Grid item xs={12}>
+                <div>
+                  • Hashtags:{" "}
+                  {this.props.hashtag.map(item => {
+                    return (
+                      <React.Fragment key={item + item}>
+                        {" "}
+                        <Link
+                          to={{
+                            pathname:
+                              "/hashtag/" + item.toLowerCase().replace("#", ""),
+                            state: {
+                              hashtag: { item }
+                            }
+                          }}
+                        >
+                          <span className="hashtagTags">{item}</span>
+                        </Link>{" "}
+                      </React.Fragment>
+                    );
+                  })}
+                </div>
               </Grid>
             </Grid>
           </Grid>

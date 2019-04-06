@@ -8,12 +8,11 @@ import { fetchAxiosComments } from "../actions/commentActions";
 import { getCurrentProfile } from "./../actions/profileActions";
 
 import ItinCard from "./layout/ItinCard";
+import ItinCardTitle from "../components/layout/ItinCardTitle";
 import Activity from "./Activity";
 import Comments from "./Comments";
 
 import Card from "@material-ui/core/Card";
-// import CardContent from "@material-ui/core/CardContent";
-import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Icon from "@material-ui/core/Icon";
 import Fab from "@material-ui/core/Fab";
@@ -28,13 +27,13 @@ class Itinerary extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      open: false,
       isBtn: false,
       eventId: "",
       activities: [],
       itineraries: [],
       comments: [],
-      errors: {},
-      open: false
+      errors: {}
     };
     this.handleClick = this.handleClick.bind(this);
     this.addToFav = this.addToFav.bind(this);
@@ -61,7 +60,7 @@ class Itinerary extends Component {
   // FETCH ACTIVITY AND COMMENTS
   handleClick(event) {
     let eventTargetId = event.target.id;
-    console.log(eventTargetId);
+
     this.props.fetchActivityByKey(eventTargetId);
     this.props.fetchAxiosComments(eventTargetId);
 
@@ -119,64 +118,54 @@ class Itinerary extends Component {
       </div>
     );
 
-    const listItin = this.props.itineraries.itineraries.map(itinerary => (
-      <div key={itinerary.title}>
+    const listItin = this.props.itineraries.itineraries.map((itinerary, i) => (
+      <React.Fragment key={i}>
         <div className="itineraryCard">
           <Card raised>
-            <Grid container spacing={32} direction="row">
-              <Grid item xs={9}>
-                <Typography
-                  className="activtytitle"
-                  gutterBottom
-                  variant="h5"
-                  component="h5"
-                >
-                  {itinerary.title}
-                </Typography>
-              </Grid>
-              {/* ADD TO FAVORITES */}
+            <Grid container spacing={24}>
+              {/* CARD HEADER */}
+              <ItinCardTitle title={itinerary.title} />
+              {/* BUTTONS */}
               <Grid item xs={3}>
-                <div>
-                  {/* 1st TERNARY */}
-                  {isAuthenticated &&
-                  !this.props.profile.favid.includes(itinerary._id) ? (
-                    <div className="favIconDiv">
-                      <Fab>
-                        <Icon
-                          value={itinerary.title}
-                          variant="outlined"
-                          fontSize="large"
-                          onClick={this.addToFav.bind(this, itinerary._id)}
-                        >
-                          add_location
-                        </Icon>
-                        {favDialog}
-                      </Fab>
-                    </div>
-                  ) : (
-                    <div />
-                  )}
-                  {/* 2nd TERNARY */}
-                  {isAuthenticated &&
-                  this.props.profile.favid.includes(itinerary._id) ? (
-                    <div className="favIconDiv">
-                      <Fab disabled>
-                        <Icon
-                          value={itinerary.title}
-                          variant="outlined"
-                          fontSize="large"
-                        >
-                          star
-                        </Icon>
-                      </Fab>
-                    </div>
-                  ) : (
-                    <div />
-                  )}
-                </div>
+                {/* 1st TERNARY */}
+                {isAuthenticated &&
+                !this.props.profile.favid.includes(itinerary._id) ? (
+                  <div className="favIconDiv">
+                    <Fab>
+                      <Icon
+                        value={itinerary.title}
+                        variant="outlined"
+                        fontSize="large"
+                        onClick={this.addToFav.bind(this, itinerary._id)}
+                      >
+                        add_location
+                      </Icon>
+                      {favDialog}
+                    </Fab>
+                  </div>
+                ) : (
+                  <span />
+                )}
+                {/* 2nd TERNARY */}
+                {isAuthenticated &&
+                this.props.profile.favid.includes(itinerary._id) ? (
+                  <div className="favIconDiv">
+                    <Fab disabled>
+                      <Icon
+                        value={itinerary.title}
+                        variant="outlined"
+                        fontSize="large"
+                      >
+                        star
+                      </Icon>
+                    </Fab>
+                  </div>
+                ) : (
+                  <span />
+                )}
               </Grid>
+              {/* END OF BUTTONS */}
             </Grid>
-            {/* <ImageStepper /> */}
 
             <ItinCard
               authorimage={itinerary.authorimage}
@@ -221,7 +210,7 @@ class Itinerary extends Component {
             Expand
           </button>
         )}
-      </div>
+      </React.Fragment>
     ));
 
     return <div>{listItin}</div>;

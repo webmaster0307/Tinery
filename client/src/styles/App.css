@@ -670,14 +670,7 @@
   margin-right: 5px;
 }
 
-.dashboardCard {
-  color: black;
-  padding: 10px;
-  margin-bottom: 10px;
-  /* margin: 10px; */
-  /* border: 2px solid black */
-  /* border-radius: 15px; */
-}
+
 
 .dashboardImg {
   max-width: 120px;
@@ -774,4 +767,22 @@
   /* margin-top: -5px; */
   color: black;
   font-size: 12px;
+}
+
+/* HASHTAG PAGE */
+
+.hashtagHeader {
+  text-align: center;
+}
+
+.hashtagtext {
+  font-weight: bold
+}
+
+.hashtagTags {
+  /* font-weight: bold; */
+  /* font-style: italic; */
+  font-size: 15px;
+  text-decoration: none;
+
 }

@@ -29,6 +29,7 @@ import EditActivity from "./components/EditActivity";
 import EditItinerary from "./components/EditItinerary";
 import Editcity from "./components/Editcity";
 import Dashboard from "./views/Dashboard";
+import Hashtag from "./views/Hashtag";
 
 // JWT TOKEN
 if (sessionStorage.jwtToken) {
@@ -91,6 +92,11 @@ class App extends Component {
                 <Route
                   path="/cities/:city_name"
                   render={props => <City {...props} isAuthed={true} />}
+                />
+                <Route
+                  exact
+                  path="/hashtag/:itinerary"
+                  render={props => <Hashtag {...props} isAuthed={true} />}
                 />
               </Switch>
             </div>

@@ -32,11 +32,22 @@ router.get("/itinid/:id", (req, res) => {
 
 //-------------------------------------------------------------
 // @route /api/itinid/
-// @desc Get Itinerary by posting Array of IDs
+// @desc Get Itinerary by posting Array of IDs (Favorites)
 // @access Public
 
 router.post("/itinid/", (req, res) => {
   Itinmodel.find({ _id: { $in: req.body.favid } }).then(itin => res.json(itin));
+});
+
+//-------------------------------------------------------------
+// @route /api/itinhashtag/
+// @desc Get Itinerary by posting Hashtag
+// @access Public
+
+router.post("/itinhashtag/", (req, res) => {
+  Itinmodel.find({ hashtag: { $in: req.body.hashtag } }).then(itin =>
+    res.json(itin)
+  );
 });
 
 //POST
