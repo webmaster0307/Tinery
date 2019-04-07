@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { getCurrentProfile } from "./../actions/profileActions";
 import { connect } from "react-redux";
 import { fetchCities } from "../actions/citiesActions";
-import { fetchAxiosItineraries } from "../actions/itinerariesActions";
+import { fetchItinerariesByCity } from "../actions/itinerariesActions";
 
 import Itinerary from "../components/Itinerary";
 import Header from "../components/layout/Header";
@@ -19,7 +19,7 @@ class City extends Component {
     };
   }
   componentDidMount() {
-    this.props.fetchAxiosItineraries(this.props.match.params.city_name);
+    this.props.fetchItinerariesByCity(this.props.match.params.city_name);
     this.props.fetchCities();
     if (this.props.auth.isAuthenticated === true) {
       this.props.getCurrentProfile();
@@ -62,7 +62,7 @@ City.propTypes = {
 export default connect(
   mapStateToProps,
   {
-    fetchAxiosItineraries,
+    fetchItinerariesByCity,
     fetchCities,
     getCurrentProfile
   }

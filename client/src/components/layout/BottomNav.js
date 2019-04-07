@@ -5,6 +5,7 @@ import AppBar from "@material-ui/core/AppBar";
 import IconHome from "./IconHome";
 import IconBackbutton from "./IconBackbutton";
 import IconCity from "./IconCity";
+import IconDashboard from "./IconDashboard";
 import Toolbar from "@material-ui/core/Toolbar";
 
 const styles = theme => ({
@@ -42,8 +43,10 @@ const styles = theme => ({
 
 function BottomAppBar(props) {
   const { classes } = props;
+
   return (
     <React.Fragment>
+      <div className="bottomNav" />
       <AppBar position="fixed" color="default" className={classes.appBar}>
         <Toolbar className="toolBarFlex">
           <div>
@@ -51,6 +54,9 @@ function BottomAppBar(props) {
           </div>
           <div>
             <IconHome />
+          </div>
+          <div>
+            <IconDashboard />
           </div>
           <div>
             <IconCity />

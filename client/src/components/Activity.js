@@ -50,7 +50,7 @@ class Activity extends React.Component {
     const maxSteps = this.props.activities.activities.length;
 
     return (
-      <div className={classes.root}>
+      <div className="sliderDiv">
         <AutoPlaySwipeableViews
           axis={theme.direction === "rtl" ? "x-reverse" : "x"}
           index={activeStep}
@@ -59,7 +59,7 @@ class Activity extends React.Component {
         >
           {this.props.activities.activities.map((activity, index) => (
             <React.Fragment key={activity.title}>
-              <Card raised className="sliderCard">
+              <Card raised>
                 <Paper square elevation={1}>
                   <div>
                     {Math.abs(activeStep - index) <= 2 ? (
@@ -132,8 +132,5 @@ Activity.propTypes = {
 
 export default compose(
   withStyles(styles, { withTheme: true }),
-  connect(
-    mapStateToProps,
-    null
-  )
+  connect(mapStateToProps)
 )(Activity);

@@ -1,7 +1,7 @@
 import axios from "axios";
 import { FETCH_ITINERARIES, FETCH_ITINERARIES_HASHTAG } from "./Types";
 
-export const fetchAxiosItineraries = url => dispatch => {
+export const fetchItinerariesByCity = url => dispatch => {
   axios.get(`/api/itin/${url}`).then(res => {
     dispatch({
       type: FETCH_ITINERARIES,

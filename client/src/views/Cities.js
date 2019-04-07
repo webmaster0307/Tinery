@@ -5,7 +5,6 @@ import { connect } from "react-redux";
 import { fetchCities } from "../actions/citiesActions";
 import { getCurrentProfile } from "./../actions/profileActions";
 import { debounce } from "lodash";
-import BottomNav from "../components/layout/BottomNav";
 import Header from "../components/layout/Header";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
@@ -93,7 +92,6 @@ class Cities extends Component {
             );
           })}
         </div>
-        <BottomNav />
       </div>
     );
   }

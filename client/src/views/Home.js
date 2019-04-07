@@ -1,7 +1,5 @@
 import React, { Component } from "react";
-// import { NavLink } from "react-router-dom";
 import { NavLink, Link } from "react-router-dom";
-// import IconHome from "../components/layout/IconHome";
 import { logoutUser } from "../actions/authActions";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
@@ -28,6 +26,11 @@ class Home extends Component {
           <NavLink to="/dashboard">
             {" "}
             <span className="homepageLinkText">Dashboard</span>
+          </NavLink>
+        </div>
+        <div className="flexLink">
+          <NavLink to="/cms">
+            <span className="homepageLinkText">CMS</span>
           </NavLink>
         </div>
         <div className="flexLink">
@@ -83,6 +86,9 @@ class Home extends Component {
           </div>
 
           <div className="homeP bold">Want to build your own MYtinerary?</div>
+          <div className="homeP bold">
+            Signup and Login to Unlock all features!
+          </div>
 
           {/* LOGIN STATE LOGIC */}
           {isAuthenticated ? loginState : logoutState}
