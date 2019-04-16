@@ -8,6 +8,7 @@ import { fetchActivities } from "../actions/activitiesActions";
 
 import Header from "../components/layout/Header";
 import CmsCards from "../components/layout/CmsCards";
+import HorizontalStepper from "../components/layout/HorizontalStepper";
 
 class Cms extends Component {
   componentDidMount() {
@@ -20,13 +21,12 @@ class Cms extends Component {
     return (
       <React.Fragment>
         <Header title={"Content Management System"} />
-        <div className="dashboardUsername">
-          Manage your Itineraries, Activites and Ciites.
-        </div>
+
+        <HorizontalStepper />
 
         <div className="cmsCards">
           <CmsCards
-            title={"Cities"}
+            title={"Step 1: Cities"}
             subject={"City"}
             createurl={"/cmscity"}
             editurl={"/cmscity/editcity"}
@@ -36,21 +36,21 @@ class Cms extends Component {
 
         <div className="cmsCards">
           <CmsCards
-            title={"Activities"}
-            subject={"Activity"}
-            createurl={"/cmsactivity"}
-            editurl={"/cmsactivity/editactivity"}
-            icon={"image_search"}
+            title={"Step 2: Itineraries"}
+            subject={"Itinerary"}
+            createurl={"/cmsitinerary"}
+            editurl={"/cmsitinerary/edititinerary"}
+            icon={"collections"}
           />
         </div>
 
         <div className="cmsCards">
           <CmsCards
-            title={"Itineraries"}
-            subject={"Itinerary"}
-            createurl={"/cmsitinerary"}
-            editurl={"/cmsitinerary/edititinerary"}
-            icon={"collections"}
+            title={"Step 3: Activities"}
+            subject={"Activity"}
+            createurl={"/cmsactivity"}
+            editurl={"/cmsactivity/editactivity"}
+            icon={"image_search"}
           />
         </div>
       </React.Fragment>

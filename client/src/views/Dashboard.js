@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getCurrentProfile } from "./../actions/profileActions";
 import { removeFavorites } from "../actions/profileActions";
-import { fetchAxiosItinerariesID } from "../actions/profileActions";
+import { fetchItinerariesID } from "../actions/profileActions";
 
 import IconCity from "../components/layout/IconCity";
 import Header from "../components/layout/Header";
@@ -12,8 +12,8 @@ import ItinCard from "../components/layout/ItinCard";
 import Card from "@material-ui/core/Card";
 
 class Dashboard extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       itineraries: [],
       favid: [],
@@ -22,11 +22,11 @@ class Dashboard extends Component {
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     let favoritesArray = this.props.profile.favid;
 
     if (this.state.favid.length === 0) {
-      this.props.fetchAxiosItinerariesID(favoritesArray);
+      await this.props.fetchItinerariesID(favoritesArray);
     }
     this.setState({
       favitin: this.props.profile.favid
@@ -38,7 +38,7 @@ class Dashboard extends Component {
     let favitin = this.props.profile.favitin;
 
     const noFavouritesMessage = (
-      <div className="dashboardCard">
+      <div className="itineraryCard">
         <Card raised>
           <div className="dashboardNoFavMessage">
             <p> You have not added any favorites to your profile.</p>
@@ -60,10 +60,11 @@ class Dashboard extends Component {
           duration={itinerary.duration}
           price={itinerary.price}
           likes={itinerary.likes}
-          rating={itinerary.rating}
+          ratings={itinerary.ratings}
           hashtag={itinerary.hashtag}
           author={itinerary.author}
           _id={itinerary._id}
+          activitykey={itinerary.activitykey}
           history={this.props.history.location.pathname}
         />
       </React.Fragment>
@@ -71,11 +72,19 @@ class Dashboard extends Component {
 
     return (
       <React.Fragment>
-        <div>
-          <Header title={"Dashboard"} />
+        <Header title={"Dashboard"} />
+        <div className="itineraryCard">
+          <Card raised>
+            <div className="dashboardNoFavMessage">
+              Welcome <span className="dashboardUsername">{user.username}</span>
+              .
+              <p>
+                View and manage your Favourite Itineraries from the Dashboard.
+              </p>{" "}
+            </div>
+          </Card>
         </div>
 
-        <div className="dashboardUsername">Welcome {user.username}. </div>
         <div>
           {this.props.profile.favitin.length > 0 ? (
             <div>{listFavoriteIDs}</div>
@@ -95,17 +104,19 @@ Dashboard.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  favid: state.favid,
-  favitin: state.favitin,
+  auth: state.auth,
   profile: state.profile,
-  auth: state.auth
+  itineraries: state.itineraries,
+
+  favid: state.favid,
+  favitin: state.favitin
 });
 
 export default connect(
   mapStateToProps,
   {
     getCurrentProfile,
-    fetchAxiosItinerariesID,
+    fetchItinerariesID,
     removeFavorites
   }
 )(Dashboard);

@@ -21,9 +21,12 @@ class CustomButton extends Component {
         </Fab> */}
 
         <Button
+          style={{
+            backgroundColor: this.props.bgcolor
+          }}
+          color={this.props.color}
           disabled={this.props.disabled}
           className="fabButton"
-          color={this.props.color}
           variant="contained"
           size={this.props.size}
           aria-label="Add"

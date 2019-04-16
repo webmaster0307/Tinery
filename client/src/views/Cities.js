@@ -6,10 +6,11 @@ import { fetchCities } from "../actions/citiesActions";
 import { getCurrentProfile } from "./../actions/profileActions";
 import { debounce } from "lodash";
 import Header from "../components/layout/Header";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import Typography from "@material-ui/core/Typography";
+// import Card from "@material-ui/core/Card";
+// import CardContent from "@material-ui/core/CardContent";
+// import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
+import ComplexCityButton from "./../components/layout/ComplexCityButton";
 
 class Cities extends Component {
   constructor(props) {
@@ -46,7 +47,6 @@ class Cities extends Component {
     return (
       <div>
         <Header title={"Cities List"} />
-
         <div className="citysearchflex">
           <TextField
             id="filled-with-placeholder"
@@ -56,41 +56,50 @@ class Cities extends Component {
             onChange={e => this.handleSearch(e.target.value)}
             margin="normal"
             className="cityfilter"
-            variant="filled"
+            variant="outlined"
           />
         </div>
 
         {/* CITIES */}
         <div>
-          {filteredCities.map(city => {
-            return (
-              <div key={city._id}>
-                <Card className="city citycard" raised>
-                  <Link
-                    to={{
-                      pathname: "/cities/" + city.url,
-                      state: {
-                        city: city.cityname,
-                        country: city.country
-                      }
-                    }}
-                    className="citylist"
-                  >
-                    <CardContent>
-                      <img
-                        alt="proflagfile"
-                        src={city.flagimg}
-                        className="cityImg"
-                      />
-
-                      <Typography variant="button">{city.cityname}</Typography>
-                      <Typography>{city.country}</Typography>
-                    </CardContent>
-                  </Link>
-                </Card>
-              </div>
-            );
-          })}
+          {filteredCities.length < 1 ? (
+            <div className="paragraphText">
+              There are no destinations matching your search query.
+            </div>
+          ) : (
+            <React.Fragment>
+              {filteredCities.map(city => {
+                return (
+                  <React.Fragment key={city._id}>
+                    <Link
+                      to={{
+                        pathname: "/cities/" + city.url,
+                        state: {
+                          city: city.cityname,
+                          country: city.country,
+                          url: city.flagimg
+                        }
+                      }}
+                      className="citylist"
+                    >
+                      <div className="flexIcons">
+                        <div className="flexLink">
+                          <ComplexCityButton
+                            city={city.cityname}
+                            country={city.country}
+                            title={city.cityname}
+                            src={city.flagimg}
+                            url={city.url}
+                          />
+                        </div>
+                      </div>
+                      <div className="itineraryCard" />
+                    </Link>
+                  </React.Fragment>
+                );
+              })}
+            </React.Fragment>
+          )}
         </div>
       </div>
     );

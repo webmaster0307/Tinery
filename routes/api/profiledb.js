@@ -5,6 +5,7 @@ const passport = require("passport");
 
 //  Load User model
 const User = require("../../models/usermodel");
+const Itinmodel = require("../../models/itinerarymodel");
 
 // GET USER INFO
 //-------------------------------------------------------------
@@ -20,23 +21,26 @@ router.get(
     User.findById(req.user.id)
       // GET FAVORITES BY USER ID
       .then(user => {
-        res.json(user.favorites);
+        res.json(user);
       })
+      // .then(user => {
+      //   res.json(user.favorites);
+      // })
       .catch(() =>
         res.status(404).json({ User: "There is no user info for this user" })
       );
   }
 );
 
-// FAVORITE ADD & DELETE
 //-------------------------------------------------------------
+// FAVORITE ADD
 
-// @route   POST auth/profile/:id
+// @route   POST auth/profile/postfav/:id
 // @desc    Add to Favorites in User Profile
 // @access  Private
 
 router.post(
-  "/profile/:id",
+  "/profile/postfav/:id",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     User.findOneAndUpdate(
@@ -50,6 +54,7 @@ router.post(
 );
 
 //-------------------------------------------------------------
+// FAVORITE DELETE
 
 // @route   DELETE auth/profile/removefav/:id/:favid
 // @desc    Delete Favorite from User
@@ -70,7 +75,5 @@ router.delete(
       .catch(err => res.status(404).json({ success: false }));
   }
 );
-
-//-------------------------------------------------------------
 
 module.exports = router;

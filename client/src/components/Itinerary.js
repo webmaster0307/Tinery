@@ -1,15 +1,13 @@
 import React, { Component } from "react";
+import { NavLink } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { postFavorites } from "../actions/profileActions";
 import { fetchActivityByKey } from "../actions/activitiesActions";
 import { fetchAxiosComments } from "../actions/commentActions";
 import { getCurrentProfile } from "./../actions/profileActions";
 
 import ItinCard from "./layout/ItinCard";
-
-import Activity from "./Activity";
-import Comments from "./Comments";
+import CustomButton from "./../components/layout/CustomButton";
 
 class Itinerary extends Component {
   constructor(props) {
@@ -23,12 +21,12 @@ class Itinerary extends Component {
       comments: [],
       errors: {}
     };
-    this.handleOpen = this.handleOpen.bind(this);
-    this.handleClose = this.handleClose.bind(this);
+    this.expandOpen = this.expandOpen.bind(this);
+    this.expandClose = this.expandClose.bind(this);
   }
 
   // OPEN (FETCH) ACTIVITY AND COMMENTS
-  handleOpen(event) {
+  expandOpen(event) {
     let eventTargetId = event.target.id;
 
     this.props.fetchActivityByKey(eventTargetId);
@@ -41,7 +39,7 @@ class Itinerary extends Component {
   }
 
   //CLOSE ACTIVITY AND COMMENTS
-  handleClose() {
+  expandClose() {
     this.setState(() => ({
       eventId: null,
       isBtn: null
@@ -50,55 +48,54 @@ class Itinerary extends Component {
 
   render() {
     const listItin = this.props.itineraries.itineraries.map((itinerary, i) => (
-      <React.Fragment key={i}>
+      <React.Fragment key={itinerary._id}>
         <ItinCard
           title={itinerary.title}
           authorimage={itinerary.authorimage}
           duration={itinerary.duration}
           price={itinerary.price}
           likes={itinerary.likes}
-          rating={itinerary.rating}
+          ratings={itinerary.ratings}
           hashtag={itinerary.hashtag}
           author={itinerary.author}
           _id={itinerary._id}
+          activitykey={itinerary.activitykey}
+          history={this.props.history}
+          cityurl={itinerary.cityurl}
         />
-
-        {/* TERNARY OPERATOR */}
-        {this.state.eventId === itinerary.activitykey ? (
-          [
-            <Activity
-              itineraryKey={itinerary.activitykey}
-              key={itinerary.title}
-            />,
-
-            <Comments
-              activityKey={itinerary.activitykey}
-              key={itinerary._id}
-            />,
-
-            <button
-              className="closeActivityBtn"
-              id={itinerary.activitykey}
-              onClick={this.handleClose}
-              key={itinerary.title + itinerary._id}
-            >
-              Close
-            </button>
-          ]
-        ) : (
-          <button
-            className="viewActivityBtn "
-            id={itinerary.activitykey}
-            onClick={this.handleOpen}
-            key={itinerary.title + itinerary._id}
-          >
-            Expand
-          </button>
-        )}
       </React.Fragment>
     ));
 
-    return <React.Fragment>{listItin}</React.Fragment>;
+    return (
+      <React.Fragment>
+        {this.props.itineraries.itineraries.length > 0 ? (
+          <React.Fragment> {listItin} </React.Fragment>
+        ) : (
+          <React.Fragment>
+            <div className="paragraphText">
+              There are no Itineraries for this City.
+            </div>
+            <div className="homeParagraphText">
+              • Create your own Itinerary with our CMS.
+            </div>
+            <div className="flexLink">
+              <NavLink to="/cms">
+                {/* <span className="homepageLinkText">CMS</span> */}
+                <CustomButton
+                  bgcolor={"#039be5"}
+                  disabled={false}
+                  title={"CMS"}
+                  type={"CMS"}
+                  size={"large"}
+                  variant={"extended"}
+                  value={"submit"}
+                />
+              </NavLink>
+            </div>
+          </React.Fragment>
+        )}
+      </React.Fragment>
+    );
   }
 }
 
@@ -111,17 +108,18 @@ Itinerary.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    itineraries: state.itineraries,
+    auth: state.auth,
     profile: state.profile,
+    itineraries: state.itineraries,
+
     favid: state.favid,
     activities: state.activities,
     comments: state.comments,
-    auth: state.auth,
     errors: state.errors
   };
 };
 
 export default connect(
   mapStateToProps,
-  { fetchActivityByKey, fetchAxiosComments, postFavorites, getCurrentProfile }
+  { fetchActivityByKey, fetchAxiosComments, getCurrentProfile }
 )(Itinerary);

@@ -5,12 +5,6 @@ const ItinSchema = new Schema({
   title: {
     type: String
   },
-  rating: {
-    type: Number
-  },
-  likes: {
-    type: Number
-  },
   duration: {
     type: Number
   },
@@ -34,6 +28,12 @@ const ItinSchema = new Schema({
   },
   activitykey: {
     type: String
+  },
+  ratings: {
+    type: Number
+  },
+  likes: {
+    type: Array
   }
 });
 

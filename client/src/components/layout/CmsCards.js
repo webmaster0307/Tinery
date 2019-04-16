@@ -6,6 +6,8 @@ import { connect } from "react-redux";
 import Card from "@material-ui/core/Card";
 import Icon from "@material-ui/core/Icon";
 
+import CustomButton from "./CustomButton";
+
 class CmsCards extends Component {
   componentDidMount() {}
 
@@ -14,26 +16,39 @@ class CmsCards extends Component {
       <React.Fragment>
         <Card raised>
           <div className="flexLink">
-            <h3>{this.props.title}</h3>
+            <h3>
+              <Icon>{this.props.icon}</Icon> {this.props.title}
+            </h3>
           </div>
           <div className="flexIcons">
             <div className="flexLink">
-              •{" "}
               <NavLink to={this.props.createurl}>
-                <span className="homepageLinkText">
+                <CustomButton
+                  bgcolor={"#039be5"}
+                  disabled={false}
+                  title={"Create " + this.props.subject}
+                  type={this.props.subject}
+                  size={"medium"}
+                  variant={"extended"}
+                  value={this.props.subject}
+                />
+                {/* <span className="homepageLinkText">
                   Create {this.props.subject}
-                </span>
+                </span> */}
               </NavLink>
             </div>
-            <div className="flexIcons">
-              <Icon>{this.props.icon}</Icon>
-            </div>
+
             <div className="flexLink">
-              •{" "}
               <NavLink to={this.props.editurl}>
-                <span className="homepageLinkText">
-                  Edit {this.props.subject}
-                </span>
+                <CustomButton
+                  bgcolor={"#039be5"}
+                  disabled={false}
+                  title={"Edit " + this.props.subject}
+                  type={this.props.subject}
+                  size={"medium"}
+                  variant={"extended"}
+                  value={this.props.subject}
+                />
               </NavLink>
             </div>
           </div>

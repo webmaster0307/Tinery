@@ -1,7 +1,8 @@
 import { FETCH_ITINERARIES, FETCH_ITINERARIES_HASHTAG } from "../actions/Types";
 
 const initialState = {
-  itineraries: []
+  itineraries: [],
+  likestate: []
 };
 
 export default function(state = initialState, action) {
@@ -16,6 +17,7 @@ export default function(state = initialState, action) {
         ...state,
         itineraries: action.payload
       };
+
     default:
       return state;
   }

@@ -108,9 +108,7 @@ class Cmsitin extends Component {
 
     const cmstitle = (
       <React.Fragment>
-        <div>
-          <Header title={"Create Itineraries"} />
-        </div>
+        <Header title={"Create Itineraries"} />
         <div className="cmsTitletext">
           <p>Fill out the form below to create a new city.</p>
           <p>Or click below to edit an existing Itinerary.</p>
@@ -125,9 +123,7 @@ class Cmsitin extends Component {
     const selectCity = (
       <React.Fragment>
         <FormControl variant="filled">
-          <InputLabel htmlFor="filled-city-simple">
-            Select Parent City (Key):
-          </InputLabel>
+          <InputLabel htmlFor="filled-city-simple">Select City :</InputLabel>
           <Select
             className="selectForms"
             value={this.state.cityurl}
@@ -208,112 +204,114 @@ class Cmsitin extends Component {
     );
 
     const cmsbody = (
-      <div>
-        <Card raised className="commentForm">
-          <form encType="multipart/form-data" onSubmit={this.onSubmit}>
-            <div>
-              <TextField
-                className="commentFormInput"
-                id="outlined-with-placeholder"
-                label="Please enter Itinerary Title:"
-                placeholder=""
-                margin="normal"
-                variant="outlined"
-                type="text"
-                name="title"
-                value={this.state.title}
-                onChange={this.onSnakecase}
-                errorform={errors.title}
-              />
-            </div>
-            {errors.title && (
-              <div className="invalid-feedback">{errors.title}</div>
-            )}
-            <div> {selectCity}</div>
-            <div>
-              <TextField
-                className="commentFormInput"
-                id="outlined-with-placeholder"
-                label="Please enter number of Likes:"
-                placeholder=""
-                margin="normal"
-                variant="filled"
-                type="number"
-                name="likes"
-                value={this.state.likes}
-                onChange={this.onChange}
-                errorform={errors.likes}
-              />
-            </div>
-            <div>
-              <TextField
-                className="commentFormInput"
-                id="outlined-with-placeholder"
-                label="Please enter number of Hours:"
-                placeholder=""
-                margin="normal"
-                variant="filled"
-                type="number"
-                name="duration"
-                value={this.state.duration}
-                onChange={this.onChange}
-                errorform={errors.duration}
-              />
-            </div>
-            <div>{selectRating}</div>
-            <div>{selectPrice}</div>
-            <div>
-              <TextField
-                className="commentFormInput"
-                id="outlined-with-placeholder"
-                label="Please enter Hashtags:"
-                placeholder="Seperate with Comma, maximum of 3."
-                margin="normal"
-                variant="outlined"
-                type="text"
-                name="hashtag"
-                value={this.state.hashtag}
-                onChange={this.onChange}
-              />
-            </div>
-          </form>
-
-          {/* SUBMIT BUTTON VALIDATION */}
-          {!this.state.title ||
-          !this.state.rating ||
-          !this.state.cityurl ||
-          !this.state.duration ||
-          !this.state.price ||
-          !this.state.likes ||
-          this.state.hashtag.length === 0 ? (
-            <React.Fragment>
-              <div className="cmsAction">
-                <Button variant="outlined" color="primary" disabled>
-                  Create Itinerary!<Icon>save</Icon>
-                </Button>
+      <React.Fragment>
+        <div className="itineraryCard">
+          <Card raised className="commentForm">
+            <form encType="multipart/form-data" onSubmit={this.onSubmit}>
+              <div>
+                <TextField
+                  className="commentFormInput"
+                  id="outlined-with-placeholder"
+                  label="Please enter Itinerary Title:"
+                  placeholder=""
+                  margin="normal"
+                  variant="outlined"
+                  type="text"
+                  name="title"
+                  value={this.state.title}
+                  onChange={this.onSnakecase}
+                  errorform={errors.title}
+                />
+              </div>
+              {errors.title && (
+                <div className="invalid-feedback">{errors.title}</div>
+              )}
+              <div> {selectCity}</div>
+              <div>
+                <TextField
+                  className="commentFormInput"
+                  id="outlined-with-placeholder"
+                  label="Please enter number of Likes:"
+                  placeholder=""
+                  margin="normal"
+                  variant="filled"
+                  type="number"
+                  name="likes"
+                  value={this.state.likes}
+                  onChange={this.onChange}
+                  errorform={errors.likes}
+                />
               </div>
               <div>
-                <p className="cmsimagerequired">
-                  *Fill out Form to enable Create Itinerary.
-                </p>
+                <TextField
+                  className="commentFormInput"
+                  id="outlined-with-placeholder"
+                  label="Please enter number of Hours:"
+                  placeholder=""
+                  margin="normal"
+                  variant="filled"
+                  type="number"
+                  name="duration"
+                  value={this.state.duration}
+                  onChange={this.onChange}
+                  errorform={errors.duration}
+                />
               </div>
-            </React.Fragment>
-          ) : (
-            <React.Fragment>
-              <div className="cmsAction">
-                <Button
+              <div>{selectRating}</div>
+              <div>{selectPrice}</div>
+              <div>
+                <TextField
+                  className="commentFormInput"
+                  id="outlined-with-placeholder"
+                  label="Please enter Hashtags:"
+                  placeholder="Seperate with Comma, maximum of 3."
+                  margin="normal"
                   variant="outlined"
-                  color="primary"
-                  onClick={this.onSubmit}
-                  value="Submit"
-                >
-                  Create Itinerary!<Icon>save</Icon>
-                </Button>
+                  type="text"
+                  name="hashtag"
+                  value={this.state.hashtag}
+                  onChange={this.onChange}
+                />
               </div>
-            </React.Fragment>
-          )}
-        </Card>
-      </div>
+            </form>
+
+            {/* SUBMIT BUTTON VALIDATION */}
+            {!this.state.title ||
+            !this.state.rating ||
+            !this.state.cityurl ||
+            !this.state.duration ||
+            !this.state.price ||
+            !this.state.likes ||
+            this.state.hashtag.length === 0 ? (
+              <React.Fragment>
+                <div className="cmsAction">
+                  <Button variant="outlined" color="primary" disabled>
+                    Create Itinerary!<Icon>save</Icon>
+                  </Button>
+                </div>
+                <div>
+                  <p className="cmsimagerequired">
+                    *Fill out Form to enable Create Itinerary.
+                  </p>
+                </div>
+              </React.Fragment>
+            ) : (
+              <React.Fragment>
+                <div className="cmsAction">
+                  <Button
+                    variant="outlined"
+                    color="primary"
+                    onClick={this.onSubmit}
+                    value="Submit"
+                  >
+                    Create Itinerary!<Icon>save</Icon>
+                  </Button>
+                </div>
+              </React.Fragment>
+            )}
+          </Card>
+        </div>
+      </React.Fragment>
     );
 
     return (

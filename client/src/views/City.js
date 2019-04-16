@@ -27,9 +27,12 @@ class City extends Component {
   }
   render() {
     let showCity = (
-      <span>
-        {this.props.location.state.city}, {this.props.location.state.country}
-      </span>
+      <React.Fragment>
+        {/* <img src={this.props.location.state.url} /> */}
+        <span>
+          {this.props.location.state.city}, {this.props.location.state.country}
+        </span>
+      </React.Fragment>
     );
 
     return (
@@ -38,7 +41,7 @@ class City extends Component {
           <Header title={showCity} />
         </div>
         <div>
-          <Itinerary />
+          <Itinerary history={this.props.history.location.pathname} />
         </div>
       </div>
     );

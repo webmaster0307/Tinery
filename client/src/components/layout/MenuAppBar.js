@@ -118,7 +118,7 @@ class MenuAppBar extends React.Component {
         <ListItem button>
           <NavLink to="/cities">
             <Icon className="navIcon">location_city</Icon>
-            <span className="navText">Cites</span>
+            <span className="navText">Cities</span>
           </NavLink>
         </ListItem>
         <Divider />

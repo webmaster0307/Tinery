@@ -89,9 +89,7 @@ class Cmsactivity extends Component {
     const previewFile = this.state.previewFile;
     const cmstitle = (
       <React.Fragment>
-        <div>
-          <Header title={"Create Activities"} />
-        </div>
+        <Header title={"Create Activities"} />
         <div className="cmsTitletext">
           <p>Fill out the form below to create a new Activity.</p>
           <p>Or click below to edit an existing activity.</p>
@@ -108,7 +106,7 @@ class Cmsactivity extends Component {
       <React.Fragment>
         <FormControl variant="filled">
           <InputLabel htmlFor="filled-itin-simple">
-            Select Parent Itinerary (Key):
+            Select Itinerary:
           </InputLabel>
           <Select
             className="selectForms"
@@ -138,74 +136,76 @@ class Cmsactivity extends Component {
     );
 
     const cmsbody = (
-      <div>
-        <Card raised className="commentForm">
-          <form
-            encType="multipart/form-data"
-            noValidate
-            onSubmit={this.onSubmit}
-          >
-            <div>
-              <TextField
-                className="commentFormInput"
-                id="outlined-with-placeholder"
-                label="Please enter Activity Title:"
-                placeholder=""
-                margin="normal"
-                variant="outlined"
-                type="text"
-                name="title"
-                value={this.state.title}
-                onChange={this.onChange}
-                errorform={errors.title}
-              />
-            </div>
-            {errors.title && (
-              <div className="invalid-feedback">{errors.title}</div>
-            )}
-            {selectActivity}
-          </form>
-          <div className="cmsUploadimage">
-            Upload Activity Image.
-            <input type="file" onChange={this.fileChangedHandler} />
-          </div>
-
-          {/* SUBMIT BUTTON VALIDATION */}
-          {this.state.image === null ||
-          !this.state.title ||
-          !this.state.activitykey ? (
-            <React.Fragment>
-              <div className="cmsAction">
-                <Button variant="outlined" color="primary" disabled>
-                  Create Activity!<Icon>save</Icon>
-                </Button>
-              </div>
+      <React.Fragment>
+        <div className="itineraryCard">
+          <Card raised className="commentForm">
+            <form
+              encType="multipart/form-data"
+              noValidate
+              onSubmit={this.onSubmit}
+            >
               <div>
-                <p className="cmsimagerequired">
-                  *Fill out Form to enable Create Activity.
-                </p>
-              </div>
-            </React.Fragment>
-          ) : (
-            <React.Fragment>
-              <div className="cmsAction">
-                <Button
+                <TextField
+                  className="commentFormInput"
+                  id="outlined-with-placeholder"
+                  label="Please enter Activity Title:"
+                  placeholder=""
+                  margin="normal"
                   variant="outlined"
-                  color="primary"
-                  onClick={this.onSubmit}
-                  value="Submit"
-                >
-                  Create Activity!<Icon>save</Icon>
-                </Button>
+                  type="text"
+                  name="title"
+                  value={this.state.title}
+                  onChange={this.onChange}
+                  errorform={errors.title}
+                />
               </div>
-            </React.Fragment>
-          )}
-        </Card>
+              {errors.title && (
+                <div className="invalid-feedback">{errors.title}</div>
+              )}
+              {selectActivity}
+            </form>
+            <div className="cmsUploadimage">
+              Upload Activity Image.
+              <input type="file" onChange={this.fileChangedHandler} />
+            </div>
 
-        <div className="cmsTitletext">
-          <h3>Preview Your Image Below : </h3>
+            {/* SUBMIT BUTTON VALIDATION */}
+            {this.state.image === null ||
+            !this.state.title ||
+            !this.state.activitykey ? (
+              <React.Fragment>
+                <div className="cmsAction">
+                  <Button variant="outlined" color="primary" disabled>
+                    Create Activity!<Icon>save</Icon>
+                  </Button>
+                </div>
+                <div>
+                  <p className="cmsimagerequired">
+                    *Fill out Form to enable Create Activity.
+                  </p>
+                </div>
+              </React.Fragment>
+            ) : (
+              <React.Fragment>
+                <div className="cmsAction">
+                  <Button
+                    variant="outlined"
+                    color="primary"
+                    onClick={this.onSubmit}
+                    value="Submit"
+                  >
+                    Create Activity!<Icon>save</Icon>
+                  </Button>
+                </div>
+              </React.Fragment>
+            )}
+          </Card>
+
+          <div className="cmsTitletext">
+            <h3>Preview Your Image Below : </h3>
+          </div>
         </div>
-      </div>
+      </React.Fragment>
     );
     const noPreview = (
       <div>

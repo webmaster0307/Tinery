@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { fetchItinerariesHashtag } from "../actions/itinerariesActions";
-import { postFavorites } from "../actions/profileActions";
 import { getCurrentProfile } from "./../actions/profileActions";
 
 import Header from "./../components/layout/Header";
@@ -61,10 +60,12 @@ class Hashtag extends Component {
             duration={itinerary.duration}
             price={itinerary.price}
             likes={itinerary.likes}
-            rating={itinerary.rating}
+            ratings={itinerary.ratings}
             hashtag={itinerary.hashtag}
             author={itinerary.author}
             _id={itinerary._id}
+            activitykey={itinerary.activitykey}
+            history={this.props.history.location.pathname}
           />
         </React.Fragment>
       );
@@ -85,9 +86,10 @@ Hashtag.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    itineraries: state.itineraries,
-    profile: state.profile,
     auth: state.auth,
+    profile: state.profile,
+    itineraries: state.itineraries,
+
     favid: state.favid
   };
 };
@@ -96,7 +98,6 @@ export default connect(
   mapStateToProps,
   {
     fetchItinerariesHashtag,
-    postFavorites,
     getCurrentProfile
   }
 )(Hashtag);

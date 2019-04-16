@@ -139,16 +139,14 @@ class EditActivity extends Component {
     );
     const cmstitle = (
       <React.Fragment>
-        <div>
-          <Header title={"Edit Activity"} />
-        </div>
+        <Header title={"Edit Activity"} />
       </React.Fragment>
     );
     const selectItinerary = (
       <React.Fragment>
         <FormControl variant="filled">
           <InputLabel htmlFor="filled-itin-simple">
-            Select Parent Itinerary (Key):
+            Select Itinerary:
           </InputLabel>
           <Select
             className="selectForms"
@@ -177,73 +175,75 @@ class EditActivity extends Component {
       </React.Fragment>
     );
     const cmsbody = (
-      <div>
-        <Card raised className="commentForm">
-          <form
-            encType="multipart/form-data"
-            noValidate
-            onSubmit={this.onSubmit}
-          >
-            <div>
-              <TextField
-                className="commentFormInput"
-                id="outlined-with-placeholder"
-                label="Please enter Activity Title:"
-                placeholder=""
-                margin="normal"
-                variant="outlined"
-                type="text"
-                name="title"
-                value={this.state.title}
-                onChange={this.onChange}
-              />
+      <React.Fragment>
+        <div className="itineraryCard">
+          <Card raised className="commentForm">
+            <form
+              encType="multipart/form-data"
+              noValidate
+              onSubmit={this.onSubmit}
+            >
+              <div>
+                <TextField
+                  className="commentFormInput"
+                  id="outlined-with-placeholder"
+                  label="Please enter Activity Title:"
+                  placeholder=""
+                  margin="normal"
+                  variant="outlined"
+                  type="text"
+                  name="title"
+                  value={this.state.title}
+                  onChange={this.onChange}
+                />
+              </div>
+              {selectItinerary}
+            </form>
+            <div className="cmsUploadimage">
+              Upload Country Flag Here.
+              <input type="file" onChange={this.fileChangedHandler} />
             </div>
-            {selectItinerary}
-          </form>
-          <div className="cmsUploadimage">
-            Upload Country Flag Here.
-            <input type="file" onChange={this.fileChangedHandler} />
-          </div>
-          {/* SUBMIT BUTTON */}
+            {/* SUBMIT BUTTON */}
 
-          {this.state.authorid === this.props.auth.user.id ? (
-            <React.Fragment>
-              <div className="cmsAction">
-                <Button
-                  variant="outlined"
-                  color="primary"
-                  onClick={this.onSubmit}
-                >
-                  Update Activity!<Icon>save</Icon>
-                </Button>
-              </div>
-              <div>{deleteButton}</div>
-            </React.Fragment>
-          ) : (
-            <React.Fragment>
-              <div className="cmsAction">
-                <Button
-                  disabled
-                  variant="outlined"
-                  color="primary"
-                  onClick={this.onSubmit}
-                >
-                  Update Activity!<Icon>save</Icon>
-                </Button>
-                <div>
-                  <p className="cmsimagerequired">
-                    *Create Your Own to enable Edit.
-                  </p>
+            {this.state.authorid === this.props.auth.user.id ? (
+              <React.Fragment>
+                <div className="cmsAction">
+                  <Button
+                    variant="outlined"
+                    color="primary"
+                    onClick={this.onSubmit}
+                  >
+                    Update Activity!<Icon>save</Icon>
+                  </Button>
                 </div>
-              </div>
-            </React.Fragment>
-          )}
-        </Card>
+                <div>{deleteButton}</div>
+              </React.Fragment>
+            ) : (
+              <React.Fragment>
+                <div className="cmsAction">
+                  <Button
+                    disabled
+                    variant="outlined"
+                    color="primary"
+                    onClick={this.onSubmit}
+                  >
+                    Update Activity!<Icon>save</Icon>
+                  </Button>
+                  <div>
+                    <p className="cmsimagerequired">
+                      *Create Your Own to enable Edit.
+                    </p>
+                  </div>
+                </div>
+              </React.Fragment>
+            )}
+          </Card>
 
-        <div className="cmsTitletext">
-          <h3>Preview Your Image Below : </h3>
+          <div className="cmsTitletext">
+            <h3>Preview Your Image Below : </h3>
+          </div>
         </div>
-      </div>
+      </React.Fragment>
     );
     const noPreview = (
       <div>
@@ -284,20 +284,28 @@ class EditActivity extends Component {
             onChange={e => this.handleSearch(e.target.value)}
             margin="normal"
             className="cityfilter"
-            variant="filled"
+            variant="outlined"
           />
         </div>
         {/* ACTIVITIES */}
 
-        {filteredList.map(activity => {
-          return (
-            <div key={activity._id} className="editCmsitems">
-              <Button onClick={this.editValue.bind(this, activity.title)}>
-                {activity.title} - {activity.activitykey.replace(/_/g, " ")}
-              </Button>
-            </div>
-          );
-        })}
+        {filteredList.length < 1 ? (
+          <div className="paragraphText">
+            There are no activities matching your search query.
+          </div>
+        ) : (
+          <React.Fragment>
+            {filteredList.map(activity => {
+              return (
+                <div key={activity._id} className="editCmsitems">
+                  <Button onClick={this.editValue.bind(this, activity.title)}>
+                    {activity.title} - {activity.activitykey.replace(/_/g, " ")}
+                  </Button>
+                </div>
+              );
+            })}
+          </React.Fragment>
+        )}
       </React.Fragment>
     );
 

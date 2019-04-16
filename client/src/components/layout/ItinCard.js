@@ -2,20 +2,28 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import {
-  postFavorites,
   getCurrentProfile,
-  removeFavorites
+  postFavorites,
+  removeFavorites,
+  fetchItinerariesID
 } from "./../../actions/profileActions";
-// import {  } from "./../actions/profileActions";
+import {
+  fetchItineraries,
+  fetchItinerariesByCity
+} from "./../../actions/itinerariesActions";
+import { fetchActivityByKey } from "./../../actions/activitiesActions";
+import { fetchAxiosComments } from "./../../actions/commentActions";
+import Activity from "./../Activity";
+import Comments from "./../Comments";
+
+import StarRatingComponent from "react-star-rating-component";
 
 import CardContent from "@material-ui/core/CardContent";
 import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
-// import ItinIcons from "./ItinIcons";
 import Icon from "@material-ui/core/Icon";
 import Fab from "@material-ui/core/Fab";
 import Button from "@material-ui/core/Button";
-import CardActions from "@material-ui/core/CardActions";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
@@ -30,40 +38,47 @@ class ItinCard extends Component {
     this.state = {
       open: false,
       isBtn: false,
-      eventId: ""
+      eventId: "",
+
+      activities: [],
+      itineraries: [],
+      comments: [],
+      errors: {}
     };
+
     this.addToFav = this.addToFav.bind(this);
     this.confirmButton = this.confirmButton.bind(this);
+    this.expandOpen = this.expandOpen.bind(this);
+    this.expandClose = this.expandClose.bind(this);
   }
-
-  // componentDidMount() {
-  // }
-
-  // ADD FAVORITES
-  addToFav = event => {
-    let eventTargetId = event;
-
-    let favData = {
-      favorites: eventTargetId
-    };
-    let userID = this.props.auth.user.id;
-    this.props.postFavorites(userID, favData);
-
-    this.setState({ open: true });
-  };
 
   // CLOSE DIALOG
   dialogClose = () => {
     this.setState({ open: false });
   };
 
+  // CLOSE SNACKBAR
   snackbarClose = () => {
     this.setState({ snackbar: false });
   };
 
+  // SAVE TO FAVORITES BUTTON
+  addToFav = async event => {
+    this.setState({ open: true });
+    let eventTargetId = event;
+    let favData = {
+      favorites: eventTargetId
+    };
+    let userID = this.props.auth.user.id;
+
+    await setTimeout(() => {
+      this.props.postFavorites(userID, favData);
+    }, 1500);
+  };
+
+  // REMOVE FAV AND CLOSE SNACKBAR
   handleOpen = event => {
     this.setState({ open: true, snackbar: false });
-    // let eventTargetId = event;
     let eventTargetId = event;
     let favData = {
       favorites: eventTargetId
@@ -73,21 +88,46 @@ class ItinCard extends Component {
     });
   };
 
-  confirmButton = () => {
+  // REMOVE FAV - CONFIRM BUTTON
+  confirmButton = async () => {
     let userID = this.props.auth.user.id;
     let favData = {
       favorites: this.state.favdataid
     };
 
-    this.setState({
-      open: false,
-      confirm: true,
-      snackbar: true
-    });
+    await setTimeout(() => {
+      this.setState({
+        open: false,
+        confirm: true,
+        snackbar: true
+      });
+    }, 1000);
+
     if (this.state.confirm === true) {
-      this.props.removeFavorites(userID, favData.favorites);
+      await this.props.removeFavorites(userID, favData.favorites);
     }
   };
+
+  // OPEN (FETCH) ACTIVITY AND COMMENTS
+  expandOpen(event) {
+    let eventTargetId = event.target.id;
+
+    this.props.fetchActivityByKey(eventTargetId);
+    this.props.fetchAxiosComments(eventTargetId);
+
+    this.setState(() => ({
+      eventId: eventTargetId,
+      isBtn: eventTargetId
+    }));
+  }
+
+  //CLOSE ACTIVITY AND COMMENTS
+  expandClose() {
+    this.setState(() => ({
+      eventId: null,
+      isBtn: null
+    }));
+  }
 
   render() {
     const { isAuthenticated } = this.props.auth;
@@ -96,7 +136,7 @@ class ItinCard extends Component {
       <React.Fragment>
         <Dialog
           open={this.state.open}
-          onClose={this.handleClose}
+          onClose={this.dialogClose}
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
         >
@@ -114,9 +154,9 @@ class ItinCard extends Component {
               <Fab
                 className="confirmFabButton"
                 variant="extended"
-                size="medium"
+                size="small"
                 color="primary"
-                onClick={this.handleClose}
+                onClick={this.dialogClose}
               >
                 Go To Favorites
               </Fab>
@@ -133,7 +173,7 @@ class ItinCard extends Component {
       <React.Fragment>
         <Dialog
           open={this.state.open}
-          onClose={this.handleClose}
+          onClose={this.dialogClose}
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
         >
@@ -150,13 +190,13 @@ class ItinCard extends Component {
             <Fab
               className="confirmFabButton"
               variant="extended"
-              size="medium"
+              size="small"
               color="primary"
               onClick={this.confirmButton.bind(this)}
             >
               Confirm
             </Fab>
-            <Button onClick={this.handleClose} color="inherit" autoFocus>
+            <Button onClick={this.dialogClose} color="inherit" autoFocus>
               Close
             </Button>
           </DialogActions>
@@ -166,119 +206,63 @@ class ItinCard extends Component {
 
     const unauthedIcons = (
       <React.Fragment>
-        <CardActions>
-          <Grid container spacing={0}>
-            {/* ICON 1 */}
-            <Grid item xs={4}>
-              <div className="itinIconpanel">
-                <Fab variant="extended" disabled>
-                  <Icon fontSize="large">thumb_up</Icon>
-                  <span className="buttonText">Like</span>
-                </Fab>
-              </div>
-            </Grid>
-            {/* ICON 2 */}
-            <Grid item xs={4}>
-              <div className="itinIconpanel">
-                <Fab variant="extended" disabled>
-                  <Icon fontSize="large">star_rate</Icon>
-                  <span className="buttonText">Rate</span>
-                </Fab>
-              </div>
-            </Grid>
-            {/* ICON 3 */}
-            <Grid item xs={4}>
-              <div className="itinIconpanel">
-                <Fab variant="extended" disabled>
-                  <Icon fontSize="large">add_location</Icon>
-                  <span className="buttonText">Save</span>
-                </Fab>
-              </div>
-            </Grid>
-          </Grid>
-        </CardActions>
+        <div className="itinIconpanel">
+          <Fab variant="round" disabled>
+            <Icon fontSize="large">add_location</Icon>
+          </Fab>
+        </div>
       </React.Fragment>
     );
 
     const authedIcons = (
       <React.Fragment>
-        <CardActions>
-          <Grid container spacing={0}>
-            {/* ICON 1 */}
-            <Grid item xs={4}>
-              <div className="itinIconpanel">
-                <Fab variant="extended" disabled>
-                  <Icon fontSize="large">thumb_up</Icon>
-                  <span className="buttonText">Like</span>
-                </Fab>
-              </div>
-            </Grid>
-            {/* ICON 2 */}
-            <Grid item xs={4}>
-              <div className="itinIconpanel">
-                <Fab variant="extended" disabled>
-                  <Icon fontSize="large">star_rate</Icon>
-                  <span className="buttonText">Rate</span>
-                </Fab>
-              </div>
-            </Grid>
-            {/* ICON 3 */}
-            <Grid item xs={4}>
-              <div className="itinIconpanel">
-                {/*  TERNARY CONDITION*/}
-
-                {this.props.profile.favid.includes(this.props._id) ? (
-                  <React.Fragment>
-                    {/*  DASHBOARD CONDITION*/}
-                    {this.props.history === "/dashboard" ? (
-                      <React.Fragment>
-                        {/*  DASHBOARD CONDITION - FAV REMOVE*/}
-                        <Fab variant="extended">
-                          <Icon
-                            value={this.props.title}
-                            variant="outlined"
-                            fontSize="large"
-                            onClick={this.handleOpen.bind(this, this.props._id)}
-                          >
-                            favorite
-                          </Icon>
-                          {removeFavDialog}
-                          <span className="buttonText">Remove</span>
-                        </Fab>
-                      </React.Fragment>
-                    ) : (
-                      <React.Fragment>
-                        {/*  DASHBOARD CONDITION - FAV SAVED*/}
-                        <Fab variant="extended" disabled>
-                          <Icon value={this.props.title} fontSize="large">
-                            favorite
-                          </Icon>
-                          <span className="buttonText">Saved</span>
-                          {/* {favDialog} */}
-                        </Fab>
-                      </React.Fragment>
-                    )}
-                  </React.Fragment>
-                ) : (
-                  <React.Fragment>
-                    {/*  ITIN PAGE CONDITION - ADD TO FAV*/}
-                    <Fab variant="extended">
-                      <Icon
-                        value={this.props.title}
-                        fontSize="large"
-                        onClick={this.addToFav.bind(this, this.props._id)}
-                      >
-                        add_location
-                      </Icon>
-                      <span className="buttonText">Save</span>
-                      {addFavDialog}
-                    </Fab>
-                  </React.Fragment>
-                )}
-              </div>
-            </Grid>
-          </Grid>
-        </CardActions>
+        <div className="itinIconpanel">
+          {/*  TERNARY CONDITION*/}
+          {this.props.profile.favid.includes(this.props._id) ? (
+            <React.Fragment>
+              {/*  DASHBOARD CONDITION*/}
+              {this.props.history === "/dashboard" ? (
+                <React.Fragment>
+                  {/*  DASHBOARD PAGE CONDITION - FAV REMOVE*/}
+                  <Fab variant="round">
+                    <Icon
+                      value={this.props.title}
+                      variant="outlined"
+                      fontSize="large"
+                      onClick={this.handleOpen.bind(this, this.props._id)}
+                    >
+                      favorite_border
+                    </Icon>
+                    {removeFavDialog}
+                  </Fab>
+                </React.Fragment>
+              ) : (
+                <React.Fragment>
+                  {/*  DASHBOARD PAGE CONDITION - FAV SAVED*/}
+                  <Fab variant="round" disabled>
+                    <Icon value={this.props.title} fontSize="large">
+                      favorite
+                    </Icon>
+                  </Fab>
+                </React.Fragment>
+              )}
+            </React.Fragment>
+          ) : (
+            <React.Fragment>
+              {/*  ITIN PAGE CONDITION - ADD TO FAV*/}
+              <Fab variant="round">
+                <Icon
+                  value={this.props.title}
+                  fontSize="large"
+                  onClick={this.addToFav.bind(this, this.props._id)}
+                >
+                  add_location
+                </Icon>
+                {addFavDialog}
+              </Fab>
+            </React.Fragment>
+          )}
+        </div>
       </React.Fragment>
     );
 
@@ -288,13 +272,18 @@ class ItinCard extends Component {
           <Card raised>
             {/* CARD HEADER */}
             <Grid container spacing={0}>
-              <Grid item xs={12}>
-                <div>
+              <Grid item xs={9} sm={6}>
+                <div className="itinCardDiv">
                   <h2 className="itinCardTitleText">{this.props.title}</h2>
                   <div className="itinCardTitleBy">By: {this.props.author}</div>
                 </div>
               </Grid>
+              {/* CARD ICONS => TERNARY : AUTHED : UNAUTHED */}
+              <Grid item xs={3} sm={6}>
+                {isAuthenticated ? authedIcons : unauthedIcons}
+              </Grid>
             </Grid>
+
             {/* CARD CONTENT */}
             <CardContent>
               <Grid container spacing={0}>
@@ -308,18 +297,33 @@ class ItinCard extends Component {
                   </div>
                 </Grid>
                 <Grid item xs={7} sm={6}>
-                  <Grid item xs={8}>
+                  {/* TIME */}
+                  <Grid item xs={10}>
                     <div>• Time: {this.props.duration} Hours</div>
                   </Grid>
-                  <Grid item xs={8}>
+                  {/* COST */}
+                  <Grid item xs={10}>
                     <div>• Cost: {this.props.price}</div>
                   </Grid>
-                  <Grid item xs={8}>
-                    <div>• Likes: {this.props.likes}</div>
+                  {/* LIKES */}
+                  <Grid item xs={10}>
+                    <div>• Likes: {this.props.likes} </div>
                   </Grid>
-                  <Grid item xs={8}>
-                    <div>• Rating: {this.props.rating}/5</div>
+
+                  {/* RATINGS */}
+                  <Grid item xs={10}>
+                    <div className="starRatingComponentDiv">
+                      • Rating:
+                      <StarRatingComponent
+                        className="starRatingComponent"
+                        name="Rating"
+                        starCount={5}
+                        value={this.props.ratings}
+                        editing={false}
+                      />
+                    </div>
                   </Grid>
+                  {/* HASHTAGS */}
                   <Grid item xs={12}>
                     <div>
                       • Hashtags:{" "}
@@ -347,8 +351,41 @@ class ItinCard extends Component {
                 </Grid>
               </Grid>
             </CardContent>
-            {/* CARD ICONS => TERNARY : AUTHED : UNAUTHED */}
-            {isAuthenticated ? authedIcons : unauthedIcons}
+
+            {/* {BUTTON} */}
+            {this.state.eventId === this.props.activitykey ? (
+              [
+                <Activity
+                  itineraryKey={this.props.activitykey}
+                  key={this.props.title}
+                />,
+
+                <Comments
+                  activityKey={this.props.activitykey}
+                  key={this.props._id}
+                />,
+
+                <button
+                  className="closeActivityBtn"
+                  id={this.props.activitykey}
+                  onClick={this.expandClose}
+                  key={this.props.title + this.props._id}
+                >
+                  Close
+                </button>
+              ]
+            ) : (
+              <button
+                className="viewActivityBtn "
+                id={this.props.activitykey}
+                onClick={this.expandOpen}
+                key={this.props.title + this.props._id}
+              >
+                Expand
+              </button>
+            )}
+
+            {/* END OF CARD */}
           </Card>
         </div>
         <Snackbar
@@ -372,11 +409,23 @@ const mapStateToProps = state => {
     itineraries: state.itineraries,
     profile: state.profile,
     auth: state.auth,
-    favid: state.favid
+    favid: state.favid,
+    activities: state.activities,
+    comments: state.comments,
+    errors: state.errors
   };
 };
 
 export default connect(
   mapStateToProps,
-  { postFavorites, getCurrentProfile, removeFavorites }
+  {
+    fetchItineraries,
+    postFavorites,
+    getCurrentProfile,
+    removeFavorites,
+    fetchActivityByKey,
+    fetchAxiosComments,
+    fetchItinerariesID,
+    fetchItinerariesByCity
+  }
 )(ItinCard);
