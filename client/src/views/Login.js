@@ -16,10 +16,10 @@ import {
   FacebookLoginButton,
   GoogleLoginButton
 } from "react-social-login-buttons";
+import Header from "./../components/layout/Header";
 
 import CustomButton from "../components/layout/CustomButton";
 
-import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import Card from "@material-ui/core/Card";
 
@@ -130,120 +130,110 @@ class Login extends Component {
     };
 
     const loginComponent = (
-      <div>
-        <div>
-          <div>
-            <div>
-              <Typography
-                component="h2"
-                variant="display1"
-                gutterBottom
-                className="activtytitle"
-              >
-                Login
-              </Typography>
-            </div>
-            <Card raised className="commentForm">
-              <form onSubmit={this.onSubmit}>
-                <div>
-                  <TextField
-                    className="registerFormInput"
-                    id="outlined-with-placeholder"
-                    label="Please enter your Email:"
-                    placeholder="email:"
-                    margin="normal"
-                    variant="outlined"
-                    type="text"
-                    name="email"
-                    value={this.state.email}
-                    onChange={this.onChange}
-                    errorform={errors.email}
-                  />
-                </div>
-                {errors.email && (
-                  <div className="invalid-feedback">{errors.email}</div>
+      <React.Fragment>
+        <Header title={"Login"} />
+        <div className="itineraryCard">
+          {/* START OF FORM */}
+          <Card raised className="commentForm">
+            <form onSubmit={this.onSubmit}>
+              <div>
+                <TextField
+                  className="registerFormInput"
+                  id="outlined-with-placeholder"
+                  label="Please enter your Email:"
+                  placeholder="email:"
+                  margin="normal"
+                  variant="outlined"
+                  type="text"
+                  name="email"
+                  value={this.state.email}
+                  onChange={this.onChange}
+                  errorform={errors.email}
+                />
+              </div>
+              {errors.email && (
+                <div className="invalid-feedback">{errors.email}</div>
+              )}
+              <div>
+                <TextField
+                  className="registerFormInput"
+                  id="outlined-with-placeholder"
+                  label="Please enter your Password:"
+                  placeholder="Password:"
+                  margin="normal"
+                  variant="outlined"
+                  type="password"
+                  name="password"
+                  value={this.state.password}
+                  onChange={this.onChange}
+                  errorform={errors.password}
+                />
+
+                {errors.password && (
+                  <div>
+                    <div className="invalid-feedback">{errors.password}</div>
+                    <div className="removePhotoDiv" />
+                  </div>
                 )}
+              </div>
+
+              {/* SUBMIT BUTTON */}
+              <div>
+                <CustomButton
+                  bgcolor={"#039be5"}
+                  disabled={false}
+                  title={"Submit"}
+                  type={"submit"}
+                  size={"large"}
+                  variant={"extended"}
+                  value={"submit"}
+                />
+              </div>
+              <div>*Sign Up or Register using third party services.</div>
+
+              <div className="socialDiv">
                 <div>
-                  <TextField
-                    className="registerFormInput"
-                    id="outlined-with-placeholder"
-                    label="Please enter your Password:"
-                    placeholder="Password:"
-                    margin="normal"
-                    variant="outlined"
-                    type="password"
-                    name="password"
-                    value={this.state.password}
-                    onChange={this.onChange}
-                    errorform={errors.password}
+                  <GoogleLogin
+                    clientId={googleClientID}
+                    render={renderProps => (
+                      <GoogleLoginButton
+                        className="googleBtn"
+                        alt="googleLogo"
+                        onClick={renderProps.onClick}
+                        align={"center"}
+                      >
+                        <span>Google</span>
+                      </GoogleLoginButton>
+                    )}
+                    buttonText="Login with Google"
+                    onSuccess={responseGoogle}
+                    onFailure={responseGoogle}
+                    className="googleComponentBtn"
+                    theme="dark"
                   />
-
-                  {errors.password && (
-                    <div>
-                      <div className="invalid-feedback">{errors.password}</div>
-                      <div className="removePhotoDiv" />
-                    </div>
-                  )}
                 </div>
-
-                {/* SUBMIT BUTTON */}
                 <div>
-                  <CustomButton
-                    color={"primary"}
-                    disabled={false}
-                    title={"Submit"}
-                    type={"submit"}
-                    size={"medium"}
-                    variant={"extended"}
-                    value={"submit"}
+                  <FacebookLogin
+                    appId="284220635589707"
+                    callback={responseFacebook}
+                    fields="name,email,picture"
+                    render={renderProps => (
+                      <FacebookLoginButton
+                        className="facebookBtn"
+                        alt="facebookLogo"
+                        onClick={renderProps.onClick}
+                        align={"center"}
+                      >
+                        <span>Facebook</span>
+                      </FacebookLoginButton>
+                    )}
                   />
                 </div>
-                <div>*Sign Up or Register using third party services.</div>
-
-                <div className="socialDiv">
-                  <div>
-                    <GoogleLogin
-                      clientId={googleClientID}
-                      render={renderProps => (
-                        <GoogleLoginButton
-                          className="googleBtn"
-                          alt="googleLogo"
-                          onClick={renderProps.onClick}
-                          align={"center"}
-                        >
-                          <span>Google</span>
-                        </GoogleLoginButton>
-                      )}
-                      buttonText="Login with Google"
-                      onSuccess={responseGoogle}
-                      onFailure={responseGoogle}
-                      className="googleComponentBtn"
-                      theme="dark"
-                    />
-                  </div>
-                  <div>
-                    <FacebookLogin
-                      appId="284220635589707"
-                      callback={responseFacebook}
-                      fields="name,email,picture"
-                      render={renderProps => (
-                        <FacebookLoginButton
-                          className="facebookBtn"
-                          alt="facebookLogo"
-                          onClick={renderProps.onClick}
-                          align={"center"}
-                        >
-                          <span>Facebook</span>
-                        </FacebookLoginButton>
-                      )}
-                    />
-                  </div>
-                </div>
-              </form>
-            </Card>
-          </div>
+              </div>
+            </form>
+          </Card>
         </div>
-      </div>
+      </React.Fragment>
     );
     const noAccountMessage = (
       <div>

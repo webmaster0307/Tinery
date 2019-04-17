@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import { registerUser } from "../actions/authActions";
 
 import CustomButton from "../components/layout/CustomButton";
+import Header from "./../components/layout/Header";
 
 import Checkbox from "@material-ui/core/Checkbox";
 import Button from "@material-ui/core/Button";
@@ -15,7 +16,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Slide from "@material-ui/core/Slide";
-import Typography from "@material-ui/core/Typography";
+
 import TextField from "@material-ui/core/TextField";
 import Card from "@material-ui/core/Card";
 import Select from "@material-ui/core/Select";
@@ -25,7 +26,6 @@ import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import DeleteIcon from "@material-ui/icons/Delete";
 import Fab from "@material-ui/core/Fab";
-// import FormControlLabel from "@material-ui/core/FormControlLabel";
 
 function Transition(props) {
   return <Slide direction="up" {...props} />;
@@ -139,7 +139,7 @@ class Signup extends Component {
         color={"primary"}
         title={"Agree to Terms & Conditions"}
         type={"submit"}
-        size={"medium"}
+        size={"large"}
         variant={"extended"}
         value={"Submit"}
       />
@@ -147,11 +147,12 @@ class Signup extends Component {
 
     const checkboxTrueBtn = (
       <CustomButton
+        bgcolor={"#039be5"}
         disabled={false}
         color={"primary"}
         title={"Submit"}
         type={"submit"}
-        size={"medium"}
+        size={"large"}
         variant={"extended"}
         value={"Submit"}
         onClick={this.onSubmit}
@@ -160,16 +161,6 @@ class Signup extends Component {
 
     const checkboxFalse = (
       <div>
-        {/* <FormControlLabel
-          control={
-            <Checkbox
-              onChange={this.tccheckbox}
-              value="checkedB"
-              color="primary"
-            />
-          }
-          label=""
-        /> */}
         <Checkbox
           value="t&c"
           color="primary"
@@ -187,7 +178,6 @@ class Signup extends Component {
 
     const checkboxTrue = (
       <div>
-        {/* <FormControlLabel disabled control={<Checkbox checked />} label="" /> */}
         <Checkbox disabled color="primary" />
         <span>
           I agree to MYtinerarys{" "}
@@ -204,22 +194,19 @@ class Signup extends Component {
             *Google & Facebook Registration is Supported.
           </p>
         </Link>
-        <Card raised className="registerFormCard">
-          <div className="registerFormPhototext">
-            Upload Profile Image Below:
-          </div>
-          <div className="cmsUploadimage">
-            <input type="file" onChange={this.fileChangedHandler} />
-          </div>
-          <div>
-            <p>*Gravatar is Supported.</p>
-          </div>
-        </Card>
+
+        <div className="registerFormPhototext">Upload Profile Image Below:</div>
+        <div className="cmsUploadimage">
+          <input type="file" onChange={this.fileChangedHandler} />
+        </div>
+        <div>
+          <p>*Gravatar is Supported.</p>
+        </div>
       </React.Fragment>
     );
 
     const preview = (
-      <Card className="commentForm">
+      <React.Fragment>
         <div className="previewPhoto">
           <img
             className="previewImage"
@@ -237,23 +224,13 @@ class Signup extends Component {
             <DeleteIcon />
           </Button>
         </div>
-      </Card>
+      </React.Fragment>
     );
 
     const registerForm = (
-      <div className="register">
-        <div className="container">
-          <div>
-            <Typography
-              component="h2"
-              variant="display1"
-              gutterBottom
-              className="activtytitle"
-            >
-              Register
-            </Typography>
-          </div>
-
+      <React.Fragment>
+        <Header title={"Register"} />
+        <div className="itineraryCard">
           {/* START OF FORM */}
           <Card raised className="commentForm">
             <form
@@ -458,10 +435,10 @@ class Signup extends Component {
             </form>
           </Card>
         </div>
-      </div>
+      </React.Fragment>
     );
 
-    return <div>{registerForm}</div>;
+    return <React.Fragment>{registerForm}</React.Fragment>;
   }
 }
 
@@ -476,7 +453,6 @@ const mapStateToProps = state => ({
   errors: state.errors
 });
 
-// export default Signup;
 export default connect(
   mapStateToProps,
   { registerUser }

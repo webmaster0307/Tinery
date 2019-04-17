@@ -51,21 +51,29 @@ class MenuAppBar extends React.Component {
     // NAVIGATION
     const loginState = (
       <div>
+        {/* <Divider /> */}
         <ListItem button>
           <NavLink onClick={this.onLogoutClick.bind(this)} to="/">
             <Icon className="navIcon">exit_to_app</Icon>
             <span className="navText">Log Out</span>
           </NavLink>
         </ListItem>
-        <Divider />
+        {/* <Divider /> */}
         <ListItem button>
           <NavLink to="/dashboard">
             <Icon className="navIcon">dashboard</Icon>
             <span className="navText">Dashboard</span>
           </NavLink>
         </ListItem>
-        <Divider />
+        {/* <Divider /> */}
         <ListItem button>
+          <NavLink to="/cms">
+            <Icon className="navIcon">collections</Icon>
+            <span className="navText">CMS</span>
+          </NavLink>
+        </ListItem>
+        {/* <Divider /> */}
+        {/* <ListItem button>
           <NavLink to="/cmscity">
             <Icon className="navIcon">edit_location</Icon>
             <span className="navText">Create/Edit City</span>
@@ -82,7 +90,7 @@ class MenuAppBar extends React.Component {
             <Icon className="navIcon">add_a_photo</Icon>
             <span className="navText">Create/Edit Activity</span>
           </NavLink>
-        </ListItem>
+        </ListItem> */}
       </div>
     );
 
@@ -110,7 +118,7 @@ class MenuAppBar extends React.Component {
         <ListItem button>
           <NavLink to="/cities">
             <Icon className="navIcon">location_city</Icon>
-            <span className="navText">Cites</span>
+            <span className="navText">Cities</span>
           </NavLink>
         </ListItem>
         <Divider />

@@ -13,6 +13,7 @@ const initialState = {
   favitin: [],
   favid: [],
   profile: []
+  // likes: [],
 };
 
 export default function(state = initialState, action) {
@@ -26,23 +27,22 @@ export default function(state = initialState, action) {
     case GET_PROFILE:
       return {
         ...state,
-        favid: action.payload
+        favid: action.payload.favorites
         // loading: false
       };
-
     // GETS FAVORITES FROM ITINERARIES USING ITIN ID
     case FETCH_ITINERARIES_ID:
       return {
         ...state,
         favitin: action.payload
       };
-
+    // SAVE FAVOURITES
     case POST_FAVORITES:
       return {
         ...state,
         favid: [action.payload, ...state.favid]
       };
-
+    // REMOVE FAVOURITES
     case DELETE_FAVORITES:
       return {
         ...state,
@@ -50,7 +50,6 @@ export default function(state = initialState, action) {
           favorite => favorite._id !== action.payload
         )
       };
-
     case CLEAR_CURRENT_PROFILE:
       return {
         ...state,

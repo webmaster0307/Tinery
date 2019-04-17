@@ -4,15 +4,13 @@ import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import compose from "recompose/compose";
 import MobileStepper from "@material-ui/core/MobileStepper";
-import Paper from "@material-ui/core/Paper";
+// import Paper from "@material-ui/core/Paper";
 
 import Button from "@material-ui/core/Button";
 import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 import SwipeableViews from "react-swipeable-views";
 import { autoPlay } from "react-swipeable-views-utils";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
@@ -50,7 +48,7 @@ class Activity extends React.Component {
     const maxSteps = this.props.activities.activities.length;
 
     return (
-      <div className={classes.root}>
+      <div className="sliderDiv">
         <AutoPlaySwipeableViews
           axis={theme.direction === "rtl" ? "x-reverse" : "x"}
           index={activeStep}
@@ -59,24 +57,21 @@ class Activity extends React.Component {
         >
           {this.props.activities.activities.map((activity, index) => (
             <React.Fragment key={activity.title}>
-              <Card raised className="sliderCard">
-                <Paper square elevation={1}>
-                  <div>
-                    {Math.abs(activeStep - index) <= 2 ? (
+              <div>
+                {Math.abs(activeStep - index) <= 2 ? (
+                  <React.Fragment>
+                    <div className="container">
                       <img
                         className="sliderImg"
                         src={activity.image}
                         alt={activity.title}
                       />
-                    ) : null}
-                  </div>
-                </Paper>
-                <CardContent className="sliderImgTitle">
-                  <Paper square elevation={1}>
-                    • {activity.title}
-                  </Paper>
-                </CardContent>
-              </Card>
+
+                      <div className="sliderTextCentre">{activity.title}</div>
+                    </div>
+                  </React.Fragment>
+                ) : null}
+              </div>
             </React.Fragment>
           ))}
         </AutoPlaySwipeableViews>
@@ -132,8 +127,5 @@ Activity.propTypes = {
 
 export default compose(
   withStyles(styles, { withTheme: true }),
-  connect(
-    mapStateToProps,
-    null
-  )
+  connect(mapStateToProps)
 )(Activity);

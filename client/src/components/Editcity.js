@@ -108,7 +108,6 @@ class Editcity extends Component {
     let data = {
       id: this.state.id
     };
-
     this.props.deleteCity(data.id);
     this.props.history.push("/cmscity");
   };
@@ -147,95 +146,95 @@ class Editcity extends Component {
 
     const cmstitle = (
       <React.Fragment>
-        <div>
-          <Header title={"Edit City"} />
-        </div>
+        <Header title={"Edit City"} />
       </React.Fragment>
     );
     const cmsbody = (
-      <div>
-        <Card raised className="commentForm">
-          <form
-            encType="multipart/form-data"
-            noValidate
-            onSubmit={this.onSubmit}
-          >
-            <div>
-              <TextField
-                className="commentFormInput"
-                id="outlined-with-placeholder"
-                label="Please enter City Name:"
-                placeholder=""
-                margin="normal"
-                variant="outlined"
-                type="text"
-                name="cityname"
-                value={this.state.cityname}
-                onChange={this.onSnakecase}
-              />
-            </div>
-            <p className="cmswarning">
-              *Warning : Changing City Name can affect linked Itinerary
-            </p>
-            <div>
-              <TextField
-                className="commentFormInput"
-                id="outlined-with-placeholder"
-                label="Please enter City Country:"
-                placeholder=""
-                margin="normal"
-                variant="outlined"
-                type="text"
-                name="country"
-                value={this.state.country}
-                onChange={this.onChange}
-              />
-            </div>
-          </form>
-          <div className="cmsUploadimage">
-            Upload Country Flag Here.
-            <input type="file" onChange={this.fileChangedHandler} />
-          </div>
-          {/* SUBMIT BUTTON */}
-
-          {this.state.authorid === this.props.auth.user.id ? (
-            <React.Fragment>
-              <div className="cmsAction">
-                <Button
+      <React.Fragment>
+        <div className="itineraryCard">
+          <Card raised className="commentForm">
+            <form
+              encType="multipart/form-data"
+              noValidate
+              onSubmit={this.onSubmit}
+            >
+              <div>
+                <TextField
+                  className="commentFormInput"
+                  id="outlined-with-placeholder"
+                  label="Please enter City Name:"
+                  placeholder=""
+                  margin="normal"
                   variant="outlined"
-                  color="primary"
-                  onClick={this.onSubmit}
-                >
-                  Update City!<Icon>save</Icon>
-                </Button>
+                  type="text"
+                  name="cityname"
+                  value={this.state.cityname}
+                  onChange={this.onSnakecase}
+                />
               </div>
-              <div>{deleteButton}</div>
-            </React.Fragment>
-          ) : (
-            <React.Fragment>
-              <div className="cmsAction">
-                <Button
-                  disabled
+              {/* <p className="cmswarning">
+                *Warning : Changing City Name can affect linked Itinerary
+              </p> */}
+              <div>
+                <TextField
+                  className="commentFormInput"
+                  id="outlined-with-placeholder"
+                  label="Please enter City Country:"
+                  placeholder=""
+                  margin="normal"
                   variant="outlined"
-                  color="primary"
-                  onClick={this.onSubmit}
-                >
-                  Update City!<Icon>save</Icon>
-                </Button>
-                <div>
-                  <p className="cmsimagerequired">
-                    *Create Your Own to enable Edit.
-                  </p>
+                  type="text"
+                  name="country"
+                  value={this.state.country}
+                  onChange={this.onChange}
+                />
+              </div>
+            </form>
+            <div className="cmsUploadimage">
+              Upload City Cover Image.
+              <input type="file" onChange={this.fileChangedHandler} />
+            </div>
+            {/* SUBMIT BUTTON */}
+
+            {this.state.authorid === this.props.auth.user.id ? (
+              <React.Fragment>
+                <div className="cmsAction">
+                  <Button
+                    variant="outlined"
+                    color="primary"
+                    onClick={this.onSubmit}
+                  >
+                    Update City!<Icon>save</Icon>
+                  </Button>
                 </div>
-              </div>
-            </React.Fragment>
-          )}
-        </Card>
+                <div>{deleteButton}</div>
+              </React.Fragment>
+            ) : (
+              <React.Fragment>
+                <div className="cmsAction">
+                  <Button
+                    disabled
+                    variant="outlined"
+                    color="primary"
+                    onClick={this.onSubmit}
+                  >
+                    Update City!<Icon>save</Icon>
+                  </Button>
+                  <div>
+                    <p className="cmsimagerequired">
+                      *Create Your Own to enable Edit.
+                    </p>
+                  </div>
+                </div>
+              </React.Fragment>
+            )}
+          </Card>
 
-        <div className="cmsTitletext">
-          <h3>Preview Your Image Below : </h3>
+          <div className="cmsTitletext">
+            <h3>Preview Your Image Below : </h3>
+          </div>
         </div>
-      </div>
+      </React.Fragment>
     );
 
     const noPreview = (
@@ -274,19 +273,27 @@ class Editcity extends Component {
             onChange={e => this.handleSearch(e.target.value)}
             margin="normal"
             className="cityfilter"
-            variant="filled"
+            variant="outlined"
           />
         </div>
         {/* CITIES */}
-        {filteredList.map(city => {
-          return (
-            <div key={city._id} className="editCmsitems">
-              <Button onClick={this.editValue.bind(this, city.cityname)}>
-                {city.cityname}, {city.country}
-              </Button>
-            </div>
-          );
-        })}
+        {filteredList.length < 1 ? (
+          <div className="paragraphText">
+            There are no cities matching your search query.
+          </div>
+        ) : (
+          <React.Fragment>
+            {filteredList.map(city => {
+              return (
+                <div key={city._id} className="editCmsitems">
+                  <Button onClick={this.editValue.bind(this, city.cityname)}>
+                    {city.cityname}, {city.country}
+                  </Button>
+                </div>
+              );
+            })}
+          </React.Fragment>
+        )}
       </React.Fragment>
     );
 

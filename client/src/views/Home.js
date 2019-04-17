@@ -1,13 +1,14 @@
 import React, { Component } from "react";
-// import { NavLink } from "react-router-dom";
-import { NavLink, Link } from "react-router-dom";
-// import IconHome from "../components/layout/IconHome";
+import { NavLink } from "react-router-dom";
 import { logoutUser } from "../actions/authActions";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { getCurrentProfile } from "../actions/profileActions";
 
 import { Spring } from "react-spring/renderprops";
+
+import ComplexHomeButton from "../components/layout/ComplexHomeButton";
+import CustomButton from "./../components/layout/CustomButton";
 
 class Home extends Component {
   componentDidMount() {
@@ -23,33 +24,82 @@ class Home extends Component {
     const { isAuthenticated } = this.props.auth;
 
     const loginState = (
-      <div className="flexIcons">
-        <div className="flexLink">
-          <NavLink to="/dashboard">
-            {" "}
-            <span className="homepageLinkText">Dashboard</span>
-          </NavLink>
+      <React.Fragment>
+        <div className="homeParagraphText">
+          • View your favorite Itineraries in the dashboard.
         </div>
-        <div className="flexLink">
-          <NavLink onClick={this.onLogoutClick.bind(this)} to="/login">
-            <span className="homepageLinkText">Log Out</span>
-          </NavLink>
+        <div className="homeParagraphText">
+          • Create your own Itinerary with our CMS.
         </div>
-      </div>
+        <div className="homeParagraphText">
+          • Browse by #Hashtags & Comment!
+        </div>
+
+        <div className="flexIcons">
+          <div className="flexLink">
+            <NavLink to="/dashboard">
+              <CustomButton
+                bgcolor={"#039be5"}
+                disabled={false}
+                title={"Dashboard"}
+                type={"Dashboard"}
+                size={"large"}
+                variant={"extended"}
+                value={"submit"}
+              />
+            </NavLink>
+          </div>
+          <div className="flexLink">
+            <NavLink to="/cms">
+              <CustomButton
+                bgcolor={"#039be5"}
+                disabled={false}
+                title={"CMS"}
+                type={"CMS"}
+                size={"large"}
+                variant={"extended"}
+                value={"submit"}
+              />
+            </NavLink>
+          </div>
+        </div>
+      </React.Fragment>
     );
     const logoutState = (
-      <div className="flexIcons">
-        <div className="flexLink">
-          <NavLink to="/login">
-            <span className="homepageLinkText">Login</span>
-          </NavLink>
+      <React.Fragment>
+        <div className="paragraphText">
+          • Signup and Login to Unlock all features!
         </div>
-        <div className="flexLink">
-          <NavLink to="/signup">
-            <span className="homepageLinkText">Create Account</span>
-          </NavLink>
+
+        <div className="flexIcons">
+          <div className="flexLink">
+            <NavLink to="/login">
+              <CustomButton
+                bgcolor={"#039be5"}
+                disabled={false}
+                title={"Login"}
+                type={"Login"}
+                size={"large"}
+                variant={"extended"}
+                value={"submit"}
+              />
+            </NavLink>
+          </div>
+          <div className="flexLink">
+            <NavLink to="/signup">
+              <CustomButton
+                bgcolor={"#039be5"}
+                disabled={false}
+                title={"Sign Up"}
+                type={"Sign Up"}
+                size={"large"}
+                variant={"extended"}
+                value={"submit"}
+              />
+            </NavLink>
+          </div>
         </div>
-      </div>
+      </React.Fragment>
     );
 
     const homepageBody = (
@@ -63,28 +113,16 @@ class Home extends Component {
             />
           </div>
 
-          <div className="homeP">
-            Find your perfect trip, designed by insider who know and love their
+          <div className="paragraphText">
+            Find your perfect trip, designed by insiders who know and love their
             cities.
           </div>
 
-          <div className="homeBrowsing">
-            <span>Start Browsing</span>
+          <div className="paragraphText">
+            <ComplexHomeButton />
           </div>
 
-          <div>
-            <Link to="/cities">
-              <img
-                className="homeCircle"
-                alt="logo_image"
-                src={require("../images/client/circled-right-2.png")}
-              />
-            </Link>
-          </div>
-
-          <div className="homeP bold">Want to build your own MYtinerary?</div>
-
-          {/* LOGIN STATE LOGIC */}
+          {/* TERNERY AUTH LOGIC */}
           {isAuthenticated ? loginState : logoutState}
         </div>
       </div>
@@ -92,6 +130,7 @@ class Home extends Component {
 
     return (
       <React.Fragment>
+        {/* ANIMATION TERNERY AUTH LOGIC */}
         {isAuthenticated ? (
           <div>
             {" "}
@@ -100,12 +139,7 @@ class Home extends Component {
               to={{ opacity: 1, marginTop: 0 }}
               config={{ delay: 0, duration: 500 }}
             >
-              {props => (
-                <div style={props}>
-                  {/* <div style={c1Style}> */}
-                  {homepageBody}
-                </div>
-              )}
+              {props => <div style={props}>{homepageBody}</div>}
             </Spring>
           </div>
         ) : (
@@ -115,12 +149,7 @@ class Home extends Component {
               to={{ opacity: 1 }}
               config={{ delay: 500 }}
             >
-              {props => (
-                <div style={props}>
-                  {/* <div style={c1Style}> */}
-                  {homepageBody}
-                </div>
-              )}
+              {props => <div style={props}>{homepageBody}</div>}
             </Spring>
           </div>
         )}

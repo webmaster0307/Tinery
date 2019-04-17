@@ -29,6 +29,8 @@ import EditActivity from "./components/EditActivity";
 import EditItinerary from "./components/EditItinerary";
 import Editcity from "./components/Editcity";
 import Dashboard from "./views/Dashboard";
+import Hashtag from "./views/Hashtag";
+import Cms from "./views/Cms";
 
 // JWT TOKEN
 if (sessionStorage.jwtToken) {
@@ -65,6 +67,7 @@ class App extends Component {
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/signup" component={Signup} />
                 <Route exact path="/cities" component={Cities} />
+                <PrivateRoute exact path="/cms" component={Cms} />
                 <PrivateRoute exact path="/cmsitinerary" component={Cmsitin} />
                 <PrivateRoute
                   exact
@@ -87,16 +90,19 @@ class App extends Component {
                   path="/cmsactivity/editactivity"
                   component={EditActivity}
                 />
-                <PrivateRoute exact path="/Dashboard" component={Dashboard} />
+                <PrivateRoute exact path="/dashboard" component={Dashboard} />
                 <Route
                   path="/cities/:city_name"
                   render={props => <City {...props} isAuthed={true} />}
                 />
+                <Route
+                  exact
+                  path="/hashtag/:itinerary"
+                  render={props => <Hashtag {...props} isAuthed={true} />}
+                />
               </Switch>
             </div>
-            <div className="bottomNav">
-              <BottomNav />
-            </div>
+            <BottomNav />
           </div>
         </BrowserRouter>
       </Provider>

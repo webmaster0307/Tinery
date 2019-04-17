@@ -172,17 +172,13 @@ class EditItinerary extends Component {
     );
     const cmstitle = (
       <React.Fragment>
-        <div>
-          <Header title={"Edit Itineraries"} />
-        </div>
+        <Header title={"Edit Itineraries"} />
       </React.Fragment>
     );
     const selectCity = (
       <React.Fragment>
         <FormControl variant="filled">
-          <InputLabel htmlFor="filled-city-simple">
-            Select Parent City (Key):
-          </InputLabel>
+          <InputLabel htmlFor="filled-city-simple">Select City:</InputLabel>
           <Select
             className="selectForms"
             value={this.state.cityurl}
@@ -257,113 +253,115 @@ class EditItinerary extends Component {
     );
 
     const cmsbody = (
-      <div>
-        <Card raised className="commentForm">
-          <form
-            encType="multipart/form-data"
-            noValidate
-            onSubmit={this.onSubmit}
-          >
-            <div>
-              <TextField
-                className="commentFormInput"
-                id="outlined-with-placeholder"
-                label="Please enter Itinerary Title:"
-                placeholder=""
-                margin="normal"
-                variant="outlined"
-                type="text"
-                name="title"
-                value={this.state.title}
-                onChange={this.onSnakecase}
-              />
-            </div>
-            <p className="cmswarning">
-              *Warning : Changing Title can affect linked Activity
-            </p>
-            <div> {selectCity}</div>
-            <div>
-              <TextField
-                className="commentFormInput"
-                id="outlined-with-placeholder"
-                label="Please enter number of Likes:"
-                placeholder=""
-                margin="normal"
-                variant="filled"
-                type="number"
-                name="likes"
-                value={this.state.likes}
-                onChange={this.onChange}
-              />
-            </div>
-
-            <div>
-              <TextField
-                className="commentFormInput"
-                id="outlined-with-placeholder"
-                label="Please enter number of Hours:"
-                placeholder=""
-                margin="normal"
-                variant="filled"
-                type="number"
-                name="duration"
-                value={this.state.duration}
-                onChange={this.onChange}
-              />
-            </div>
-            <div>{selectRating}</div>
-            <div>{selectPrice}</div>
-            <div>
-              <TextField
-                className="commentFormInput"
-                id="outlined-with-placeholder"
-                label="Please enter Hashtags:"
-                placeholder="Seperate with Comma, maximum of 3."
-                margin="normal"
-                variant="outlined"
-                type="text"
-                name="hashtag"
-                value={this.state.hashtag}
-                onChange={this.onChange}
-              />
-            </div>
-          </form>
-
-          {/* SUBMIT BUTTON */}
-          {this.state.authorid === this.props.auth.user.id ? (
-            <React.Fragment>
-              <div className="cmsAction">
-                <Button
+      <React.Fragment>
+        <div className="itineraryCard">
+          <Card raised className="commentForm">
+            <form
+              encType="multipart/form-data"
+              noValidate
+              onSubmit={this.onSubmit}
+            >
+              <div>
+                <TextField
+                  className="commentFormInput"
+                  id="outlined-with-placeholder"
+                  label="Please enter Itinerary Title:"
+                  placeholder=""
+                  margin="normal"
                   variant="outlined"
-                  color="primary"
-                  onClick={this.onSubmit}
-                >
-                  Update Itinerary!<Icon>save</Icon>
-                </Button>
+                  type="text"
+                  name="title"
+                  value={this.state.title}
+                  onChange={this.onSnakecase}
+                />
               </div>
-              <div>{deleteButton}</div>
-            </React.Fragment>
-          ) : (
-            <React.Fragment>
-              <div className="cmsAction">
-                <Button
-                  disabled
+              <p className="cmswarning">
+                *Warning : Changing Title can affect linked Activity
+              </p>
+              <div> {selectCity}</div>
+              <div>
+                <TextField
+                  className="commentFormInput"
+                  id="outlined-with-placeholder"
+                  label="Please enter number of Likes:"
+                  placeholder=""
+                  margin="normal"
+                  variant="filled"
+                  type="number"
+                  name="likes"
+                  value={this.state.likes}
+                  onChange={this.onChange}
+                />
+              </div>
+
+              <div>
+                <TextField
+                  className="commentFormInput"
+                  id="outlined-with-placeholder"
+                  label="Please enter number of Hours:"
+                  placeholder=""
+                  margin="normal"
+                  variant="filled"
+                  type="number"
+                  name="duration"
+                  value={this.state.duration}
+                  onChange={this.onChange}
+                />
+              </div>
+              <div>{selectRating}</div>
+              <div>{selectPrice}</div>
+              <div>
+                <TextField
+                  className="commentFormInput"
+                  id="outlined-with-placeholder"
+                  label="Please enter Hashtags:"
+                  placeholder="Seperate with Comma, maximum of 3."
+                  margin="normal"
                   variant="outlined"
-                  color="primary"
-                  onClick={this.onSubmit}
-                >
-                  Update Itinerary!<Icon>save</Icon>
-                </Button>
-                <div>
-                  <p className="cmsimagerequired">
-                    *Create Your Own to enable Edit.
-                  </p>
+                  type="text"
+                  name="hashtag"
+                  value={this.state.hashtag}
+                  onChange={this.onChange}
+                />
+              </div>
+            </form>
+
+            {/* SUBMIT BUTTON */}
+            {this.state.authorid === this.props.auth.user.id ? (
+              <React.Fragment>
+                <div className="cmsAction">
+                  <Button
+                    variant="outlined"
+                    color="primary"
+                    onClick={this.onSubmit}
+                  >
+                    Update Itinerary!<Icon>save</Icon>
+                  </Button>
                 </div>
-              </div>
-            </React.Fragment>
-          )}
-        </Card>
-      </div>
+                <div>{deleteButton}</div>
+              </React.Fragment>
+            ) : (
+              <React.Fragment>
+                <div className="cmsAction">
+                  <Button
+                    disabled
+                    variant="outlined"
+                    color="primary"
+                    onClick={this.onSubmit}
+                  >
+                    Update Itinerary!<Icon>save</Icon>
+                  </Button>
+                  <div>
+                    <p className="cmsimagerequired">
+                      *Create Your Own to enable Edit.
+                    </p>
+                  </div>
+                </div>
+              </React.Fragment>
+            )}
+          </Card>
+        </div>
+      </React.Fragment>
     );
 
     let filteredList = this.props.itineraries.itineraries.filter(itin => {
@@ -390,20 +388,28 @@ class EditItinerary extends Component {
             onChange={e => this.handleSearch(e.target.value)}
             margin="normal"
             className="cityfilter"
-            variant="filled"
+            variant="outlined"
           />
         </div>
         {/* ITINERARIES */}
 
-        {filteredList.map(itin => {
-          return (
-            <div key={itin._id} className="editCmsitems">
-              <Button onClick={this.editValue.bind(this, itin.activitykey)}>
-                {itin.title} - {itin.cityurl.replace(/_/g, " ")}
-              </Button>
-            </div>
-          );
-        })}
+        {filteredList.length < 1 ? (
+          <div className="paragraphText">
+            There are no itineraries matching your search query.
+          </div>
+        ) : (
+          <React.Fragment>
+            {filteredList.map(itin => {
+              return (
+                <div key={itin._id} className="editCmsitems">
+                  <Button onClick={this.editValue.bind(this, itin.activitykey)}>
+                    {itin.title} - {itin.cityurl.replace(/_/g, " ")}
+                  </Button>
+                </div>
+              );
+            })}
+          </React.Fragment>
+        )}
       </React.Fragment>
     );
 

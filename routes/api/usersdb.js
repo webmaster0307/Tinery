@@ -222,22 +222,5 @@ router.post("/user/login", (req, res) => {
   });
 });
 
-//GET CURRENT USER
-// @route   GET auth/current
-// @desc    Return current user
-// @access  Private
-// router.get(
-//   "/current",
-//   passport.authenticate("jwt", { session: false }),
-//   (req, res) => {
-//     res.json({
-//       id: req.user.id,
-//       name: req.user.name,
-//       email: req.user.email,
-//       avatar: req.user.avatar
-//     });
-//   }
-// );
-
 // EXPORT
 module.exports = router;

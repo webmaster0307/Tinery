@@ -38,38 +38,37 @@ export const clearCurrentProfile = () => {
 
 //-------------------------------------------------------------
 
-// FETCH FAVORITES
-export const fetchAxiosItinerariesID = favid => dispatch => {
-  axios
-    .post("/api/itinid", { favid: favid })
-    .then(res => {
-      dispatch({
-        type: FETCH_ITINERARIES_ID,
-        payload: res.data
-      });
-    })
-    .catch(err => console.log(err));
+// FETCH FAVORITES BY USER ID
+export const fetchItinerariesID = favid => dispatch => {
+  axios.post("/api/itinid", { favid: favid }).then(res => {
+    dispatch({
+      type: FETCH_ITINERARIES_ID,
+      payload: res.data
+    });
+  });
+  // .catch(err => console.log(err));
 };
+
+//-------------------------------------------------------------
 
 // POST FAVORITES
 export const postFavorites = (id, favData) => dispatch => {
   axios
-    .post(`/auth/profile/${id}`, { favData: favData.favorites })
-    .then(res => {
+    .post(`/auth/profile/postfav/${id}`, { favData: favData.favorites })
+    .then(() => {
       dispatch({
         type: POST_FAVORITES,
         payload: favData.favorites
       });
-    })
-    .catch(err => console.log(err));
+    });
+  // .catch(err => console.log(err));
 };
 
-//-------------------------------------------------------------
 // REMOVE FAVORITES
 export const removeFavorites = (id, favData) => dispatch => {
   axios
     .delete(`/auth/profile/removefav/${id}/${favData}`)
-    .then(res =>
+    .then(() =>
       dispatch({
         type: DELETE_FAVORITES,
         payload: favData
@@ -83,5 +82,3 @@ export const removeFavorites = (id, favData) => dispatch => {
       });
     });
 };
-
-//-------------------------------------------------------------

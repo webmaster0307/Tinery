@@ -1,21 +1,10 @@
 import React, { Component } from "react";
-import Typography from "@material-ui/core/Typography";
-
 class Header extends Component {
   render() {
     return (
-      <div>
-        <React.Fragment>
-          <Typography
-            align="center"
-            component="h2"
-            variant="display2"
-            gutterBottom
-          >
-            {this.props.title}
-          </Typography>
-        </React.Fragment>
-      </div>
+      <React.Fragment>
+        <div className="headerDiv">{this.props.title}</div>
+      </React.Fragment>
     );
   }
 }
