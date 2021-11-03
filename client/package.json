@@ -32,7 +32,7 @@
     "react-twitter-auth": "0.0.13",
     "redux": "^4.0.1",
     "source-map-explorer": "^1.8.0",
-    "validator": "^10.11.0"
+    "validator": "^13.7.0"
   },
   "scripts": {
     "start": "react-scripts start",
